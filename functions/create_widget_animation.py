@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from objects.animationMixin import AnimationMixin
+from objects.animation_mixin import AnimationMixin
 
 def create_widget_with_animation(base_class, *args, **kwargs):
     """

@@ -5,26 +5,12 @@ from data.variable import *
 from objects.tooltip import *
 from tkinter import filedialog
 from functions.import_widget import *
-from objects.codeBox import CTkCodeBox
+from objects.code_box import CTkCodeBox
 from translations.translations import *
 from translations.translator import Translator
 from functions.create_widget_animation import *
-from objects.virtualWindow import VirtualWindow
-
-def validate_input(value:any):
-    """Update the treeview in the right sidebar.
-
-    This method triggers an update of the treeview widget within the right sidebar.
-    It calls the `update_treeview` method of the `right_sidebar` object.
-
-    Args:
-        self: The current instance of the class.
-
-    Returns:
-        None
-    """
-
-    return bool(value == "" or (value.isdigit() and 0 <= int(value) <= 1000))
+from objects.virtual_window import VirtualWindow
+from functions.generic import *
 
 class LeftSidebar(ctk.CTkScrollableFrame):
     PADDING = 5
@@ -201,8 +187,10 @@ class LeftSidebar(ctk.CTkScrollableFrame):
                 lambda event: self.update_property(widget, prop, entry, tooltip)
             )
             logging.info(f"Entry '{prop}' del widget '{widget.__class__.__name__}' creada.")
-        except ValueError:
-            logging.error(f"Error al obtener valor de '{prop}' del widget '{widget.__class__.__name__}'")
+        except ValueError as e:
+            logging.error(f"Error al obtener valor de '{prop}' del widget '{widget.__class__.__name__}': {e}")
+        except Exception as e:
+            logging.error(f"Error inesperado al crear la entrada para '{prop}': {e}")
 
     def update_property(self, widget:object, prop:str, entry:object, tooltip:object):
         """Update a widget property based on entry value.
@@ -629,7 +617,37 @@ class TkinterLogHandler(logging.Handler):
             log_entry = self.format(record)
             self.label.configure(text=log_entry)
             self.label.after(3000, lambda: self.label.configure(text="Ok"))
+class AdvancedZoomCanvas(ctk.CTkCanvas):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
+        
+        self.scale_factor = 1.0  # Escala inicial
+        self.offset_x = 0
+        self.offset_y = 0
 
+        # Configurar eventos de zoom
+        self.bind("<Control-MouseWheel>", self.zoom)
+        self.bind("<ButtonPress-2>", self.start_pan)
+        self.bind("<B2-Motion>", self.pan)
+
+    def zoom(self, event):
+        """Aplica zoom sin modificar los widgets individuales."""
+        factor = 1.1 if event.delta > 0 else 0.9
+        new_scale = self.scale_factor * factor
+
+        # Evitar que el zoom se salga de los límites
+        if 0.2 <= new_scale <= 5.0:
+            self.scale_factor = new_scale
+            self.tk.call(self._w, 'scale', 0, 0, factor, factor)
+            self.tk.call(self._w, 'configure', '-scrollregion', self.bbox("all"))
+
+    def start_pan(self, event):
+        """Guarda la posición inicial para hacer paneo."""
+        self.scan_mark(event.x, event.y)
+
+    def pan(self, event):
+        """Desplaza la vista del canvas arrastrando con el botón central."""
+        self.scan_dragto(event.x, event.y, gain=1)
 class App(ctk.CTk):
     DEFAULT_HEIGHT = 500
     DEFAULT_WIDTH = 800
@@ -846,14 +864,13 @@ class App(ctk.CTk):
                         continue
     
     def inter_add_widget(self, widget: object):
-        kwargs_dict = {}  # Crear un diccionario vacío
+        kwargs_dict = {}  # Crea un diccionario vacío
         for prop in global_properties[widget.__class__.__name__]:
             try:
-                # Obtener el valor de la propiedad y añadirla al diccionario
+                # Obtiene el valor de la propiedad y la añade al diccionario
                 kwargs_dict[prop] = widget.cget(prop)
             except Exception:
-                # Si la propiedad no es válida o no está configurada, puedes manejar la excepción
-                kwargs_dict[prop] = None  # O puedes asignar un valor por defecto
+                kwargs_dict[prop] = None
         self.virtual_window.paste_widget(widget, **kwargs_dict)
         
 if __name__ == "__main__":

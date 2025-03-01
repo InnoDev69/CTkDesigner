@@ -1,4 +1,5 @@
 import customtkinter as ctk
+
 global_properties = {
     "VirtualWindow": ["width", "height", "fg_color", "bg_color", "border_width", "border_color"],
     "CTkButton": ["text", "command", "fg_color", "width", "height", "border_width", "border_color", "hover_color", "text_color",
@@ -41,6 +42,7 @@ widgets = [
         ]
 
 widget_classes = {
+            "VirtualWindow": ctk.CTkToplevel,
             "CTkButton": ctk.CTkButton,
             "CTkLabel": ctk.CTkLabel,
             "CTkEntry": ctk.CTkEntry,

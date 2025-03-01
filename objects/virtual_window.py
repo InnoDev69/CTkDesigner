@@ -263,17 +263,17 @@ class VirtualWindow(ctk.CTkFrame):
         self.add_widget(widget)
 
     def draw_guides(self, widget, new_x, new_y, show_guides=True, color_exact="green", color_near="red", tolerance=5, snap_range=10):
-        """Dibuja líneas guía en el canvas para ayudar con la alineación y auto-coloca el widget si está cerca de una guía.
+        """Draws guide lines on the canvas to assist with alignment and snaps the widget if it's near a guide.
 
         Args:
-            widget: El widget que se está moviendo.
-            new_x: La nueva posición x del widget.
-            new_y: La nueva posición y del widget.
-            show_guides: Booleano para mostrar u ocultar las guías.
-            color_exact: Color de las guías cuando están exactamente alineadas.
-            color_near: Color de las guías cuando están cerca de la alineación.
-            tolerance: Tolerancia para considerar que los widgets están alineados.
-            snap_range: Rango en el que el widget se auto-coloca cuando está cerca de una guía.
+            widget: The widget being moved.
+            new_x: The new x position of the widget.
+            new_y: The new y position of the widget.
+            show_guides: Boolean to show or hide the guides.
+            color_exact: Color of the guides when exactly aligned.
+            color_near: Color of the guides when near alignment.
+            tolerance: Tolerance to consider widgets aligned.
+            snap_range: Range at which the widget snaps when near a guide.
         """
         if not show_guides:
             return
@@ -295,49 +295,42 @@ class VirtualWindow(ctk.CTkFrame):
             child_center_x = child_x + child_width // 2
             child_center_y = child_y + child_height // 2
 
-            # Centrando verticalmente
-            if widget_center_x == child_center_x:
-                self.create_guide_line(child_center_x, 0, child_center_x, self.winfo_height(), color_exact)
-            elif abs(widget_center_x - child_center_x) <= tolerance:
-                self.create_guide_line(child_center_x, 0, child_center_x, self.winfo_height(), color_near)
+            # Define a helper function to draw guide lines
+            def draw_guide(x1, y1, x2, y2, color, condition):
+                if condition:
+                    self.create_guide_line(x1, y1, x2, y2, color)
+
+            # Vertical Centering
+            draw_guide(child_center_x, 0, child_center_x, self.winfo_height(), color_exact, widget_center_x == child_center_x)
+            draw_guide(child_center_x, 0, child_center_x, self.winfo_height(), color_near, abs(widget_center_x - child_center_x) <= tolerance)
             if abs(widget_center_x - child_center_x) <= snap_range:
                 new_x = child_center_x - widget_width // 2
 
-            # Centrando horizontalmente
-            if widget_center_y == child_center_y:
-                self.create_guide_line(0, child_center_y, self.winfo_width(), child_center_y, color_exact)
-            elif abs(widget_center_y - child_center_y) <= tolerance:
-                self.create_guide_line(0, child_center_y, self.winfo_width(), child_center_y, color_near)
+            # Horizontal Centering
+            draw_guide(0, child_center_y, self.winfo_width(), child_center_y, color_exact, widget_center_y == child_center_y)
+            draw_guide(0, child_center_y, self.winfo_width(), child_center_y, color_near, abs(widget_center_y - child_center_y) <= tolerance)
             if abs(widget_center_y - child_center_y) <= snap_range:
                 new_y = child_center_y - widget_height // 2
 
-            # Bordes izquierdo y derecho
-            if new_x == child_x:
-                self.create_guide_line(child_x, 0, child_x, self.winfo_height(), color_exact)
-            elif abs(new_x - child_x) <= tolerance:
-                self.create_guide_line(child_x, 0, child_x, self.winfo_height(), color_near)
+            # Left and Right Edges
+            draw_guide(child_x, 0, child_x, self.winfo_height(), color_exact, new_x == child_x)
+            draw_guide(child_x, 0, child_x, self.winfo_height(), color_near, abs(new_x - child_x) <= tolerance)
             if abs(new_x - child_x) <= snap_range:
                 new_x = child_x
 
-            if new_x + widget_width == child_x + child_width:
-                self.create_guide_line(child_x + child_width, 0, child_x + child_width, self.winfo_height(), color_exact)
-            elif abs(new_x + widget_width - (child_x + child_width)) <= tolerance:
-                self.create_guide_line(child_x + child_width, 0, child_x + child_width, self.winfo_height(), color_near)
+            draw_guide(child_x + child_width, 0, child_x + child_width, self.winfo_height(), color_exact, new_x + widget_width == child_x + child_width)
+            draw_guide(child_x + child_width, 0, child_x + child_width, self.winfo_height(), color_near, abs(new_x + widget_width - (child_x + child_width)) <= tolerance)
             if abs(new_x + widget_width - (child_x + child_width)) <= snap_range:
                 new_x = child_x + child_width - widget_width
 
-            # Bordes superior e inferior
-            if new_y == child_y:
-                self.create_guide_line(0, child_y, self.winfo_width(), child_y, color_exact)
-            elif abs(new_y - child_y) <= tolerance:
-                self.create_guide_line(0, child_y, self.winfo_width(), child_y, color_near)
+            # Top and Bottom Edges
+            draw_guide(0, child_y, self.winfo_width(), child_y, color_exact, new_y == child_y)
+            draw_guide(0, child_y, self.winfo_width(), child_y, color_near, abs(new_y - child_y) <= tolerance)
             if abs(new_y - child_y) <= snap_range:
                 new_y = child_y
 
-            if new_y + widget_height == child_y + child_height:
-                self.create_guide_line(0, child_y + child_height, self.winfo_width(), child_y + child_height, color_exact)
-            elif abs(new_y + widget_height - (child_y + child_height)) <= tolerance:
-                self.create_guide_line(0, child_y + child_height, self.winfo_width(), child_y + child_height, color_near)
+            draw_guide(0, child_y + child_height, self.winfo_width(), child_y + child_height, color_exact, new_y + widget_height == child_y + child_height)
+            draw_guide(0, child_y + child_height, self.winfo_width(), child_y + child_height, color_near, abs(new_y + widget_height - (child_y + child_height)) <= tolerance)
             if abs(new_y + widget_height - (child_y + child_height)) <= snap_range:
                 new_y = child_y + child_height - widget_height
 
@@ -353,14 +346,17 @@ class VirtualWindow(ctk.CTkFrame):
 
     def make_widget_selectable(self, widget):
         """Hace que un widget sea seleccionable con clic derecho."""
+        logging.info(f"Creando widget seleccionable {widget.__class__.__name__} ")
         try:
             def select_widget(event):
+                logging.info(f"{widget.__class__.__name__} seleccionado.")
                 if widget.__class__.__name__ == "Canvas":
-                    widget.bind("<Button-3>", lambda event: select_widget(event))
                     self.left_sidebar.show_widget_config(self)
+                    widget.bind("<Button-3>", lambda event: select_widget(event))
                 else:
-                    enable_resizable_highlight(self.guide_canvas,widget, self.left_sidebar)
                     self.left_sidebar.show_widget_config(widget)
+                    enable_resizable_highlight(self.guide_canvas,widget, self.left_sidebar)
+                    
             def copy(widget):
                 self.clipboard = widget
                 logging.info(f"{widget.__class__.__name__} copied.")
@@ -377,7 +373,9 @@ class VirtualWindow(ctk.CTkFrame):
             widget.bind("<Delete>", lambda event: self.left_sidebar.delete_widget(widget))  # Delete
             widget.bind("<Control-c>", lambda event: copy(widget))  # Ctrl + C
             widget.bind("<Control-v>", lambda event: paste())  # Ctrl + V
-            enable_resizable_highlight(self.guide_canvas,widget, self.left_sidebar)
+            if widget.__class__.__name__ != "Canvas":
+                enable_resizable_highlight(self.guide_canvas,widget, self.left_sidebar)
+            logging.info(f"Widget {widget.__class__.__name__} seleccionable creado.")
         except Exception as e:
             logging.error(f"Error en la selección de widget: {e}")
 
