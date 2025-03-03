@@ -19,6 +19,12 @@ translations = {
         "TOOLBAR_BUTTON_EXPORT": "Export to .py",
         "TOOLBAR_BUTTON_CONFIG": "Settings",
         "RIGHTBAR_BUTTON_VARIABLE_NAME": "Variable name",
+        
+        "IMPORT_WIDGET_BUTTON": "Import",
+        
+        # Translation of everything related to the console
+        "CONSOLE_BUTTON_TEXT": "Console",
+        "CONSOLE_BUTTON_RUN": "Run",
     },
     "es": {  # Español
         "NEW_PROYECT": "Nuevo projecto",
@@ -40,8 +46,14 @@ translations = {
         "TOOLBAR_BUTTON_EXPORT": "Exportar a .py",
         "TOOLBAR_BUTTON_CONFIG": "Configuraciones",
         "RIGHTBAR_BUTTON_VARIABLE_NAME": "Nombre de la variable",
+        
+        "IMPORT_WIDGET_BUTTON": "Importar",
+        
+        # Traducciones de todo lo relacionado con la consola
+        "CONSOLE_BUTTON_TEXT": "Consola",
+        "CONSOLE_BUTTON_RUN": "Ejecutar",
     },
-    "fr": {  # Francés (ejemplo)
+    "fr": {  # Francés (ejemplo(No voy a agregar frances(nuke france)))
         "CONFIG_LABEL_TEXT": "Configuration du widget",
         "SCENE_MANAGER_LABEL_TEXT": "Ça marche",
         "POSITION_LABEL_TEXT": "Position (x, y):",

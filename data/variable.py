@@ -41,6 +41,34 @@ widgets = [
             "CTkTextbox", "CTkSwitch", "CTkFrame"
         ]
 
+widgets_info = {
+    "es":["Un botón que puede ejecutar una acción cuando se hace clic en él.",
+    "Un widget para mostrar texto o imágenes.",
+    "Un campo de entrada de texto de una sola línea.",
+    "Un botón de opción que puede estar marcado o desmarcado.",
+    "Un botón de opción que permite seleccionar una opción de un grupo.",
+    "Un cuadro combinado que permite seleccionar una opción de una lista desplegable.",
+    "Un control deslizante para seleccionar un valor de un rango.",
+    "Una barra de progreso que muestra el progreso de una operación.",
+    "Un campo de entrada de texto de varias líneas.",
+    "Un interruptor que puede estar en estado encendido o apagado.",
+    "Un contenedor para agrupar otros widgets."]
+    ,
+    "en": [
+    "A button that can execute an action when clicked.",
+    "A widget for displaying text or images.",
+    "A single-line text input field.",
+    "A check button that can be checked or unchecked.",
+    "A radio button that allows selecting one option from a group.",
+    "A combo box that allows selecting an option from a dropdown list.",
+    "A slider control for selecting a value from a range.",
+    "A progress bar that shows the progress of an operation.",
+    "A multi-line text input field.",
+    "A switch that can be in an on or off state.",
+    "A container for grouping other widgets."
+]
+}
+
 widget_classes = {
             "VirtualWindow": ctk.CTkToplevel,
             "CTkButton": ctk.CTkButton,

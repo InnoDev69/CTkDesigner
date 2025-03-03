@@ -1,0 +1,998 @@
+2025-03-01 17:22:58,528 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 17:22:58,608 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:22:58,608 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:22:58,608 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:22:58,608 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:22:58,608 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 17:23:00,952 - INFO - Widgets ocultados.
+2025-03-01 17:23:00,984 - DEBUG - Intentando generar lineas
+2025-03-01 17:23:01,004 - DEBUG - Loading window parameters...
+2025-03-01 17:23:01,004 - DEBUG - Creating initial lines...
+2025-03-01 17:23:01,004 - INFO - Not using Base Scene
+2025-03-01 17:23:05,263 - INFO - Widgets desocultados.
+2025-03-01 17:23:11,464 - INFO - Canvas seleccionado.
+2025-03-01 17:23:11,465 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:23:11,466 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:23:11,476 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:23:11,485 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:23:11,496 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:23:11,506 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:23:11,516 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:23:11,525 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:23:12,353 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-01 17:23:12,353 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-01 17:23:12,365 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-01 17:23:12,365 - INFO - Creando widget seleccionable CTkButton 
+2025-03-01 17:23:12,365 - INFO - Widget CTkButton seleccionable creado.
+2025-03-01 17:23:12,365 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-01 17:23:13,212 - INFO - CTkButton seleccionado.
+2025-03-01 17:23:13,243 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-01 17:23:13,243 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-01 17:23:13,261 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,269 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,281 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,290 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,300 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,310 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,320 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,329 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,340 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,349 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-01 17:23:13,358 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-01 17:23:21,334 - INFO - Widgets ocultados.
+2025-03-01 17:23:21,364 - DEBUG - Intentando generar lineas
+2025-03-01 17:23:21,371 - DEBUG - Loading window parameters...
+2025-03-01 17:23:21,379 - DEBUG - Creating initial lines...
+2025-03-01 17:23:21,379 - INFO - Not using Base Scene
+2025-03-01 17:23:21,379 - INFO - Exporting: text=CTkButton
+2025-03-01 17:23:21,379 - INFO - Exporting: command=None
+2025-03-01 17:23:21,379 - INFO - Exporting: fg_color=['#3a7ebf', '#1f538d']
+2025-03-01 17:23:21,379 - INFO - Exporting: width=140
+2025-03-01 17:23:21,379 - INFO - Exporting: height=28
+2025-03-01 17:23:21,379 - INFO - Exporting: border_width=0
+2025-03-01 17:23:21,379 - INFO - Exporting: border_color=['#3E454A', '#949A9F']
+2025-03-01 17:23:21,379 - INFO - Exporting: hover_color=['#325882', '#14375e']
+2025-03-01 17:23:21,379 - INFO - Exporting: text_color=['#DCE4EE', '#DCE4EE']
+2025-03-01 17:23:21,379 - INFO - Exporting: border_spacing=2
+2025-03-01 17:23:21,379 - INFO - Exporting: corner_radius=6
+2025-03-01 17:23:21,908 - INFO - Widgets desocultados.
+2025-03-01 17:23:54,770 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 17:23:54,856 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:23:54,856 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:23:54,857 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:23:54,857 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:23:54,857 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 17:23:56,216 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-01 17:23:56,217 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-01 17:23:56,220 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-01 17:23:56,221 - INFO - Creando widget seleccionable CTkButton 
+2025-03-01 17:23:56,221 - INFO - Widget CTkButton seleccionable creado.
+2025-03-01 17:23:56,222 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-01 17:23:58,079 - INFO - Widgets ocultados.
+2025-03-01 17:23:58,106 - DEBUG - Intentando generar lineas
+2025-03-01 17:23:58,125 - DEBUG - Loading window parameters...
+2025-03-01 17:23:58,125 - DEBUG - Creating initial lines...
+2025-03-01 17:23:58,125 - INFO - Not using Base Scene
+2025-03-01 17:23:58,125 - INFO - Exporting: text=CTkButton
+2025-03-01 17:23:58,125 - INFO - Exporting: command=None
+2025-03-01 17:23:58,125 - INFO - Exporting: fg_color=['#3a7ebf', '#1f538d']
+2025-03-01 17:23:58,125 - INFO - Exporting: width=140
+2025-03-01 17:23:58,125 - INFO - Exporting: height=28
+2025-03-01 17:23:58,125 - INFO - Exporting: border_width=0
+2025-03-01 17:23:58,131 - INFO - Exporting: border_color=['#3E454A', '#949A9F']
+2025-03-01 17:23:58,131 - INFO - Exporting: hover_color=['#325882', '#14375e']
+2025-03-01 17:23:58,131 - INFO - Exporting: text_color=['#DCE4EE', '#DCE4EE']
+2025-03-01 17:23:58,132 - INFO - Exporting: border_spacing=2
+2025-03-01 17:23:58,132 - INFO - Exporting: corner_radius=6
+2025-03-01 17:24:02,446 - INFO - Widgets desocultados.
+2025-03-01 17:24:03,333 - INFO - CTkButton seleccionado.
+2025-03-01 17:24:03,333 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-01 17:24:03,333 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-01 17:24:03,333 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,349 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,365 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,365 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,385 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,396 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,399 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,412 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,412 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,432 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-01 17:24:03,444 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-01 17:24:07,192 - INFO - Widgets ocultados.
+2025-03-01 17:24:07,211 - DEBUG - Intentando generar lineas
+2025-03-01 17:24:07,224 - DEBUG - Loading window parameters...
+2025-03-01 17:24:07,224 - DEBUG - Creating initial lines...
+2025-03-01 17:24:07,224 - INFO - Not using Base Scene
+2025-03-01 17:24:07,224 - INFO - Exporting: text=CTkButton
+2025-03-01 17:24:07,224 - INFO - Exporting: command=None
+2025-03-01 17:24:07,224 - INFO - Exporting: fg_color=['#3a7ebf', '#1f538d']
+2025-03-01 17:24:07,239 - INFO - Exporting: width=140
+2025-03-01 17:24:07,239 - INFO - Exporting: height=28
+2025-03-01 17:24:07,239 - INFO - Exporting: border_width=0
+2025-03-01 17:24:07,239 - INFO - Exporting: border_color=['#3E454A', '#949A9F']
+2025-03-01 17:24:07,239 - INFO - Exporting: hover_color=['#325882', '#14375e']
+2025-03-01 17:24:07,239 - INFO - Exporting: text_color=['#DCE4EE', '#DCE4EE']
+2025-03-01 17:24:07,239 - INFO - Exporting: border_spacing=2
+2025-03-01 17:24:07,239 - INFO - Exporting: corner_radius=6
+2025-03-01 17:24:07,544 - INFO - Widgets desocultados.
+2025-03-01 17:34:09,183 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 17:34:09,256 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:34:09,256 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:34:09,256 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:34:09,256 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:34:09,258 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 17:34:12,559 - INFO - Widgets ocultados.
+2025-03-01 17:34:12,588 - DEBUG - Intentando generar lineas
+2025-03-01 17:34:12,602 - DEBUG - Loading window parameters...
+2025-03-01 17:34:12,605 - DEBUG - Creating initial lines...
+2025-03-01 17:34:12,605 - INFO - Not using Base Scene
+2025-03-01 17:34:13,400 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:34:13,400 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:34:13,401 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:34:13,401 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:34:13,402 - INFO - Widgets desocultados.
+2025-03-01 17:34:15,248 - INFO - Canvas seleccionado.
+2025-03-01 17:34:15,248 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:34:15,256 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:34:15,268 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:15,278 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:15,288 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:15,299 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:15,308 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:15,320 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:17,807 - INFO - Canvas seleccionado.
+2025-03-01 17:34:17,832 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:34:17,832 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:34:17,844 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:17,853 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:17,864 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:17,875 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:17,884 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:17,893 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:27,480 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 17:34:27,546 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:34:27,548 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:34:27,548 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:34:27,549 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:34:27,549 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 17:34:30,759 - INFO - Canvas seleccionado.
+2025-03-01 17:34:30,760 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:34:30,760 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:34:30,772 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:30,784 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:30,795 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:30,807 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:30,818 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:30,828 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:35,287 - INFO - Canvas seleccionado.
+2025-03-01 17:34:35,311 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:34:35,312 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:34:35,324 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:35,334 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:35,345 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:35,356 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:35,362 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:35,376 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:44,927 - INFO - Canvas seleccionado.
+2025-03-01 17:34:44,955 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:34:44,956 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:34:44,967 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:44,976 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:44,988 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:44,998 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:45,009 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:45,019 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:48,031 - INFO - Canvas seleccionado.
+2025-03-01 17:34:48,058 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:34:48,059 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:34:48,070 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:48,081 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:48,091 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:48,098 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:48,113 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:48,123 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:34:59,351 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 17:34:59,427 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:34:59,427 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:34:59,429 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:34:59,429 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:34:59,429 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 17:35:01,679 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-01 17:35:01,679 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-01 17:35:01,682 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-01 17:35:01,683 - INFO - Creando widget seleccionable CTkButton 
+2025-03-01 17:35:01,684 - INFO - Widget CTkButton seleccionable creado.
+2025-03-01 17:35:01,684 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-01 17:35:02,599 - INFO - CTkButton seleccionado.
+2025-03-01 17:35:02,599 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-01 17:35:02,600 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-01 17:35:02,611 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,620 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,630 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,641 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,651 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,661 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,669 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,682 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,690 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,702 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-01 17:35:02,712 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-01 17:35:16,838 - INFO - Canvas seleccionado.
+2025-03-01 17:35:16,883 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:35:16,884 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:35:16,890 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:16,904 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:16,915 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:16,925 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:16,934 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:16,944 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:21,085 - INFO - CTkButton seleccionado.
+2025-03-01 17:35:21,118 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-01 17:35:21,118 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-01 17:35:21,128 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,138 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,148 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,161 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,170 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,178 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,191 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,201 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,213 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,222 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-01 17:35:21,232 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-01 17:35:26,023 - INFO - Canvas seleccionado.
+2025-03-01 17:35:26,059 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:35:26,059 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:35:26,068 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:26,078 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:26,094 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:26,104 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:26,115 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:35:26,125 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:38:16,351 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 17:38:16,420 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:38:16,420 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:38:16,420 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:38:16,421 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:38:16,421 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 17:38:17,119 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-01 17:38:17,120 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-01 17:38:17,123 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-01 17:38:17,124 - INFO - Creando widget seleccionable CTkButton 
+2025-03-01 17:38:17,124 - INFO - Widget CTkButton seleccionable creado.
+2025-03-01 17:38:17,125 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-01 17:38:17,788 - INFO - Canvas seleccionado.
+2025-03-01 17:38:17,788 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 17:38:17,788 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 17:38:17,802 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 17:38:17,812 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 17:38:17,822 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:38:17,832 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:38:17,841 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 17:38:17,852 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 17:38:20,446 - INFO - CTkButton seleccionado.
+2025-03-01 17:38:20,473 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-01 17:38:20,474 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-01 17:38:20,484 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,495 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,505 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,514 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,525 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,533 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,544 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,553 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,562 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,572 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-01 17:38:20,581 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-01 17:38:33,126 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 17:38:33,187 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 17:38:33,187 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 17:38:33,187 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 17:38:33,187 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 17:38:33,196 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 17:38:34,199 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-01 17:38:34,199 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-01 17:38:34,203 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-01 17:38:34,204 - INFO - Creando widget seleccionable CTkButton 
+2025-03-01 17:38:34,204 - INFO - Widget CTkButton seleccionable creado.
+2025-03-01 17:38:34,205 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-01 17:38:35,270 - INFO - CTkButton seleccionado.
+2025-03-01 17:38:35,271 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-01 17:38:35,272 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-01 17:38:35,283 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,293 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,303 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,313 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,322 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,331 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,342 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,351 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,361 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,371 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-01 17:38:35,381 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-01 18:02:25,965 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 18:02:26,037 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 18:02:26,037 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 18:02:26,037 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 18:02:26,038 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 18:02:26,038 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 18:02:28,867 - INFO - Widgets ocultados.
+2025-03-01 18:02:28,894 - DEBUG - Intentando generar lineas
+2025-03-01 18:02:28,911 - DEBUG - Loading window parameters...
+2025-03-01 18:02:28,914 - DEBUG - Creating initial lines...
+2025-03-01 18:02:28,914 - INFO - Not using Base Scene
+2025-03-01 18:02:29,515 - INFO - Widgets desocultados.
+2025-03-01 18:02:31,681 - INFO - Canvas seleccionado.
+2025-03-01 18:02:31,684 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 18:02:31,684 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 18:02:31,684 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 18:02:31,706 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 18:02:31,710 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:02:31,725 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:02:31,732 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 18:02:31,745 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:22,411 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 18:03:22,477 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 18:03:22,477 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 18:03:22,477 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 18:03:22,477 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 18:03:22,477 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 18:03:24,821 - INFO - Canvas seleccionado.
+2025-03-01 18:03:24,821 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 18:03:24,821 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 18:03:24,838 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:24,850 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:24,861 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:24,872 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:24,882 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:24,893 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:27,000 - INFO - Canvas seleccionado.
+2025-03-01 18:03:27,038 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 18:03:27,038 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 18:03:27,052 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:27,059 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:27,074 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:27,081 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:27,092 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:27,098 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:03:39,675 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 18:03:39,748 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 18:03:39,748 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 18:03:39,749 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 18:03:39,749 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 18:03:39,749 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 18:04:06,843 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 18:04:06,914 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 18:04:06,914 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 18:04:06,914 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 18:04:06,914 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 18:04:06,914 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 18:04:09,291 - INFO - Canvas seleccionado.
+2025-03-01 18:04:09,291 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 18:04:09,291 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 18:04:09,303 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:09,313 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:09,313 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:09,332 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:09,346 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:09,346 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:10,958 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-01 18:04:10,958 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-01 18:04:10,974 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-01 18:04:10,974 - INFO - Creando widget seleccionable CTkButton 
+2025-03-01 18:04:10,974 - INFO - Widget CTkButton seleccionable creado.
+2025-03-01 18:04:10,974 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-01 18:04:34,133 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-01 18:04:34,204 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-01 18:04:34,204 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-01 18:04:34,204 - INFO - Creando widget seleccionable Canvas 
+2025-03-01 18:04:34,205 - INFO - Widget Canvas seleccionable creado.
+2025-03-01 18:04:34,205 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-01 18:04:37,955 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-01 18:04:37,955 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-01 18:04:37,955 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-01 18:04:37,955 - INFO - Creando widget seleccionable CTkButton 
+2025-03-01 18:04:37,955 - INFO - Widget CTkButton seleccionable creado.
+2025-03-01 18:04:37,955 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-01 18:04:38,781 - INFO - CTkButton seleccionado.
+2025-03-01 18:04:38,781 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-01 18:04:38,781 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-01 18:04:38,792 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,797 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,812 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,812 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,830 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,844 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,848 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,860 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,869 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,876 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-01 18:04:38,892 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-01 18:04:42,174 - INFO - Canvas seleccionado.
+2025-03-01 18:04:42,206 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 18:04:42,206 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 18:04:42,221 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:42,230 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:42,237 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:42,253 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:42,262 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:42,269 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:45,699 - INFO - Canvas seleccionado.
+2025-03-01 18:04:45,714 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-01 18:04:45,714 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-01 18:04:45,737 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:45,746 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:45,756 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:45,766 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:45,766 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-01 18:04:45,786 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:13:03,809 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 11:13:03,883 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 11:13:03,883 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 11:13:03,883 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 11:13:03,883 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 11:13:03,883 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 11:13:29,998 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 11:13:30,082 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 11:13:30,082 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 11:13:30,082 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 11:13:49,230 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 11:13:49,300 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 11:13:49,300 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 11:13:49,301 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 11:13:49,301 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 11:13:49,301 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 11:13:49,750 - INFO - Canvas seleccionado.
+2025-03-02 11:13:49,750 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-02 11:13:49,750 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-02 11:13:49,778 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-02 11:13:49,788 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-02 11:13:49,798 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:13:49,807 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:13:49,816 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-02 11:13:49,830 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:47,136 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 11:29:47,206 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 11:29:47,206 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 11:29:47,206 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 11:29:47,206 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 11:29:47,206 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 11:29:50,219 - INFO - Canvas seleccionado.
+2025-03-02 11:29:50,219 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-02 11:29:50,219 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-02 11:29:50,235 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:50,256 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:50,259 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:50,273 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:50,287 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:50,287 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:55,520 - INFO - Canvas seleccionado.
+2025-03-02 11:29:55,541 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-02 11:29:55,541 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-02 11:29:55,554 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:55,571 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:55,571 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:55,588 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:55,598 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-02 11:29:55,613 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-02 11:30:30,594 - INFO - Posición actualizada a: (5, 2)
+2025-03-02 11:30:30,724 - INFO - Posición actualizada a: (50, 2)
+2025-03-02 11:30:33,058 - INFO - Posición actualizada a: (50, 5)
+2025-03-02 11:30:33,252 - INFO - Posición actualizada a: (50, 50)
+2025-03-02 12:19:21,458 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:19:21,521 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:19:21,525 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:19:21,525 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:19:21,526 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:19:21,526 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:26:08,304 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:26:08,390 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:26:08,390 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:26:08,390 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:26:08,390 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:26:08,390 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:28:59,137 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:28:59,221 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:28:59,221 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:28:59,221 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:28:59,221 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:28:59,222 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:30:05,265 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:30:05,339 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:30:05,339 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:30:05,340 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:30:05,340 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:30:05,340 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:31:00,559 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:31:00,642 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:31:00,644 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:31:00,644 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:31:00,644 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:31:00,644 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:31:24,821 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:31:24,919 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:31:24,919 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:31:24,920 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:31:24,920 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:31:24,920 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:31:35,095 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:31:35,190 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:31:35,191 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:31:35,191 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:31:35,191 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:31:35,192 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:35:33,912 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:35:33,989 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:35:33,989 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:35:33,989 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:35:33,989 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:35:33,989 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:36:37,806 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:36:37,884 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:36:37,885 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:36:37,885 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:36:37,885 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:36:37,887 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 12:37:02,761 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 12:37:02,844 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 12:37:02,844 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 12:37:02,844 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 12:37:02,844 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 12:37:02,844 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 14:05:04,174 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 14:05:04,259 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 14:05:04,261 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 14:05:04,261 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 14:05:04,262 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 14:05:04,262 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:07:27,591 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:07:27,677 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:07:27,677 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:07:27,678 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:07:27,678 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:07:27,678 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:23:22,888 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:23:22,970 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:23:22,971 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:23:22,971 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:23:22,971 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:23:22,973 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:25:58,217 - INFO - Widgets ocultados.
+2025-03-02 16:25:58,394 - DEBUG - Intentando generar lineas
+2025-03-02 16:25:58,406 - DEBUG - Loading window parameters...
+2025-03-02 16:25:58,422 - DEBUG - Creating initial lines...
+2025-03-02 16:25:58,422 - INFO - Not using Base Scene
+2025-03-02 16:30:33,837 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:30:33,922 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:30:33,924 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:30:33,924 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:30:33,924 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:30:33,924 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:33:03,669 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:33:03,751 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:33:03,751 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:33:03,751 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:33:03,751 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:33:03,751 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:35:06,247 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:35:06,335 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:35:06,336 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:35:06,336 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:35:06,336 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:35:06,336 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:35:31,950 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:35:32,031 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:35:32,031 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:35:32,031 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:35:32,031 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:35:32,031 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:36:01,772 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:36:01,864 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:36:01,867 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:36:01,867 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:36:01,873 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:36:01,873 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:36:33,543 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:36:33,646 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:36:33,647 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:36:33,647 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:36:33,647 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:36:33,647 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:38:15,355 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:38:15,433 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:38:15,434 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:38:15,434 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:38:15,434 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:38:15,434 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:40:13,654 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:40:13,749 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:40:13,749 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:40:13,749 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:40:13,749 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:40:13,750 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:41:29,469 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:41:29,550 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:41:29,550 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:41:29,550 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:41:29,550 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:41:29,550 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 16:42:55,773 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 16:42:55,868 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 16:42:55,869 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 16:42:55,869 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 16:42:55,869 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 16:42:55,869 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 19:36:50,876 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 19:36:50,969 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 19:36:50,969 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 19:36:50,969 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 19:36:50,969 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 19:36:50,971 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 19:47:21,365 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 19:47:21,441 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 19:47:21,441 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 19:47:21,442 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 19:47:21,442 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 19:47:21,442 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 19:54:34,353 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 19:54:34,437 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 19:54:34,437 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 19:54:34,438 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 19:54:34,438 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 19:54:34,438 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:03:04,495 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:03:04,576 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:03:04,577 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:03:04,577 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:03:04,577 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:03:04,577 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:03:23,692 - DEBUG - Intentando agregar widget de tipo 'CTkButton'.
+2025-03-02 20:03:23,692 - DEBUG - Creando widget de tipo 'CTkButton' con argumentos: {}.
+2025-03-02 20:03:23,692 - INFO - Widget 'CTkButton' creado con éxito.
+2025-03-02 20:03:23,692 - INFO - Creando widget seleccionable CTkButton 
+2025-03-02 20:03:23,692 - INFO - Widget CTkButton seleccionable creado.
+2025-03-02 20:03:23,692 - INFO - Widget de tipo 'CTkButton' agregado en posición inicial 140 28
+2025-03-02 20:03:24,565 - INFO - CTkButton seleccionado.
+2025-03-02 20:03:24,565 - INFO - Mostrando configuración para widget: CTkButton
+2025-03-02 20:03:24,565 - DEBUG - ['width', 'height', 'corner_radius', 'border_width', 'border_spacing', 'bg_color', 'fg_color', 'hover_color', 'border_color', 'text_color', 'text_color_disabled', 'background_corner_colors', 'round_width_to_even_numbers', 'round_height_to_even_numbers', 'text', 'font', 'textvariable', 'image', 'state', 'hover', 'command', 'compound', 'anchor', 'kwargs']
+2025-03-02 20:03:24,590 - INFO - Entry 'text' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,601 - INFO - Entry 'command' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,610 - INFO - Entry 'fg_color' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,613 - INFO - Entry 'width' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,632 - INFO - Entry 'height' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,632 - INFO - Entry 'border_width' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,649 - INFO - Entry 'border_color' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,660 - INFO - Entry 'hover_color' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,673 - INFO - Entry 'text_color' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,683 - INFO - Entry 'border_spacing' del widget 'CTkButton' creada.
+2025-03-02 20:03:24,692 - INFO - Entry 'corner_radius' del widget 'CTkButton' creada.
+2025-03-02 20:03:28,152 - INFO - Canvas seleccionado.
+2025-03-02 20:03:28,183 - INFO - Mostrando configuración para widget: VirtualWindow
+2025-03-02 20:03:28,183 - DEBUG - ['left_sidebar', 'app', 'parameters_dict', 'width', 'height']
+2025-03-02 20:03:28,199 - INFO - Entry 'width' del widget 'VirtualWindow' creada.
+2025-03-02 20:03:28,199 - INFO - Entry 'height' del widget 'VirtualWindow' creada.
+2025-03-02 20:03:28,215 - INFO - Entry 'fg_color' del widget 'VirtualWindow' creada.
+2025-03-02 20:03:28,231 - INFO - Entry 'bg_color' del widget 'VirtualWindow' creada.
+2025-03-02 20:03:28,231 - INFO - Entry 'border_width' del widget 'VirtualWindow' creada.
+2025-03-02 20:03:28,247 - INFO - Entry 'border_color' del widget 'VirtualWindow' creada.
+2025-03-02 20:23:52,218 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:23:52,289 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:23:52,290 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:23:52,290 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:23:52,290 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:23:52,290 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:26:36,317 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:26:36,391 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:26:36,392 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:26:36,392 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:26:36,392 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:26:36,392 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:30:25,353 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:30:25,407 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:30:25,407 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:30:25,407 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:30:25,407 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:30:25,407 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:31:25,502 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:31:25,577 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:31:25,578 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:31:25,578 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:31:25,579 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:31:25,580 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:32:07,989 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:32:08,062 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:32:08,064 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:32:08,064 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:32:08,064 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:32:08,065 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:34:09,000 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:34:09,077 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:34:09,078 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:34:09,078 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:34:09,078 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:34:09,078 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:39:51,971 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:39:52,073 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:39:52,074 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:39:52,074 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:39:52,074 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:39:52,075 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:41:15,171 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:41:15,253 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:41:15,253 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:41:15,253 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:41:15,253 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:41:15,254 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:41:49,695 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:41:49,783 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:41:49,783 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:41:49,783 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:41:49,783 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:41:49,784 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:42:55,801 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:42:55,881 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:42:55,882 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:42:55,882 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:42:55,882 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:42:55,883 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:46:40,370 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:46:40,446 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:46:40,446 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:46:40,446 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:46:40,446 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:46:40,447 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:49:21,474 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:49:21,558 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:49:21,558 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:49:21,558 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:49:21,559 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:49:21,559 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:52:29,138 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:52:29,221 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:52:29,221 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:52:29,221 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:52:29,222 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:52:29,222 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:55:38,697 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:55:38,777 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:55:38,777 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:55:38,778 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:55:38,778 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:55:38,778 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 20:57:01,665 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 20:57:01,754 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 20:57:01,754 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 20:57:01,755 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 20:57:01,755 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 20:57:01,755 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:14:58,963 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:14:59,046 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:14:59,046 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:14:59,046 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:14:59,048 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:14:59,048 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:24:26,890 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:24:26,965 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:24:26,965 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:24:26,965 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:24:26,966 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:24:26,966 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:24:34,594 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:24:34,676 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:24:34,677 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:24:34,677 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:24:34,677 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:24:34,677 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:25:21,114 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:25:21,198 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:25:21,198 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:25:21,198 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:25:21,198 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:25:21,198 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:26:54,628 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:26:54,715 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:26:54,716 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:26:54,716 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:26:54,716 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:26:54,716 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:27:46,738 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:27:46,817 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:27:46,817 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:27:46,817 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:27:46,817 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:27:46,817 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:28:28,562 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:28:28,638 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:28:28,639 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:28:28,639 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:28:28,640 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:28:28,640 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:30:01,713 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:30:01,784 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:30:01,784 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:30:01,785 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:30:01,785 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:30:01,785 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:31:34,378 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:31:34,452 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:31:34,452 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:31:34,453 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:31:34,453 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:31:34,453 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:34:20,441 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:34:20,517 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:34:20,517 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:34:20,519 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:34:20,519 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:34:20,519 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:36:11,517 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:36:11,592 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:36:11,592 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:36:11,593 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:36:11,593 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:36:11,593 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:36:27,437 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:36:27,523 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:36:27,523 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:36:27,523 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:36:27,524 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:36:27,524 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:39:05,012 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:39:05,090 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:39:05,091 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:39:05,091 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:39:05,091 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:39:05,091 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:48:18,644 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:48:18,734 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:48:18,734 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:48:18,735 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:48:18,735 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:48:18,737 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:50:14,000 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:50:14,088 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:50:14,089 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:50:14,089 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:50:14,091 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:50:14,092 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:52:34,835 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:52:34,918 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:52:34,918 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:52:34,919 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:52:34,919 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:52:34,920 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:52:53,938 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-02 22:52:54,023 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-02 22:52:54,024 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-02 22:52:54,024 - INFO - Creando widget seleccionable Canvas 
+2025-03-02 22:52:54,024 - INFO - Widget Canvas seleccionable creado.
+2025-03-02 22:52:54,024 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-02 22:53:20,787 - DEBUG - Actualizando widget: CTkButton - Texto: Exportar a .py
+2025-03-02 22:53:20,788 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,789 - DEBUG - Actualizando widget: CTkButton - Texto: Configuraciones
+2025-03-02 22:53:20,789 - DEBUG - Actualizando widget: CTkButton - Texto: Consola
+2025-03-02 22:53:20,790 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-02 22:53:20,791 - DEBUG - Actualizando widget: CTkLabel - Texto: Widgets disponibles
+2025-03-02 22:53:20,791 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,792 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,792 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,793 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,793 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,793 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,794 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,795 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,795 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,795 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,796 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,796 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-02 22:53:20,796 - DEBUG - Actualizando widget: CTkLabel - Texto: Esquema de widgets
+2025-03-03 15:47:14,519 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-03 15:47:14,613 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-03 15:47:14,613 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-03 15:47:14,614 - INFO - Creando widget seleccionable Canvas 
+2025-03-03 15:47:14,614 - INFO - Widget Canvas seleccionable creado.
+2025-03-03 15:47:14,614 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-03 15:49:25,292 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-03 15:49:25,386 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-03 15:49:25,386 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-03 15:49:25,386 - INFO - Creando widget seleccionable Canvas 
+2025-03-03 15:49:25,386 - INFO - Widget Canvas seleccionable creado.
+2025-03-03 15:49:25,386 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: Exportar a .py
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: Configuraciones
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: Consola
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkLabel - Texto: Widgets disponibles
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkButton - Texto: Importar
+2025-03-03 15:49:39,047 - DEBUG - Actualizando widget: CTkLabel - Texto: Esquema de widgets
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:45,726 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkButton - Texto: None
+2025-03-03 15:49:46,585 - DEBUG - Actualizando widget: CTkLabel - Texto: None
+2025-03-03 16:40:54,001 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-03 16:40:54,087 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-03 16:40:54,088 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-03 16:40:54,088 - INFO - Creando widget seleccionable Canvas 
+2025-03-03 16:40:54,088 - INFO - Widget Canvas seleccionable creado.
+2025-03-03 16:40:54,088 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-03 17:31:39,356 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-03 17:31:39,446 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-03 17:31:39,446 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-03 17:31:39,446 - INFO - Creando widget seleccionable Canvas 
+2025-03-03 17:31:39,446 - INFO - Widget Canvas seleccionable creado.
+2025-03-03 17:31:39,446 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-03 17:32:06,183 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-03 17:32:06,274 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-03 17:32:06,274 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-03 17:32:06,274 - INFO - Creando widget seleccionable Canvas 
+2025-03-03 17:32:06,274 - INFO - Widget Canvas seleccionable creado.
+2025-03-03 17:32:06,274 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-03 17:32:18,391 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-03 17:32:18,472 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-03 17:32:18,473 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-03 17:32:18,473 - INFO - Creando widget seleccionable Canvas 
+2025-03-03 17:32:18,473 - INFO - Widget Canvas seleccionable creado.
+2025-03-03 17:32:18,473 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-03 18:27:51,224 - INFO - Creando proyecto - Altura: 500, Anchura: 800, Opciones: {'is_resizable': 0}
+2025-03-03 18:27:51,308 - INFO - Creando widget seleccionable VirtualWindow 
+2025-03-03 18:27:51,309 - INFO - Widget VirtualWindow seleccionable creado.
+2025-03-03 18:27:51,309 - INFO - Creando widget seleccionable Canvas 
+2025-03-03 18:27:51,309 - INFO - Widget Canvas seleccionable creado.
+2025-03-03 18:27:51,310 - INFO - VirtualWindow inicializada con dimensiones 800x500 y canvas configurado.
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'IHDR' 16 13
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'sRGB' 41 1
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'gAMA' 54 4
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'pHYs' 70 9
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'IDAT' 91 14923
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'IHDR' 16 13
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'sRGB' 41 1
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'gAMA' 54 4
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'pHYs' 70 9
+2025-03-03 18:27:54,072 - DEBUG - STREAM b'IDAT' 91 14923

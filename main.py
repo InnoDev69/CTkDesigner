@@ -11,6 +11,10 @@ from translations.translator import Translator
 from functions.create_widget_animation import *
 from objects.virtual_window import VirtualWindow
 from functions.generic import *
+from config.config_manajer import ConfigManager
+from CTkMessagebox import CTkMessagebox
+import io
+import sys
 
 class LeftSidebar(ctk.CTkScrollableFrame):
     PADDING = 5
@@ -413,8 +417,8 @@ class RightSidebar(ctk.CTkScrollableFrame):
     def create_widgets_section(self):
         ctk.CTkLabel(self, text=app.translator.translate("LABEL_WIDGETS_TEXT")).grid(row=0, column=0, padx=self.PADDING, pady=self.PADDING, sticky="w")
         for i, widget in enumerate(widgets):
-            self.create_widget_button(widget, i + 1)
-        self.create_widget_button("Importar", i + 1)
+            self.create_widget_button(widget, i + 1, True)
+        self.create_widget_button(app.translator.translate("IMPORT_WIDGET_BUTTON"), i + 1)
 
     def import_custom_widget(self):
         widget=load_classes_from_file(filedialog.askopenfilename(
@@ -428,8 +432,9 @@ class RightSidebar(ctk.CTkScrollableFrame):
         if widget == "Importar": return self.import_custom_widget
         else: return lambda w=widget: self.add_widget(w)
 
-    def create_widget_button(self, widget:object, row:int):
+    def create_widget_button(self, widget:object, row:int, h:str = None):
         """Crea un botón para cada widget y lo agrega a la sección de widgets."""
+        dic_help = widgets_info.get(app.translator.current_language)
         btn = ctk.CTkButton(
             self,
             text=widget,
@@ -437,6 +442,8 @@ class RightSidebar(ctk.CTkScrollableFrame):
             **BUTTON_STYLE
         )
         btn.grid(row=row, column=0, padx=self.PADDING, pady=2, sticky="ew")
+        if h:
+            CTkToolTip(btn, dic_help[row-1])
         self.buttons[widget] = btn
 
     def disable_buttons(self):
@@ -519,11 +526,21 @@ class Toolbar(ctk.CTkFrame):
 
     def create_config_widgets(self, config_window):
         """Crea los widgets de configuración en la ventana de configuración."""
+        def apply_config():
+            nonlocal language
+            app.config_manager.set("General","language",language.get())
+            
+            msg = CTkMessagebox(title="Save", message="Para ver los cambios debe reiniciar la aplicacion.",
+                        icon="question", option_1="Cancel", option_2="No", option_3="Yes")
+            if msg.get():
+                app.destroy()
+            
         language = ctk.CTkComboBox(config_window, values=['es', 'en'], command=None, state='readonly', fg_color=['#F9F9FA', '#343638'], button_color=['#979DA2', '#565B5E'], button_hover_color=['#6E7174', '#7A848D'], dropdown_fg_color=['gray90', 'gray20'], dropdown_hover_color=['gray75', 'gray28'], width=140, height=28)
         language.place(x=99, y=44)
-        language.set(app.translator.current_language)
+        language.set(app.config_manager.get("General", "language"))
         ctk.CTkLabel(config_window, text='Idioma:', textvariable='', fg_color='transparent', corner_radius=0, text_color=['gray14', 'gray84'], width=0, height=28, font=('Arial', 19), anchor='center', compound='center', justify='center').place(x=20, y=44)
-        ctk.CTkButton(config_window, text='Aplicar cambios', command=lambda:self.apply_configs(language.get()), fg_color=['#3a7ebf', '#1f538d'], width=140, height=28, border_width=0, border_color=['#3E454A', '#949A9F'], hover_color=['#325882', '#14375e'], text_color=['#DCE4EE', '#DCE4EE'], border_spacing=2, corner_radius=6).place(x=251, y=262)
+        ctk.CTkButton(config_window, text='Aplicar cambios', command=apply_config, fg_color=['#3a7ebf', '#1f538d'], width=140, height=28, border_width=0, border_color=['#3E454A', '#949A9F'], hover_color=['#325882', '#14375e'], text_color=['#DCE4EE', '#DCE4EE'], border_spacing=2, corner_radius=6).place(x=251, y=262)
+        
         # entry = ctk.CTkEntry(config_window)
         # entry.pack(pady=10)
 
@@ -533,7 +550,7 @@ class Toolbar(ctk.CTkFrame):
             self.config_window = ctk.CTkToplevel(self)
             self.config_window.title("Configuraciones")
             self.config_window.geometry("400x300")
-            
+            self.config_window.after(100, self.config_window.lift)
             self.create_config_widgets(self.config_window)
             
             label = ctk.CTkLabel(self.config_window, text="Configuraciones")
@@ -546,7 +563,12 @@ class Toolbar(ctk.CTkFrame):
         self.create_button(app.translator.translate("TOOLBAR_BUTTON_EXPORT"), self.export_to_file, side="right")
         self.create_button("Code preview", self.change_view, side="right")
         self.create_button(app.translator.translate("TOOLBAR_BUTTON_CONFIG"),self.open_config_window, side="right")
+        self.create_button(app.translator.translate("CONSOLE_BUTTON_TEXT"), self.open_console, side="right")
         #self.create_button("Importar desde .py", self.import_from_file, side="right")
+    
+    def open_console(self):
+        """Abre la consola de la aplicación."""
+        app.open_console()
     
     def change_view(self):
         """Cambia el modo de visualización del código."""
@@ -617,44 +639,17 @@ class TkinterLogHandler(logging.Handler):
             log_entry = self.format(record)
             self.label.configure(text=log_entry)
             self.label.after(3000, lambda: self.label.configure(text="Ok"))
-class AdvancedZoomCanvas(ctk.CTkCanvas):
-    def __init__(self, master, **kwargs):
-        super().__init__(master, **kwargs)
-        
-        self.scale_factor = 1.0  # Escala inicial
-        self.offset_x = 0
-        self.offset_y = 0
 
-        # Configurar eventos de zoom
-        self.bind("<Control-MouseWheel>", self.zoom)
-        self.bind("<ButtonPress-2>", self.start_pan)
-        self.bind("<B2-Motion>", self.pan)
-
-    def zoom(self, event):
-        """Aplica zoom sin modificar los widgets individuales."""
-        factor = 1.1 if event.delta > 0 else 0.9
-        new_scale = self.scale_factor * factor
-
-        # Evitar que el zoom se salga de los límites
-        if 0.2 <= new_scale <= 5.0:
-            self.scale_factor = new_scale
-            self.tk.call(self._w, 'scale', 0, 0, factor, factor)
-            self.tk.call(self._w, 'configure', '-scrollregion', self.bbox("all"))
-
-    def start_pan(self, event):
-        """Guarda la posición inicial para hacer paneo."""
-        self.scan_mark(event.x, event.y)
-
-    def pan(self, event):
-        """Desplaza la vista del canvas arrastrando con el botón central."""
-        self.scan_dragto(event.x, event.y, gain=1)
 class App(ctk.CTk):
     DEFAULT_HEIGHT = 500
     DEFAULT_WIDTH = 800
 
     def __init__(self):
         super().__init__()
-        self.translator = Translator()
+        # CONFIGURACIONES
+        self.config_manager = ConfigManager()
+        
+        self.translator = Translator(self.config_manager.get("General", "language"))
         self.translator.load_translations(translations)
         self.title("CustomDesigner")
         self.geometry("1000x600")
@@ -689,6 +684,8 @@ class App(ctk.CTk):
             'corner_radius': 5,
             'font': self.LABEL_FONT
         }
+        
+        self.command_history = []
         
         self.setup_grid()
         self.create_virtual_window()
@@ -782,37 +779,13 @@ class App(ctk.CTk):
             self.toolbar.import_from_file()
 
         #self.central_canvas.bind("<MouseWheel>", self.zoom_canvas)
-        self.central_canvas.bind("<ButtonPress-1>", self.start_pan)
-        self.central_canvas.bind("<B1-Motion>", self.pan_canvas)
+        #self.central_canvas.bind("<ButtonPress-1>", self.start_pan)
+        #self.central_canvas.bind("<B1-Motion>", self.pan_canvas)
 
         self.scale_factor = 1.1
         self.current_scale = 1.0
         self.last_x = 0
         self.last_y = 0
-
-    def zoom_canvas(self, event):
-        x = self.central_canvas.canvasx(event.x)
-        y = self.central_canvas.canvasy(event.y)
-
-        scale = self.scale_factor if event.delta > 0 else 1 / self.scale_factor
-        self.central_canvas.scale("all", x, y, scale, scale)
-
-        self.central_canvas.configure(scrollregion=self.central_canvas.bbox("all"))
-
-        self.current_scale *= scale
-
-    def start_pan(self, event):
-        self.last_x = event.x
-        self.last_y = event.y
-
-    def pan_canvas(self, event):
-        dx = event.x - self.last_x
-        dy = event.y - self.last_y
-
-        self.central_canvas.move("all", dx, dy)
-
-        self.last_x = event.x
-        self.last_y = event.y
 
     def view_code(self):
         if self.virtual_window.toggle_visibility():
@@ -872,6 +845,108 @@ class App(ctk.CTk):
             except Exception:
                 kwargs_dict[prop] = None
         self.virtual_window.paste_widget(widget, **kwargs_dict)
+        
+    def open_console(self):
+        console = ctk.CTkToplevel(self)
+        console.title(self.translator.translate("CONSOLE_BUTTON_TEXT"))
+        console.geometry("600x400")
+        console.after(100, console.lift)
+        command_history = []
+        history_index = -1
+        custom_command_active = False
+        
+        def execute_command():
+            nonlocal custom_command_active, input_entry_tooltip
+            output_textbox.configure(state="normal")
+            command = input_entry.get()
+            if command.strip():
+                try:
+                    old_stdout, old_stderr = sys.stdout, sys.stderr
+                    sys.stdout, sys.stderr = io.StringIO(), io.StringIO()
+                    
+                    if command.startswith("$"):
+                        custom_command_active = True
+                        handle_custom_command(command[1:])
+                    else:
+                        custom_command_active = False
+                        result = eval(command)
+                        if result is not None:
+                            print(result)
+                    
+                    output = sys.stdout.getvalue()
+                    error = sys.stderr.getvalue()
+                    
+                    output_textbox.insert(ctk.END, f"> {command}\n{output}{error}\n")
+                    output_textbox.see(ctk.END)
+                except Exception as e:
+                    output_textbox.insert(ctk.END, f"> {command}\nError: {str(e)}\n")
+                finally:
+                    sys.stdout, sys.stderr = old_stdout, old_stderr
+                
+                command_history.append(command)
+            input_entry.delete(0, ctk.END)
+            output_textbox.configure(state="disabled")
+        
+        def handle_custom_command(cmd):
+            if cmd == "hello":
+                print("Hello, Custom Console!")
+            elif cmd == "clear":
+                output_textbox.delete("1.0", ctk.END)
+            elif cmd == "help":
+                print("Available commands:")
+                print("- hello: Displays a hello message")
+                print("- clear: Clears the console output")
+                print("- help: Displays this help message")
+                print("- exit: Closes the console")
+                print("- <command>: Executes a custom command")
+            elif cmd == "exit":
+                console.destroy()
+            else:
+                print(f"Unknown command: {cmd}")
+        
+        def browse_history(direction):
+            nonlocal history_index
+            if command_history:
+                history_index += direction
+                if history_index < 0:
+                    history_index = 0
+                elif history_index >= len(command_history):
+                    history_index = len(command_history)
+                    input_entry.delete(0, ctk.END)
+                    return
+                input_entry.delete(0, ctk.END)
+                input_entry.insert(0, command_history[history_index])
+        
+        def check_custom_command(event):
+            nonlocal custom_command_active, input_entry_tooltip
+            text = input_entry.get()
+            custom_command_active = text.startswith("$")
+            # Deberia terminar esto en un futuro, se supone seria un mini menu de 
+            # ayuda para visualizar los comandos
+            if custom_command_active and False:
+                input_entry_tooltip.show()
+                input_entry_tooltip.configure(message="help")
+        
+        output_textbox = ctk.CTkTextbox(console, width=580, height=300, wrap="word")
+        output_textbox.pack(pady=10, padx=10)
+        output_textbox.configure(state="disabled") 
+        
+        input_frame = ctk.CTkFrame(console)
+        input_frame.pack(fill="x", padx=10, pady=5)
+        
+        input_entry = ctk.CTkEntry(input_frame, width=480)
+        input_entry.pack(side="left", padx=(0, 5), fill="x", expand=True)
+        
+        input_entry_tooltip = CTkToolTip(input_entry, message="")
+        input_entry_tooltip.hide()
+        
+        input_entry.bind("<Return>", lambda event: execute_command())
+        input_entry.bind("<Up>", lambda event: browse_history(-1))
+        input_entry.bind("<Down>", lambda event: browse_history(1))
+        input_entry.bind("<KeyRelease>", check_custom_command)
+        
+        execute_button = ctk.CTkButton(input_frame, text=self.translator.translate("CONSOLE_BUTTON_RUN"), command=execute_command)
+        execute_button.pack(side="right")
         
 if __name__ == "__main__":
     app = App()
