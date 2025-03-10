@@ -1,20 +1,24 @@
+# Version: 1.2
+# Tiene comentarios en español y a veces en ingles, depende el dia
+
+import io
+import sys
 import logging
 import tkinter.ttk as ttk
+from data.commands import *
 import customtkinter as ctk
 from data.variable import *
 from objects.tooltip import *
 from tkinter import filedialog
+from functions.generic import *
 from functions.import_widget import *
+from CTkMessagebox import CTkMessagebox
 from objects.code_box import CTkCodeBox
 from translations.translations import *
 from translations.translator import Translator
+from config.config_manajer import ConfigManager
 from functions.create_widget_animation import *
 from objects.virtual_window import VirtualWindow
-from functions.generic import *
-from config.config_manajer import ConfigManager
-from CTkMessagebox import CTkMessagebox
-import io
-import sys
 
 class LeftSidebar(ctk.CTkScrollableFrame):
     PADDING = 5
@@ -210,7 +214,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
 
         tooltip.hide()
         type_of_property = str if prop == "text_color" else type(widget.cget(prop))
-        logging.info(f"Type of property:{type_of_property}")
+        logging.info(f"Type of property:{type_of_property}\n Value: {entry.get()}")
         try:
             if prop == "font":
                 self.update_font_property(widget, entry)
@@ -219,7 +223,8 @@ class LeftSidebar(ctk.CTkScrollableFrame):
                 widget.configure(**{prop: type_of_property(entry.get())})
                 widget.guide_canvas.config(bg=entry.get())
             else:
-                widget.configure(**{prop: type_of_property(entry.get())})
+                new_value = entry.get().strip() # Ahora con eso deberia de solucionar varios errores
+                widget.configure(**{prop: new_value})
             logging.info(f"Propiedad '{prop}' del widget '{widget.__class__.__name__}' actualizada a: {entry.get()}")
             entry.configure(border_color="#565B5E")
         except Exception as e:
@@ -505,7 +510,7 @@ class Toolbar(ctk.CTkFrame):
     PROGRESS_BAR_HIDE_DELAY = 3000
 
     def __init__(self, parent, virtual_window, rightbar, initialize_on_import=False):
-        super().__init__(parent, height=40, fg_color="#333333")
+        super().__init__(parent, height=40, fg_color="#222222") #Anterior #333333
         self.virtual_window = virtual_window
         self.right_bar = rightbar
         
@@ -521,28 +526,93 @@ class Toolbar(ctk.CTkFrame):
         self.initialize_on_import = initialize_on_import
         self.setup_logging()
 
-    def apply_configs(self, language:str):
+    def apply_configs(self, language:str, theme:str):
         app.switch_language(language)
 
     def create_config_widgets(self, config_window):
-        """Crea los widgets de configuración en la ventana de configuración."""
+        """Crea los widgets de configuración en una ventana con scrollbar."""
+
         def apply_config():
-            nonlocal language
-            app.config_manager.set("General","language",language.get())
-            
-            msg = CTkMessagebox(title="Save", message="Para ver los cambios debe reiniciar la aplicacion.",
-                        icon="question", option_1="Cancel", option_2="No", option_3="Yes")
-            if msg.get():
+            """Aplica y guarda los cambios de configuración."""
+            app.config_manager.set("General", "language", language.get())
+            app.config_manager.set("General", "theme", theme.get())
+            app.config_manager.set("Export", "format", export_format.get())
+            app.config_manager.set("Export", "include_comments", include_comments.get())
+
+            # Aplicar directamente en la UI
+            app.switch_language(language.get())
+            app.virtual_window.configure(fg_color=bg_color.get())
+            app.virtual_window.configure(corner_radius=int(corner_radius.get()))
+            app.virtual_window.configure(opacity=float(opacity_slider.get()))
+
+            msg = CTkMessagebox(
+                title="Save", message="Para ver algunos cambios debe reiniciar la aplicación.",
+                icon="question", option_1="Cancelar", option_2="No", option_3="Sí"
+            )
+            if msg.get() == "Sí":
                 app.destroy()
-            
-        language = ctk.CTkComboBox(config_window, values=['es', 'en'], command=None, state='readonly', fg_color=['#F9F9FA', '#343638'], button_color=['#979DA2', '#565B5E'], button_hover_color=['#6E7174', '#7A848D'], dropdown_fg_color=['gray90', 'gray20'], dropdown_hover_color=['gray75', 'gray28'], width=140, height=28)
-        language.place(x=99, y=44)
+
+        # Crear ScrollableFrame
+        scroll_frame = ctk.CTkScrollableFrame(config_window, width=380, height=280)
+        scroll_frame.pack(expand=True, fill="both", padx=10, pady=10)
+
+        # Configuración de idioma y tema
+        ctk.CTkLabel(scroll_frame, text='Idioma:').pack(anchor="w", padx=20, pady=5)
+        language = ctk.CTkComboBox(scroll_frame, values=['es', 'en'], state='readonly')
+        language.pack(fill="x", padx=20, pady=5)
         language.set(app.config_manager.get("General", "language"))
-        ctk.CTkLabel(config_window, text='Idioma:', textvariable='', fg_color='transparent', corner_radius=0, text_color=['gray14', 'gray84'], width=0, height=28, font=('Arial', 19), anchor='center', compound='center', justify='center').place(x=20, y=44)
-        ctk.CTkButton(config_window, text='Aplicar cambios', command=apply_config, fg_color=['#3a7ebf', '#1f538d'], width=140, height=28, border_width=0, border_color=['#3E454A', '#949A9F'], hover_color=['#325882', '#14375e'], text_color=['#DCE4EE', '#DCE4EE'], border_spacing=2, corner_radius=6).place(x=251, y=262)
-        
-        # entry = ctk.CTkEntry(config_window)
-        # entry.pack(pady=10)
+
+        ctk.CTkLabel(scroll_frame, text='Tema:').pack(anchor="w", padx=20, pady=5)
+        theme = ctk.CTkComboBox(scroll_frame, values=['dark-blue', 'light'], state='readonly')
+        theme.pack(fill="x", padx=20, pady=5)
+        theme.set(app.config_manager.get("General", "theme"))
+
+        # Selector de formato de exportación
+        ctk.CTkLabel(scroll_frame, text='Formato de Exportación:').pack(anchor="w", padx=20, pady=5)
+        export_format = ctk.CTkComboBox(scroll_frame, values=['py', 'json'], state='readonly')
+        export_format.pack(fill="x", padx=20, pady=5)
+        export_format.set(app.config_manager.get("Export", "format", fallback='py'))
+
+        # Checkbox para incluir comentarios
+        include_comments = ctk.CTkCheckBox(scroll_frame, text='Incluir Comentarios')
+        include_comments.pack(anchor="w", padx=20, pady=5)
+        #include_comments.set(app.config_manager.get("Export", "include_comments", fallback=False))
+
+        # Selector de color de fondo
+        ctk.CTkLabel(scroll_frame, text='Color de fondo:').pack(anchor="w", padx=20, pady=5)
+        bg_color = ctk.CTkEntry(scroll_frame, width=100)
+        bg_color.insert(0, app.virtual_window.cget("fg_color"))
+        bg_color.pack(fill="x", padx=20, pady=5)
+
+        # Configurar bordes redondeados
+        ctk.CTkLabel(scroll_frame, text='Esquinas Redondeadas:').pack(anchor="w", padx=20, pady=5)
+        corner_radius = ctk.CTkEntry(scroll_frame, width=50)
+        corner_radius.insert(0, app.virtual_window.cget("corner_radius"))
+        corner_radius.pack(fill="x", padx=20, pady=5)
+
+        # Slider de opacidad/transparencia
+        ctk.CTkLabel(scroll_frame, text='Opacidad:').pack(anchor="w", padx=20, pady=5)
+        opacity_slider = ctk.CTkSlider(scroll_frame, from_=0.1, to=1.0, number_of_steps=10)
+        opacity_slider.set(1.0)
+        opacity_slider.pack(fill="x", padx=20, pady=5)
+
+        # Botón para aplicar cambios
+        ctk.CTkButton(scroll_frame, text='Aplicar cambios', command=apply_config).pack(pady=10)
+
+        # Botón para restaurar valores por defecto
+        def reset_defaults():
+            language.set('es')
+            theme.set('dark-blue')
+            export_format.set('py')
+            include_comments.deselect()
+            bg_color.delete(0, "end")
+            bg_color.insert(0, "#FFFFFF")
+            corner_radius.delete(0, "end")
+            corner_radius.insert(0, "10")
+            opacity_slider.set(1.0)
+
+        ctk.CTkButton(scroll_frame, text='Restablecer Valores', command=reset_defaults).pack(pady=5)
+
 
     def open_config_window(self):
         """Abre la ventana de configuraciones si no está ya abierta."""
@@ -654,7 +724,7 @@ class App(ctk.CTk):
         self.title("CustomDesigner")
         self.geometry("1000x600")
         self.resizable(False, False)
-        ctk.set_appearance_mode("dark")
+        ctk.set_appearance_mode(self.config_manager.get("General", "theme"))
         ctk.set_default_color_theme("dark-blue")
 
         self.import_proyect = False
@@ -888,19 +958,25 @@ class App(ctk.CTk):
             output_textbox.configure(state="disabled")
         
         def handle_custom_command(cmd):
-            if cmd == "hello":
-                print("Hello, Custom Console!")
-            elif cmd == "clear":
-                output_textbox.delete("1.0", ctk.END)
-            elif cmd == "help":
-                print("Available commands:")
-                print("- hello: Displays a hello message")
-                print("- clear: Clears the console output")
-                print("- help: Displays this help message")
-                print("- exit: Closes the console")
-                print("- <command>: Executes a custom command")
-            elif cmd == "exit":
-                console.destroy()
+            parts = cmd.split(maxsplit=1)
+            command = parts[0]
+            args = parts[1].split() if len(parts) > 1 else []
+
+            if command in COMMAND_MAP:
+                try:
+                    # Llama a la funcion correspondiente pasando 'app', 'console' o 'output_textbox' si es necesario
+                    if command in ["clear", "exit"]:
+                        COMMAND_MAP[command](console if command == "exit" else output_textbox)
+                    elif command in ["list_widgets", "show_config", "undo", "redo", "debug_widgets", "clean_widgets", "debug_undo_stack",
+                                    "debug_redo_stack", "export_img"]:
+                        COMMAND_MAP[command](app)
+                    elif command in ["change_theme", "change_language", "save_project", "load_project",
+                                    "show_widget_info", "run_code", "export_json", "import_json"]:
+                        COMMAND_MAP[command](app, args)
+                    else:
+                        COMMAND_MAP[command]([])
+                except TypeError:
+                    print(f"Usage error: Check 'help' for correct usage of '{command}'")
             else:
                 print(f"Unknown command: {cmd}")
         

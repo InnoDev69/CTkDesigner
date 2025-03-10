@@ -1,0 +1,77 @@
+[
+    {
+        "type": "CTkButton",
+        "properties": {
+            "text": "CTkButton",
+            "command": null,
+            "fg_color": "black",
+            "width": 140,
+            "height": 28,
+            "border_width": 0,
+            "border_color": [
+                "#3E454A",
+                "#949A9F"
+            ],
+            "hover_color": [
+                "#325882",
+                "#14375e"
+            ],
+            "text_color": [
+                "#DCE4EE",
+                "#DCE4EE"
+            ],
+            "border_spacing": 2,
+            "corner_radius": 6,
+            "text_color_disabled": [
+                "gray74",
+                "gray60"
+            ],
+            "textvariable": null,
+            "image": null,
+            "state": "normal",
+            "compound": "left",
+            "anchor": "center"
+        },
+        "x": 644,
+        "y": 11
+    },
+    {
+        "type": "CTkButton",
+        "properties": {
+            "text": "CTkButton",
+            "command": null,
+            "fg_color": [
+                "#3a7ebf",
+                "#1f538d"
+            ],
+            "width": 140,
+            "height": 28,
+            "border_width": 0,
+            "border_color": [
+                "#3E454A",
+                "#949A9F"
+            ],
+            "hover_color": [
+                "#325882",
+                "#14375e"
+            ],
+            "text_color": [
+                "#DCE4EE",
+                "#DCE4EE"
+            ],
+            "border_spacing": 2,
+            "corner_radius": 6,
+            "text_color_disabled": [
+                "gray74",
+                "gray60"
+            ],
+            "textvariable": null,
+            "image": null,
+            "state": "normal",
+            "compound": "left",
+            "anchor": "center"
+        },
+        "x": 12,
+        "y": 456
+    }
+]

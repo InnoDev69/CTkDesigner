@@ -1,10 +1,14 @@
 import customtkinter as ctk
 from data.variable import *
 from functions.widget_resize import *
+from functions.generic import *
 import tkinter as tk
 import logging
+import json
 import ast
 import re
+
+from PIL import Image, ImageDraw, ImageFont
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -26,6 +30,9 @@ class VirtualWindow(ctk.CTkFrame):
         self._is_hidden = False
         self._original_positions = {}
         
+        self.undo_stack = []
+        self.redo_stack = []
+        
         self.guide_canvas = tk.Canvas(self, width=width, height=height, highlightthickness=0)
         self.guide_canvas.place(relx=0, rely=0, relwidth=1, relheight=1)
         
@@ -33,6 +40,83 @@ class VirtualWindow(ctk.CTkFrame):
         self.make_widget_selectable(self)
         self.make_widget_selectable(self.guide_canvas)
         logging.info(f"VirtualWindow inicializada con dimensiones {self.cget('width')}x{self.cget('height')} y canvas configurado.")
+        
+    def export_to_image(self, filename="virtual_window.png"):
+        """Genera una imagen de la VirtualWindow con todos los widgets, bordes y esquinas redondeadas."""
+        
+        width = self.winfo_width()
+        height = self.winfo_height()
+
+        bg_color = parse_color(self.cget("fg_color"))
+
+        img = Image.new("RGB", (width, height), bg_color)
+        draw = ImageDraw.Draw(img)
+
+        try:
+            font = ImageFont.truetype("arial.ttf", 14)
+        except Exception:
+            font = ImageFont.load_default()
+
+        for widget in self.widgets:
+            x, y = widget.winfo_x(), widget.winfo_y()
+            w, h = widget.winfo_width(), widget.winfo_height()
+            widget_bg = parse_color(widget.cget("fg_color"))
+            border_color = parse_color(widget.cget("border_color")) if "border_color" in widget.keys() else (50, 50, 50)
+
+            corner_radius = int(widget.cget("corner_radius")) if "corner_radius" in widget.keys() else 10
+            draw.rounded_rectangle([x, y, x + w, y + h], radius=corner_radius, fill=widget_bg, outline=border_color, width=3)
+
+            widget_name = widget.__class__.__name__
+            draw.text((x + 10, y + 10), widget_name, fill="black", font=font)
+
+        img.save(filename)
+        print(f"Exported VirtualWindow to {filename}")
+        
+    def save_state(self):
+        """Guarda el estado actual en la pila de undo y limpia redo."""
+        self.undo_stack.append(self.get_current_state())
+        self.redo_stack.clear()
+
+    def undo(self):
+        """Deshace la última acción."""
+        if not self.undo_stack:
+            print("No hay acciones para deshacer.")
+            return
+        self.redo_stack.append(self.get_current_state())
+        last_state = self.undo_stack.pop()
+        self.restore_state(last_state)
+
+    def redo(self):
+        """Rehace la última acción."""
+        if not self.redo_stack:
+            print("No hay acciones para rehacer.")
+            return
+        self.undo_stack.append(self.get_current_state())
+        print(self.redo_stack)
+        next_state = self.redo_stack.pop()
+        self.restore_state(next_state)
+        print(next_state)
+
+    def get_current_state(self):
+        """Obtiene el estado actual de la ventana virtual."""
+        return [
+            {
+                "type": widget.__class__.__name__,
+                "properties": {prop: widget.cget(prop) for prop in global_properties.get(widget.__class__.__name__, [])},
+                "x": widget.winfo_x(),
+                "y": widget.winfo_y()
+            }
+            for widget in self.widgets
+        ]
+
+    def restore_state(self, state):
+        """Restaura la ventana virtual a un estado guardado."""
+        self.clean_virtual_window(save_state=False)
+        for widget_data in state:
+            widget_type = widget_data["type"]
+            widget_properties = widget_data["properties"]
+            x, y = widget_data["x"], widget_data["y"]
+            self.create_and_place_widget(widget_type, widget_properties, x, y, save_state=False)    
         
     def count_widgets_by_type(self):
         """
@@ -64,6 +148,7 @@ class VirtualWindow(ctk.CTkFrame):
     
     def add_widget(self, widget_type, **kwargs):
         """Agrega un widget al VirtualWindow."""
+        self.save_state()
         logging.debug(f"Intentando agregar widget de tipo '{widget_type}'.")
         if widget := self.create_widget(widget_type, **kwargs):
             self._extracted_from_create_and_place_widget_5(widget, self.cget("width") / 2 - widget.cget("width") / 2 
@@ -72,7 +157,9 @@ class VirtualWindow(ctk.CTkFrame):
         else:
             logging.warning(f"Fallo al agregar widget de tipo '{widget_type}'.")
 
-    def create_widget(self, widget_type, **kwargs):
+    def create_widget(self, widget_type, save_state=False, **kwargs):
+        if save_state:
+            self.save_state()
         """Crea un widget basado en el tipo proporcionado."""
         logging.debug(f"Creando widget de tipo '{widget_type}' con argumentos: {kwargs}.")
         if widget_class := widget_classes.get(widget_type):
@@ -83,6 +170,7 @@ class VirtualWindow(ctk.CTkFrame):
         return None
     
     def paste_widget(self, widget, **kwargs):
+        self.save_state()
         """Agrega un widget al VirtualWindow con los argumentos proporcionados."""
         logging.debug(f"Agregando widget de tipo '{widget.__class__.__name__}' con argumentos: {kwargs}.")
         self.add_widget(widget.__class__.__name__, **kwargs)
@@ -250,6 +338,8 @@ class VirtualWindow(ctk.CTkFrame):
 
             if hasattr(self.left_sidebar, 'update_positions'):
                 self.left_sidebar.update_positions(new_x, new_y)
+                # En caso de querer depurar el movimiento de los widgets descomentar la linea de abajo
+                # logging.debug(f"Widget {widget.__class__.__name__} movido a {new_x}, {new_y}")
 
         def stop_move(event):
             self.clear_guides()
@@ -259,31 +349,28 @@ class VirtualWindow(ctk.CTkFrame):
         widget.bind("<ButtonRelease-1>", stop_move)
 
     def add_custom_widget(self, widget):
+        self.save_state()
         """Agrega un widget personalizado a la VirtualWindow."""
         self.add_widget(widget)
 
-    def draw_guides(self, widget, new_x, new_y, show_guides=True, color_exact="green", color_near="red", tolerance=5, snap_range=10):
-        """Draws guide lines on the canvas to assist with alignment and snaps the widget if it's near a guide.
-
-        Args:
-            widget: The widget being moved.
-            new_x: The new x position of the widget.
-            new_y: The new y position of the widget.
-            show_guides: Boolean to show or hide the guides.
-            color_exact: Color of the guides when exactly aligned.
-            color_near: Color of the guides when near alignment.
-            tolerance: Tolerance to consider widgets aligned.
-            snap_range: Range at which the widget snaps when near a guide.
-        """
+    def draw_guides(self, widget, new_x, new_y, show_guides=True, color_exact="green", color_near="red", color_between="red", tolerance=5, snap_range=10):
+        """Dibuja líneas guía en el canvas para ayudar con la alineación y ajusta el widget si está cerca de una guía."""
         if not show_guides:
             return
 
+        self.clear_guides()  # Limpiar guías previas
+        
         widget_width = widget.winfo_width()
         widget_height = widget.winfo_height()
-
-        widget_center_x = new_x + widget_width // 2
-        widget_center_y = new_y + widget_height // 2
-
+        widget_edges = {
+            "left": new_x,
+            "right": new_x + widget_width,
+            "top": new_y,
+            "bottom": new_y + widget_height,
+            "center_x": new_x + widget_width // 2,
+            "center_y": new_y + widget_height // 2
+        }
+        
         for child in self.widgets:
             if child == widget:
                 continue
@@ -292,49 +379,49 @@ class VirtualWindow(ctk.CTkFrame):
             child_y = child.winfo_y()
             child_width = child.winfo_width()
             child_height = child.winfo_height()
-            child_center_x = child_x + child_width // 2
-            child_center_y = child_y + child_height // 2
+            child_edges = {
+                "left": child_x,
+                "right": child_x + child_width,
+                "top": child_y,
+                "bottom": child_y + child_height,
+                "center_x": child_x + child_width // 2,
+                "center_y": child_y + child_height // 2
+            }
 
-            # Define a helper function to draw guide lines
-            def draw_guide(x1, y1, x2, y2, color, condition):
-                if condition:
+            def draw_guide(x1, y1, x2, y2, widget_edge, child_edge):
+                exact = widget_edges[widget_edge] == child_edges[child_edge]
+                near = abs(widget_edges[widget_edge] - child_edges[child_edge]) <= tolerance
+                color = color_exact if exact else color_near if near else None
+                
+                if color:
                     self.create_guide_line(x1, y1, x2, y2, color)
+                    if abs(widget_edges[widget_edge] - child_edges[child_edge]) <= snap_range:
+                        widget_edges[widget_edge] = child_edges[child_edge]
 
-            # Vertical Centering
-            draw_guide(child_center_x, 0, child_center_x, self.winfo_height(), color_exact, widget_center_x == child_center_x)
-            draw_guide(child_center_x, 0, child_center_x, self.winfo_height(), color_near, abs(widget_center_x - child_center_x) <= tolerance)
-            if abs(widget_center_x - child_center_x) <= snap_range:
-                new_x = child_center_x - widget_width // 2
+            # Centrado vertical y horizontal
+            draw_guide(child_edges["center_x"], 0, child_edges["center_x"], self.winfo_height(), "center_x", "center_x")
+            draw_guide(0, child_edges["center_y"], self.winfo_width(), child_edges["center_y"], "center_y", "center_y")
 
-            # Horizontal Centering
-            draw_guide(0, child_center_y, self.winfo_width(), child_center_y, color_exact, widget_center_y == child_center_y)
-            draw_guide(0, child_center_y, self.winfo_width(), child_center_y, color_near, abs(widget_center_y - child_center_y) <= tolerance)
-            if abs(widget_center_y - child_center_y) <= snap_range:
-                new_y = child_center_y - widget_height // 2
+            # Bordes izquierdo, derecho, superior e inferior
+            draw_guide(child_edges["left"], 0, child_edges["left"], self.winfo_height(), "left", "left")
+            draw_guide(child_edges["right"], 0, child_edges["right"], self.winfo_height(), "right", "right")
+            draw_guide(0, child_edges["top"], self.winfo_width(), child_edges["top"], "top", "top")
+            draw_guide(0, child_edges["bottom"], self.winfo_width(), child_edges["bottom"], "bottom", "bottom")
+            
+            # Alineación de esquinas
+            draw_guide(child_edges["left"], child_edges["top"], child_edges["left"], child_edges["top"], "left", "top")
+            draw_guide(child_edges["right"], child_edges["top"], child_edges["right"], child_edges["top"], "right", "top")
+            draw_guide(child_edges["left"], child_edges["bottom"], child_edges["left"], child_edges["bottom"], "left", "bottom")
+            draw_guide(child_edges["right"], child_edges["bottom"], child_edges["right"], child_edges["bottom"], "right", "bottom")
 
-            # Left and Right Edges
-            draw_guide(child_x, 0, child_x, self.winfo_height(), color_exact, new_x == child_x)
-            draw_guide(child_x, 0, child_x, self.winfo_height(), color_near, abs(new_x - child_x) <= tolerance)
-            if abs(new_x - child_x) <= snap_range:
-                new_x = child_x
+            # Líneas guía entre widgets cercanos
+            if abs(widget_edges["center_x"] - child_edges["center_x"]) <= tolerance:
+                self.create_guide_line(child_edges["center_x"], child_edges["top"], child_edges["center_x"], widget_edges["bottom"], color_between)
+            if abs(widget_edges["center_y"] - child_edges["center_y"]) <= tolerance:
+                self.create_guide_line(child_edges["left"], child_edges["center_y"], widget_edges["right"], child_edges["center_y"], color_between)
 
-            draw_guide(child_x + child_width, 0, child_x + child_width, self.winfo_height(), color_exact, new_x + widget_width == child_x + child_width)
-            draw_guide(child_x + child_width, 0, child_x + child_width, self.winfo_height(), color_near, abs(new_x + widget_width - (child_x + child_width)) <= tolerance)
-            if abs(new_x + widget_width - (child_x + child_width)) <= snap_range:
-                new_x = child_x + child_width - widget_width
+        widget.place(x=widget_edges["left"], y=widget_edges["top"])
 
-            # Top and Bottom Edges
-            draw_guide(0, child_y, self.winfo_width(), child_y, color_exact, new_y == child_y)
-            draw_guide(0, child_y, self.winfo_width(), child_y, color_near, abs(new_y - child_y) <= tolerance)
-            if abs(new_y - child_y) <= snap_range:
-                new_y = child_y
-
-            draw_guide(0, child_y + child_height, self.winfo_width(), child_y + child_height, color_exact, new_y + widget_height == child_y + child_height)
-            draw_guide(0, child_y + child_height, self.winfo_width(), child_y + child_height, color_near, abs(new_y + widget_height - (child_y + child_height)) <= tolerance)
-            if abs(new_y + widget_height - (child_y + child_height)) <= snap_range:
-                new_y = child_y + child_height - widget_height
-
-        widget.place(x=new_x, y=new_y)
 
     def create_guide_line(self, x1, y1, x2, y2, color):
         """Crea una línea guía en el canvas."""
@@ -380,12 +467,16 @@ class VirtualWindow(ctk.CTkFrame):
             logging.error(f"Error en la selección de widget: {e}")
 
     def delete_widget(self, widget):
+        remove_remark(self.guide_canvas,widget)
+        self.save_state()
         """Borra un widget del VirtualWindow."""
         widget.destroy()
         self.widgets.remove(widget)
         logging.debug(f"Deleted widget:{widget}")
         
-    def clean_virtual_window(self):
+    def clean_virtual_window(self, save_state=True):
+        if save_state:
+            self.save_state()
         """Limpia el contenido del VirtualWindow."""
         logging.info("Limpiando el contenido del VirtualWindow.")
         try:
@@ -573,10 +664,12 @@ class VirtualWindow(ctk.CTkFrame):
         logging.debug(f"Argumentos de widget extraídos: {widget_args}, Argumentos de ubicación: {placement_args}.")
         return widget_args, placement_args
 
-    def create_and_place_widget(self, widget_type, widget_args, x, y):
+    def create_and_place_widget(self, widget_type, widget_args, x, y, save_state=True):
         """Crea y coloca el widget y actualiza la lista de widgets."""
+        if save_state:
+            self.save_state()
         logging.debug(f"Intentando crear el widget del tipo '{widget_type}' con argumentos: {widget_args}.")
-        if widget := self.create_widget(widget_type, **widget_args):
+        if widget := self.create_widget(widget_type, **widget_args, save_state=save_state):
             self._extracted_from_create_and_place_widget_5(widget, x, y)
             logging.info(f"Widget del tipo '{widget_type}' ubicado en ({x}, {y}).")
         else:
@@ -587,3 +680,30 @@ class VirtualWindow(ctk.CTkFrame):
         self.make_widget_movable(widget)
         self.make_widget_selectable(widget)
         self.widgets.append(widget)
+
+    def export_to_json(self, filename):
+        data = []
+        for widget in self.widgets:
+            widget_data = {
+                "type": widget.__class__.__name__,
+                "properties": {prop: widget.cget(prop) for prop in global_properties[widget.__class__.__name__]},
+                "x": widget.winfo_x(),
+                "y": widget.winfo_y()
+            }
+            data.append(widget_data)
+        
+        with open(f"{filename}.json", "w") as f:
+            json.dump(data, f, indent=4)
+
+    def import_from_json(self, filename):
+        self.clean_virtual_window()
+        with open(f"{filename}.json", "r") as f:
+            data = json.load(f)
+        
+        for widget_data in data:
+            widget_type = widget_data["type"]
+            widget_properties = widget_data["properties"]
+            x = widget_data.get("x")
+            y = widget_data.get("y")
+
+            self.create_and_place_widget(widget_type, widget_properties, x=x, y=y)

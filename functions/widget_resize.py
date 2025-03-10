@@ -100,3 +100,14 @@ def enable_resizable_highlight(canvas, widget, left_sidebar, color="blue"):
             draw_remark()
 
     widget.bind("<Button-3>", toggle_remark)
+
+def remove_remark(canvas, widget):
+    """Elimina el remarco del widget."""
+    if getattr(widget, "_highlight_id", None):
+        canvas.delete(widget._highlight_id)
+        widget._highlight_id = None
+
+    if hasattr(widget, "_resize_handles"):
+        for handle_id in widget._resize_handles:
+            canvas.delete(handle_id)
+        widget._resize_handles = [] 
