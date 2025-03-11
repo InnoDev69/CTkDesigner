@@ -576,7 +576,6 @@ class Toolbar(ctk.CTkFrame):
         # Checkbox para incluir comentarios
         include_comments = ctk.CTkCheckBox(scroll_frame, text='Incluir Comentarios')
         include_comments.pack(anchor="w", padx=20, pady=5)
-        #include_comments.set(app.config_manager.get("Export", "include_comments", fallback=False))
 
         # Selector de color de fondo
         ctk.CTkLabel(scroll_frame, text='Color de fondo:').pack(anchor="w", padx=20, pady=5)
