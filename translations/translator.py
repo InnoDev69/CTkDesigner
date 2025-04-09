@@ -20,6 +20,17 @@ class Translator:
     def translate(self, key):
         return self.languages[self.current_language].get(key, key)
     
+    def translate_with_vars(self, key, variables):
+        """
+        Traduce una cadena con variables.
+        
+        :param key: La clave de la cadena de formato en el diccionario de traducciones.
+        :param variables: Un diccionario de variables para formatear la cadena.
+        :return: La cadena traducida y formateada.
+        """
+        translated_string = self.translate(key)
+        return translated_string.format(**variables)
+    
     def find_key_by_value(self, target_value):
         """
         Encuentra la clave asociada a un valor específico en el idioma dado.

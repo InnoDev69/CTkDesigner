@@ -20,7 +20,7 @@ logging.basicConfig(
 )
 
 class VirtualWindow(ctk.CTkFrame):
-    def __init__(self, parent, left_sidebar, app, parameters_dict:dict,width=800, height=500):
+    def __init__(self, parent, left_sidebar, app, parameters_dict:dict=None,width=800, height=500):
         super().__init__(parent, width=int(width), height=int(height), bg_color="lightgrey", fg_color="white")
         self.left_sidebar = left_sidebar
         self.app = app
@@ -39,7 +39,7 @@ class VirtualWindow(ctk.CTkFrame):
         self.pack_propagate(False)
         self.make_widget_selectable(self)
         self.make_widget_selectable(self.guide_canvas)
-        logging.info(f"VirtualWindow inicializada con dimensiones {self.cget('width')}x{self.cget('height')} y canvas configurado.")
+        logging.info(self.app.translator.translate_with_vars("VIRTUAL_WINDOW_INITIALIZED", {"width":width, "height":height}))
         
     def export_to_image(self, filename="virtual_window.png"):
         """Genera una imagen de la VirtualWindow con todos los widgets, bordes y esquinas redondeadas."""
@@ -153,7 +153,7 @@ class VirtualWindow(ctk.CTkFrame):
         if widget := self.create_widget(widget_type, **kwargs):
             self._extracted_from_create_and_place_widget_5(widget, self.cget("width") / 2 - widget.cget("width") / 2 
                                                            , self.cget("height") / 2 - widget.cget("height")/2)
-            logging.info(f"Widget de tipo '{widget_type}' agregado en posición inicial {widget.cget('width')} {widget.cget('height')}")
+            logging.info(self.app.translator.translate_with_vars("WIDGET_ADDED", {"widget_type":widget_type, "x":widget.winfo_x(), "y":widget.winfo_y()}))
         else:
             logging.warning(f"Fallo al agregar widget de tipo '{widget_type}'.")
 
@@ -164,7 +164,7 @@ class VirtualWindow(ctk.CTkFrame):
         logging.debug(f"Creando widget de tipo '{widget_type}' con argumentos: {kwargs}.")
         if widget_class := widget_classes.get(widget_type):
             widget = widget_class(self, **kwargs)
-            logging.info(f"Widget '{widget_type}' creado con éxito.")
+            logging.info(self.app.translator.translate_with_vars("WIDGET_CREATED", {"widget_type":widget_type}))
             return widget
         logging.error(f"'{widget_type}' no es un tipo de widget válido.")
         return None
@@ -174,7 +174,6 @@ class VirtualWindow(ctk.CTkFrame):
         """Agrega un widget al VirtualWindow con los argumentos proporcionados."""
         logging.debug(f"Agregando widget de tipo '{widget.__class__.__name__}' con argumentos: {kwargs}.")
         self.add_widget(widget.__class__.__name__, **kwargs)
-        logging.info(f"Widget de tipo '{widget.__class__.__name__}' agregado en posición inicial {widget.cget('width')} {widget.cget('height')}")
     
     def toggle_visibility(self):
         """Alterna la visibilidad de todos los widgets dentro de la VirtualWindow."""
@@ -184,13 +183,13 @@ class VirtualWindow(ctk.CTkFrame):
                     x, y = self._original_positions[widget]
                     widget.place(x=x, y=y)
             self._is_hidden = False
-            logging.info("Widgets desocultados.")
+            logging.info(self.app.translator.translate_with_vars("WIDGETS_SHOWN", {"count":len(self.widgets)}))
         else:
             for widget in self.widgets:
                 self._original_positions[widget] = (widget.winfo_x(), widget.winfo_y())
                 widget.place_forget()
             self._is_hidden = True
-            logging.info("Widgets ocultados.")
+            logging.info(self.app.translator.translate_with_vars("WIDGETS_HIDDEN", {"count":len(self.widgets)}))
         return self._is_hidden
     
     def previsualize_code(self):
@@ -243,11 +242,10 @@ class VirtualWindow(ctk.CTkFrame):
     def create_initial_lines(self, window_params_string):
         """Creates the initial lines of the exported code."""
         logging.debug("Creating initial lines...")
-        heredate = "class App(ctk.CTk):" if self.parameters_dict.get('is_scene_manager') else "class App(ctk.CTk):"
-        logging.info("Applying inheritance from Base Scene" if self.parameters_dict.get('is_scene_manager') else "Not using Base Scene")
+        heredate = "class App(ctk.CTk):"
 
         return [
-            "# Auto-generated code from a VirtualWindow",
+            *(['# Auto-generated code from a VirtualWindow'] if bool(self.app.config_manager.get("Export", "include_comments")) else ""),
             "import customtkinter as ctk",
             "",
             heredate,
@@ -256,7 +254,7 @@ class VirtualWindow(ctk.CTkFrame):
             f"        self.geometry('{self.winfo_width()}x{self.winfo_height()}')",
             "        self.title('Exported Virtual Window')",
             "",
-            f"        self.resizable({bool(self.parameters_dict.get('is_resizable'))},{bool(self.parameters_dict.get('is_resizable'))})",
+            f"        self.resizable({bool(self.app.config_manager.get('Export', 'resizable'))},{bool(self.app.config_manager.get('Export','resizable'))})",
             f"        self.virtual_window = ctk.CTkFrame(self, {window_params_string})",
             "        self.virtual_window.pack(expand=True, fill='both')",
             "        self.generic_widget_creator()",
@@ -270,24 +268,26 @@ class VirtualWindow(ctk.CTkFrame):
         font_pattern_ = re.compile(r'font\d{1,3}')
 
         total_widgets = len(self.widgets)
-        for i, widget in enumerate(self.widgets):
-            widget_type = widget.__class__.__name__
-            widget_params = global_properties.get(widget.__class__.__name__)
+        if total_widgets != 0:
+            for i, widget in enumerate(self.widgets):
+                widget_type = widget.__class__.__name__
+                widget_params = global_properties.get(widget.__class__.__name__)
 
-            x = widget.winfo_x()
-            y = widget.winfo_y()
+                x = widget.winfo_x()
+                y = widget.winfo_y()
 
-            params_string = self.get_widget_params_string(widget, widget_params, font_pattern, font_pattern_)
-            print(self.left_sidebar.widget_dict.values())
-            if widget._name in self.left_sidebar.widget_dict:
-                logging.info("Exporting: Utilizing name for widget ")
-                lines.append(f"        self.{self.left_sidebar.widget_dict[widget._name]} = ctk.{widget_type}(self.virtual_window, {params_string})")
-                lines.append(f"        self.{self.left_sidebar.widget_dict[widget._name]}.place(x={x}, y={y})")
-            else:
-                lines.append(f"        ctk.{widget_type}(self.virtual_window, {params_string}).place(x={x}, y={y})")
-            self.app.cross_update_progressbar(0.2 + (0.6 * (i + 1) / total_widgets))
-            self.update_idletasks()
-
+                params_string = self.get_widget_params_string(widget, widget_params, font_pattern, font_pattern_)
+                if widget._name in self.left_sidebar.widget_dict:
+                    logging.info("Exporting: Utilizing name for widget ")
+                    lines.append(f"        self.{self.left_sidebar.widget_dict[widget._name]} = ctk.{widget_type}(self.virtual_window, {params_string})")
+                    lines.append(f"        self.{self.left_sidebar.widget_dict[widget._name]}.place(x={x}, y={y})")
+                else:
+                    lines.append(f"        ctk.{widget_type}(self.virtual_window, {params_string}).place(x={x}, y={y})")
+                self.app.cross_update_progressbar(0.2 + (0.6 * (i + 1) / total_widgets))
+                self.update_idletasks()
+        else:
+            lines.append("        pass")
+            logging.warning("No widgets to export.")
     def get_widget_params_string(self, widget, widget_params, font_pattern, font_pattern_):
         """Retrieves the widget parameters as a formatted string."""
         params = []

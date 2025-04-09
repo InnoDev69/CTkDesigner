@@ -87,3 +87,6 @@ widget_classes = {
             "CTkFrame": ctk.CTkFrame,
             "Canvas": ctk.CTkCanvas,
         }
+
+# Commands variables
+event_registry = {}

@@ -1,5 +1,5 @@
 import customtkinter as ctk
-
+from data.variable import *
 def cmd_hello(_):
     print("Hello, Custom Console!")
 
@@ -121,6 +121,35 @@ def cmd_debug_undo_stack(app):
 def cmd_debug_redo_stack(app):
     print(app.virtual_window.redo_stack)
 
+# Función para registrar eventos
+def register_event(widget, sequence, callback):
+    """
+    Registra un evento vinculado a un widget.
+    
+    Args:
+        widget: El widget al que se vincula el evento
+        sequence: La secuencia del evento (ej. "<Button-1>")
+        callback: La función de callback
+    """
+    if widget not in event_registry:
+        event_registry[widget] = {}
+    
+    event_registry[widget][sequence] = callback
+    
+    # Realiza la vinculación real
+    widget.bind(sequence, callback)
+
+# Función para mostrar eventos registrados
+def display_registered_events(_):
+    """
+    Muestra todos los eventos registrados en la consola.
+    """
+    for widget, events in event_registry.items():
+        if events:
+            print(f"Widget: {widget}")
+            for event, callback in events.items():
+                print(f"  Evento: {event}, Callback: {callback}")
+
 # Diccionario de comandos
 COMMAND_MAP = {
     "hello": cmd_hello,
@@ -145,4 +174,5 @@ COMMAND_MAP = {
     "debug_undo_stack": cmd_debug_undo_stack,
     "debug_redo_stack": cmd_debug_redo_stack,
     "export_img": cmd_export_img,
+    "inspect_events": display_registered_events,
 }

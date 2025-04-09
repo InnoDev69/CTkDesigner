@@ -7,7 +7,6 @@ import logging
 import tkinter.ttk as ttk
 from data.commands import *
 import customtkinter as ctk
-from data.variable import *
 from objects.tooltip import *
 from tkinter import filedialog
 from functions.generic import *
@@ -131,7 +130,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
         widget.focus_set()
         widget_properties = global_properties
         widget_type = widget.__class__.__name__
-        logging.info(f"Mostrando configuración para widget: {widget_type}")
+        logging.info(f"{app.translator.translate('USER_SHOW_WIDGET_CONFIG')} {widget_type}")
         logging.debug(get_class_parameters(widget.__class__)[1:])
         if widget.__class__.__name__ not in widget_classes:
             self.create_property_entries(widget, get_class_parameters(widget.__class__)[1:])
@@ -194,16 +193,18 @@ class LeftSidebar(ctk.CTkScrollableFrame):
                 "<KeyRelease>",
                 lambda event: self.update_property(widget, prop, entry, tooltip)
             )
-            logging.info(f"Entry '{prop}' del widget '{widget.__class__.__name__}' creada.")
+            logging.info(app.translator.translate_with_vars("USER_ENTRY_CREATED", {"prop": prop, "widget_class": widget.__class__.__name__}))
         except ValueError as e:
             logging.error(f"Error al obtener valor de '{prop}' del widget '{widget.__class__.__name__}': {e}")
         except Exception as e:
             logging.error(f"Error inesperado al crear la entrada para '{prop}': {e}")
 
-    def update_property(self, widget:object, prop:str, entry:object, tooltip:object):
-        """Update a widget property based on entry value.
+    def update_property(self, widget: object, prop: str, entry: object, tooltip: object):
+        """
+        Update a widget property based on entry value.
 
-        Attempts to update the specified property of the widget with the value from the entry.  Handles special cases for font and VirtualWindow fg_color.  Displays an error tooltip if the update fails.
+        Attempts to update the specified property of the widget with the value from the entry.
+        Handles special cases for font and VirtualWindow fg_color. Displays an error tooltip if the update fails.
 
         Args:
             widget: The widget.
@@ -211,21 +212,31 @@ class LeftSidebar(ctk.CTkScrollableFrame):
             entry: The entry widget.
             tooltip: The tooltip for error messages.
         """
-
         tooltip.hide()
-        type_of_property = str if prop == "text_color" else type(widget.cget(prop))
-        logging.info(f"Type of property:{type_of_property}\n Value: {entry.get()}")
         try:
+            # Obtener el valor actual de la propiedad
+            current_value = widget.cget(prop)
+            new_value = entry.get().strip()
+
+            # Verificar si el valor ha cambiado
+            if str(current_value) == new_value:
+                logging.debug(f"No se requiere actualización para '{prop}'. El valor no ha cambiado.")
+                return
+
+            # Determinar el tipo de la propiedad
+            type_of_property = str if prop == "text_color" else type(current_value)
+            logging.info(app.translator.translate_with_vars("USER_PROP_TYPE", {"type_of_property": type_of_property, "entry": new_value}))
+
+            # Actualizar la propiedad
             if prop == "font":
                 self.update_font_property(widget, entry)
-                return
-            if widget.__class__.__name__ == "VirtualWindow" and prop == "fg_color":
-                widget.configure(**{prop: type_of_property(entry.get())})
-                widget.guide_canvas.config(bg=entry.get())
+            elif widget.__class__.__name__ == "VirtualWindow" and prop == "fg_color":
+                widget.configure(**{prop: type_of_property(new_value)})
+                widget.guide_canvas.config(bg=new_value)
             else:
-                new_value = entry.get().strip() # Ahora con eso deberia de solucionar varios errores
                 widget.configure(**{prop: new_value})
-            logging.info(f"Propiedad '{prop}' del widget '{widget.__class__.__name__}' actualizada a: {entry.get()}")
+
+            logging.info(app.translator.translate_with_vars("USER_PROP_UPDATED", {"prop": prop, "widget": widget, "entry": new_value}))
             entry.configure(border_color="#565B5E")
         except Exception as e:
             logging.error(f"Error al actualizar '{prop}': {e}. Valor ingresado: {entry.get()}")
@@ -240,7 +251,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
             raise ValueError(f"El valor '{font_value}' no es válido para 'font'. Formato esperado: 'Arial 20'")
         font_name, font_size = font_parts[0], int(font_parts[1])
         widget.configure(font=(font_name, font_size))
-        logging.info(f"Propiedad 'font' actualizada a: ({font_name}, {font_size})")
+        logging.info(app.translator.translate_with_vars("USER_PROP_FONT_UPDATED", {"font_name": font_name, "font_size": font_size}))
 
     def create_position_entries(self, widget:object):
         """Create position entries for the widget.
@@ -299,7 +310,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
 
         var_name = widget_var.get()
         if self.update_variable_name(widget, widget_var):
-            logging.info("Variable de widget actualizada.")
+            logging.info(app.translator.translate("USER_VAR_UPDATED"))
         else:
             corrected_var_name = ''.join(filter(str.isalpha, var_name))
             widget_var.delete(0, 'end')
@@ -360,7 +371,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
             new_x = int(x_entry.get())
             new_y = int(y_entry.get())
             widget.place(x=new_x, y=new_y)
-            logging.info(f"Posición actualizada a: ({new_x}, {new_y})")
+            logging.info(app.translator.translate_with_vars("USER_POS_UPDATED", {"new_x": new_x, "new_y": new_y}))
         except ValueError:
             logging.warning("Posición inválida. Por favor, ingresa valores numéricos.")
 
@@ -430,7 +441,7 @@ class RightSidebar(ctk.CTkScrollableFrame):
             title="Selecciona un archivo",
             filetypes=[("Archivos Python", "*.py"), ("Todos los archivos", "*.*")]
         ))
-        logging.info(f"Detalles de widget a importar: {widget}")
+        logging.info(app.translator.translate_with_vars("USER_WIDGET_DETAILS", {"widget": widget}))
         app.virtual_window._extracted_from_create_and_place_widget_5(widget[0](self.virtual_window), 100, 100)
 
     def check_widget(self, widget:object):
@@ -531,30 +542,39 @@ class Toolbar(ctk.CTkFrame):
 
     def create_config_widgets(self, config_window):
         """Crea los widgets de configuración en una ventana con scrollbar."""
-
+        #config_window.resizable(False, False)
         def apply_config():
             """Aplica y guarda los cambios de configuración."""
-            app.config_manager.set("General", "language", language.get())
             app.config_manager.set("General", "theme", theme.get())
             app.config_manager.set("Export", "format", export_format.get())
             app.config_manager.set("Export", "include_comments", include_comments.get())
+            app.config_manager.set("Export", "resizable", is_resizable.get())
 
             # Aplicar directamente en la UI
-            app.switch_language(language.get())
-            app.virtual_window.configure(fg_color=bg_color.get())
-            app.virtual_window.configure(corner_radius=int(corner_radius.get()))
-            app.virtual_window.configure(opacity=float(opacity_slider.get()))
+            # app.switch_language(language.get())
+            # No es para nada practico y es muy propenso a tener bugs
 
-            msg = CTkMessagebox(
-                title="Save", message="Para ver algunos cambios debe reiniciar la aplicación.",
-                icon="question", option_1="Cancelar", option_2="No", option_3="Sí"
-            )
-            if msg.get() == "Sí":
-                app.destroy()
+            if str(app.config_manager.get("General", "language")) != str(language.get()):
+                app.config_manager.set("General", "language", language.get()) # Se aplica aqui el cambio de idioma para actualizar bien el cambio
+                msg = CTkMessagebox(
+                    title="Save", message="Para ver algunos cambios debe reiniciar la aplicación.",
+                    icon="question", option_1="Cancelar", option_2="No", option_3="Sí"
+                )
+                if msg.get() == "Sí":
+                    app.destroy()
+            logging.info(app.translator.translate("USER_CONFIG_SAVED"))
 
-        # Crear ScrollableFrame
+        def select_value(widget, value:int):
+            if value == 1:
+                widget.select()
+            else:
+                widget.deselect()
+
+        # ScrollableFrame
         scroll_frame = ctk.CTkScrollableFrame(config_window, width=380, height=280)
         scroll_frame.pack(expand=True, fill="both", padx=10, pady=10)
+
+        ctk.CTkLabel(scroll_frame, text="Language").pack(anchor="center", padx=20, pady=5)
 
         # Configuración de idioma y tema
         ctk.CTkLabel(scroll_frame, text='Idioma:').pack(anchor="w", padx=20, pady=5)
@@ -562,10 +582,16 @@ class Toolbar(ctk.CTkFrame):
         language.pack(fill="x", padx=20, pady=5)
         language.set(app.config_manager.get("General", "language"))
 
+        ttk.Separator(scroll_frame, orient="horizontal").pack(fill="x", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text="Personalization").pack(anchor="center", padx=20, pady=5)
+
         ctk.CTkLabel(scroll_frame, text='Tema:').pack(anchor="w", padx=20, pady=5)
         theme = ctk.CTkComboBox(scroll_frame, values=['dark-blue', 'light'], state='readonly')
         theme.pack(fill="x", padx=20, pady=5)
         theme.set(app.config_manager.get("General", "theme"))
+
+        ttk.Separator(scroll_frame, orient="horizontal").pack(fill="x", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text="Exportation").pack(anchor="center", padx=20, pady=5)
 
         # Selector de formato de exportación
         ctk.CTkLabel(scroll_frame, text='Formato de Exportación:').pack(anchor="w", padx=20, pady=5)
@@ -573,30 +599,18 @@ class Toolbar(ctk.CTkFrame):
         export_format.pack(fill="x", padx=20, pady=5)
         export_format.set(app.config_manager.get("Export", "format", fallback='py'))
 
+        # Checkbox para definir el resizable
+        is_resizable = ctk.CTkCheckBox(scroll_frame, text=app.translator.translate("RESIZABLE"))
+        is_resizable.pack(anchor="w", padx=20, pady=5)
+        select_value(is_resizable, app.config_manager.get("Export", "resizable"))
+
         # Checkbox para incluir comentarios
         include_comments = ctk.CTkCheckBox(scroll_frame, text='Incluir Comentarios')
         include_comments.pack(anchor="w", padx=20, pady=5)
-
-        # Selector de color de fondo
-        ctk.CTkLabel(scroll_frame, text='Color de fondo:').pack(anchor="w", padx=20, pady=5)
-        bg_color = ctk.CTkEntry(scroll_frame, width=100)
-        bg_color.insert(0, app.virtual_window.cget("fg_color"))
-        bg_color.pack(fill="x", padx=20, pady=5)
-
-        # Configurar bordes redondeados
-        ctk.CTkLabel(scroll_frame, text='Esquinas Redondeadas:').pack(anchor="w", padx=20, pady=5)
-        corner_radius = ctk.CTkEntry(scroll_frame, width=50)
-        corner_radius.insert(0, app.virtual_window.cget("corner_radius"))
-        corner_radius.pack(fill="x", padx=20, pady=5)
-
-        # Slider de opacidad/transparencia
-        ctk.CTkLabel(scroll_frame, text='Opacidad:').pack(anchor="w", padx=20, pady=5)
-        opacity_slider = ctk.CTkSlider(scroll_frame, from_=0.1, to=1.0, number_of_steps=10)
-        opacity_slider.set(1.0)
-        opacity_slider.pack(fill="x", padx=20, pady=5)
+        select_value(include_comments, app.config_manager.get("Export", "include_comments"))
 
         # Botón para aplicar cambios
-        ctk.CTkButton(scroll_frame, text='Aplicar cambios', command=apply_config).pack(pady=10)
+        ctk.CTkButton(scroll_frame, text='Aplicar cambios', command=apply_config).pack(pady=40)
 
         # Botón para restaurar valores por defecto
         def reset_defaults():
@@ -604,14 +618,9 @@ class Toolbar(ctk.CTkFrame):
             theme.set('dark-blue')
             export_format.set('py')
             include_comments.deselect()
-            bg_color.delete(0, "end")
-            bg_color.insert(0, "#FFFFFF")
-            corner_radius.delete(0, "end")
-            corner_radius.insert(0, "10")
-            opacity_slider.set(1.0)
+            apply_config()
 
-        ctk.CTkButton(scroll_frame, text='Restablecer Valores', command=reset_defaults).pack(pady=5)
-
+        ctk.CTkButton(scroll_frame, text='Restablecer Valores', command=reset_defaults).pack()
 
     def open_config_window(self):
         """Abre la ventana de configuraciones si no está ya abierta."""
@@ -774,7 +783,6 @@ class App(ctk.CTk):
         self.create_title_label()
         self.create_window_configuration_labels()
         self.create_entry_fields()
-        self.create_checkboxes()
         self.create_action_buttons()
 
     def create_title_label(self):
@@ -797,10 +805,6 @@ class App(ctk.CTk):
         entry = ctk.CTkEntry(self.virtual_window, textvariable=text_var, validate="key", validatecommand=(validate_command, "%P"), placeholder_text=text_var.get(), **self.ENTRY_STYLE)
         entry.grid(row=row, column=1, sticky="w", padx=(10, 30), pady=10)
 
-    def create_checkboxes(self):
-        self.is_resizable = ctk.CTkCheckBox(self.virtual_window, text=self.translator.translate("RESIZABLE"), **self.CHECKBOX_STYLE)
-        self.is_resizable.grid(row=4, column=0, columnspan=2, sticky="w", padx=30, pady=10)
-
     def create_action_buttons(self):
         ctk.CTkButton(self.virtual_window, text=self.translator.translate("CREATE_PROJECT"), command=self.create_project, font=self.LABEL_FONT, **BUTTON_STYLE).grid(row=8, column=0, columnspan=2, sticky="se", padx=30, pady=30)
         ctk.CTkButton(self.virtual_window, text=self.translator.translate("IMPORT_PROJECT"), command=lambda: self.create_project(True), font=self.LABEL_FONT, **BUTTON_STYLE).grid(row=8, column=4, columnspan=2, sticky="se", padx=30, pady=30)
@@ -809,23 +813,20 @@ class App(ctk.CTk):
         self.import_proyect = import_proyect
         height = self.hvar.get()
         width = self.wvar.get()
-        options = {
-            "is_resizable": self.is_resizable.get(),
-        }
-        logging.info(f"Creando proyecto - Altura: {height}, Anchura: {width}, Opciones: {options}")
-        self.clear_virtual_window(height, width, options)
+        logging.info(app.translator.translate_with_vars("USER_PROYECT_DETAILS", {"height": height, "width": width}))
+        self.clear_virtual_window(height, width)
 
-    def clear_virtual_window(self, h:int, w:int, bools:dict):
+    def clear_virtual_window(self, h:int, w:int):
         """Elimina todos los widgets dentro de self.virtual_window en el contexto del Menu."""
         if h.isdigit() and w.isdigit():
             for widget in self.virtual_window.winfo_children():
                 widget.destroy()
             self.virtual_window.destroy()
-            self.create_ui(h, w, bools)
+            self.create_ui(h, w)
         else:
             logging.warning("Altura o anchura no válidas.")
 
-    def create_ui(self, vw_height:int, vw_width:int, bools:dict):
+    def create_ui(self, vw_height:int, vw_width:int):
         self.resizable(True, True)
         self.left_sidebar = LeftSidebar(self)
         self.left_sidebar.grid(row=0, column=0, sticky="nsew")
@@ -833,7 +834,7 @@ class App(ctk.CTk):
         self.central_canvas = ctk.CTkCanvas(self, bg="black")
         self.central_canvas.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
-        self.virtual_window = VirtualWindow(self.central_canvas, self.left_sidebar, self, bools, width=vw_width, height=vw_height)
+        self.virtual_window = VirtualWindow(self.central_canvas, self.left_sidebar, self, width=vw_width, height=vw_height)
         self.virtual_window_id = self.central_canvas.create_window((50, 50), anchor="nw", window=self.virtual_window)
 
         self.central_canvas.configure(scrollregion=self.central_canvas.bbox("all"))
@@ -846,15 +847,6 @@ class App(ctk.CTk):
 
         if self.toolbar.initialize_on_import:
             self.toolbar.import_from_file()
-
-        #self.central_canvas.bind("<MouseWheel>", self.zoom_canvas)
-        #self.central_canvas.bind("<ButtonPress-1>", self.start_pan)
-        #self.central_canvas.bind("<B1-Motion>", self.pan_canvas)
-
-        self.scale_factor = 1.1
-        self.current_scale = 1.0
-        self.last_x = 0
-        self.last_y = 0
 
     def view_code(self):
         if self.virtual_window.toggle_visibility():
@@ -906,7 +898,7 @@ class App(ctk.CTk):
                         continue
     
     def inter_add_widget(self, widget: object):
-        kwargs_dict = {}  # Crea un diccionario vacío
+        kwargs_dict = {}  # Crea un diccionario vacio
         for prop in global_properties[widget.__class__.__name__]:
             try:
                 # Obtiene el valor de la propiedad y la añade al diccionario
@@ -963,11 +955,10 @@ class App(ctk.CTk):
 
             if command in COMMAND_MAP:
                 try:
-                    # Llama a la funcion correspondiente pasando 'app', 'console' o 'output_textbox' si es necesario
                     if command in ["clear", "exit"]:
                         COMMAND_MAP[command](console if command == "exit" else output_textbox)
                     elif command in ["list_widgets", "show_config", "undo", "redo", "debug_widgets", "clean_widgets", "debug_undo_stack",
-                                    "debug_redo_stack", "export_img"]:
+                                    "debug_redo_stack", "export_img", "inspect_events"]:
                         COMMAND_MAP[command](app)
                     elif command in ["change_theme", "change_language", "save_project", "load_project",
                                     "show_widget_info", "run_code", "export_json", "import_json"]:
@@ -996,8 +987,8 @@ class App(ctk.CTk):
             nonlocal custom_command_active, input_entry_tooltip
             text = input_entry.get()
             custom_command_active = text.startswith("$")
-            # Deberia terminar esto en un futuro, se supone seria un mini menu de 
-            # ayuda para visualizar los comandos
+            """ Deberia terminar esto en un futuro, se supone seria un mini menu de 
+            ayuda para visualizar los comandos"""
             if custom_command_active and False:
                 input_entry_tooltip.show()
                 input_entry_tooltip.configure(message="help")
