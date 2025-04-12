@@ -7,7 +7,7 @@ import logging
 import tkinter.ttk as ttk
 from data.commands import *
 import customtkinter as ctk
-from objects.tooltip import *
+from functions.sidebars_utils import *
 from tkinter import filedialog
 from functions.generic import *
 from functions.import_widget import *
@@ -126,7 +126,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
         Args:
             widget: The widget to configure.
         """
-        self.clear_config_space()
+        clear_widgets(self.config_space)
         widget.focus_set()
         widget_properties = global_properties
         widget_type = widget.__class__.__name__
@@ -144,60 +144,14 @@ class LeftSidebar(ctk.CTkScrollableFrame):
         self.width_entry.delete(0, "end")
         self.height_entry.insert(0,int(h))
         self.width_entry.insert(0,int(w))
+    
+    def create_property_entries(self, widget: object, properties: list):
+        if not hasattr(self, "property_entries"):
+            self.property_entries = {}
 
-    def clear_config_space(self):
-        """Clear the configuration space.
-
-        Removes all child widgets from the configuration space frame.
-        """
-
-        for child in self.config_space.winfo_children():
-            child.destroy()
-
-    def create_property_entries(self, widget:object, properties:list):
-        """Create property entries for the widget.
-
-        Creates and displays labeled entry widgets for each of the specified properties of the widget.  A label indicating the widget type is also displayed.
-
-        Args:
-            widget: The widget.
-            properties: The properties to create entries for.
-        """
-        ctk.CTkLabel(self.config_space, text=f"{app.translator.translate('TYPE_TEXT_WIDGET_LABEL')} {widget.__class__.__name__}").pack(pady=self.PADDING)
-        for prop in properties:
-            self.create_property_entry(widget, prop)
-
-    def create_property_entry(self, widget: object, prop: str):
-        """Create a single property entry with a dynamic name based on the property.
-
-        Args:
-            widget: The widget.
-            prop: The property name.
-        """
-        try:
-            widget.cget(prop)
-            ctk.CTkLabel(self.config_space, text=f"{prop.capitalize()}:").pack()
-            entry = ctk.CTkEntry(self.config_space)
-            entry.insert(0, str(widget.cget(prop)))
-            entry.pack()
-
-            if not hasattr(self, "property_entries"):
-                self.property_entries = {}
-
-            self.property_entries[prop] = entry
-            setattr(self, f"{prop}_entry", entry)
-
-            tooltip = CTkToolTip(entry, "")
-            tooltip.hide()
-            entry.bind(
-                "<KeyRelease>",
-                lambda event: self.update_property(widget, prop, entry, tooltip)
-            )
-            logging.info(app.translator.translate_with_vars("USER_ENTRY_CREATED", {"prop": prop, "widget_class": widget.__class__.__name__}))
-        except ValueError as e:
-            logging.error(f"Error al obtener valor de '{prop}' del widget '{widget.__class__.__name__}': {e}")
-        except Exception as e:
-            logging.error(f"Error inesperado al crear la entrada para '{prop}': {e}")
+        self.property_entries.update(
+            create_property_entries(self.config_space, widget, properties, self.update_property, self.property_entries)
+        )
 
     def update_property(self, widget: object, prop: str, entry: object, tooltip: object):
         """
@@ -403,7 +357,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
 
         if widget.__class__.__name__ != 'VirtualWindow':
             app.virtual_window.delete_widget(widget)
-            self.clear_config_space()
+            clear_widgets(self.config_space)
             app.cross_update_treeview()
         else:
             logging.error("No se puede borrar la virtual window")
@@ -496,13 +450,9 @@ class RightSidebar(ctk.CTkScrollableFrame):
         return hierarchy
 
     def update_treeview(self):
-        """Actualiza el esquema del TreeView basándose en la jerarquía detectada automáticamente."""
+        """Actualiza el esquema del TreeView basado en la jerarquía detectada automáticamente."""
         widget_hierarchy = self.detect_hierarchy()
-        self.tree.delete(*self.tree.get_children())
-        self.widget_tree.clear()
-
-        for widget, parent_widget in widget_hierarchy:
-            self.insert_widget_into_tree(widget, parent_widget)
+        update_treeview(self.tree, widget_hierarchy, self.widget_tree)
 
     def insert_widget_into_tree(self, widget:object, parent_widget:object):
         widget_name = widget._name if hasattr(widget, "_name") else widget.__class__.__name__
@@ -549,10 +499,6 @@ class Toolbar(ctk.CTkFrame):
             app.config_manager.set("Export", "format", export_format.get())
             app.config_manager.set("Export", "include_comments", include_comments.get())
             app.config_manager.set("Export", "resizable", is_resizable.get())
-
-            # Aplicar directamente en la UI
-            # app.switch_language(language.get())
-            # No es para nada practico y es muy propenso a tener bugs
 
             if str(app.config_manager.get("General", "language")) != str(language.get()):
                 app.config_manager.set("General", "language", language.get()) # Se aplica aqui el cambio de idioma para actualizar bien el cambio
@@ -642,7 +588,6 @@ class Toolbar(ctk.CTkFrame):
         self.create_button("Code preview", self.change_view, side="right")
         self.create_button(app.translator.translate("TOOLBAR_BUTTON_CONFIG"),self.open_config_window, side="right")
         self.create_button(app.translator.translate("CONSOLE_BUTTON_TEXT"), self.open_console, side="right")
-        #self.create_button("Importar desde .py", self.import_from_file, side="right")
     
     def open_console(self):
         """Abre la consola de la aplicación."""
