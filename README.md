@@ -1,74 +1,98 @@
-# CTkDesigner
+# CTkDesigner - GUI Builder para CustomTkinter 🎨
 
-CTkDesigner is a graphical user interface (GUI) design tool built with Python and CustomTkinter. It allows users to create, customize, and export GUI layouts visually, making it easier to design interfaces for CustomTkinter applications.
+## Descripción General
+**CTkDesigner** es una herramienta visual para crear interfaces gráficas de usuario (GUI) utilizando la biblioteca **CustomTkinter**. Se enfoca en simplificar el proceso de desarrollo de aplicaciones gráficas en Python, permitiendo diseñar interfaces de manera visual e intuitiva.
 
-![image](https://github.com/user-attachments/assets/826642e4-ec81-43ab-9554-06b217e20ccb)
+## Características Principales 🌟
 
-## Features
+### 1. Diseño Visual
+- **Editor Visual**: Interfaz *drag-and-drop* para colocar widgets.
+- **Previsualización en Tiempo Real**: Cambios visibles instantáneamente.
+- **Gestión de Widgets**: Panel lateral con todos los widgets disponibles.
+- **Árbol de Jerarquía**: Visualización estructurada de componentes.
 
-- Visual GUI builder for CustomTkinter
-- Drag-and-drop widget placement
-- Real-time property editing
-- Hierarchical widget view
-- Code preview and export functionality
-- Project import and export
+### 2. Personalización 🎨
+- **Editor de Propiedades**:
+  - Modificación de atributos de widgets.
+  - Configuración de estilos.
+  - Ajuste de dimensiones y posiciones.
+  - Personalización de fuentes y colores.
 
-## Description
+### 3. Funcionalidades Avanzadas ⚙️
+- **Sistema de Traducción**:
+  - Soporte multilenguaje (ES/EN).
+  - Traducción dinámica de la interfaz.
 
-CTkDesigner is oriented towards developers who want to create CustomTkinter GUIs without writing extensive code. It provides a user-friendly interface where users can:
+- **Gestión de Configuración**:
+  - Temas claros/oscuros.
+  - Preferencias de exportación.
+  - Configuraciones personalizables.
 
-1. Set up the initial window size and properties
-2. Add various CustomTkinter widgets to the canvas
-3. Adjust widget properties and positioning in real-time
-4. View and modify the widget hierarchy
-5. Preview the generated Python code
-6. Export the designed GUI as a Python script
+- **Consola Integrada**:
+  - Ejecución de comandos personalizados.
+  - Depuración y *testing*.
+  - Historial de comandos.
 
-This tool aims to streamline the GUI development process for CustomTkinter applications, allowing for rapid prototyping and design iterations.
+### 4. Exportación e Importación 📤
+- **Exportación de Código**:
+  - Generación automática de código Python.
+  - Formato personalizable.
+  - Inclusión opcional de comentarios.
 
-## How to Execute
+- **Gestión de Proyectos**:
+  - Guardado/Carga de proyectos.
+  - Exportación a JSON.
+  - Importación de widgets personalizados.
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/CTkDesigner.git
-   cd CTkDesigner
-   ```
+### 5. Características Técnicas 🔧
 
-2. Install the required dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+#### Arquitectura
+- **Patrón MVC**: Separación clara entre modelo, vista y controlador.
+- **Sistema de Eventos**: Manejo robusto de interacciones.
+- **Gestión de Estado**: Sistema de deshacer/rehacer.
 
-3. Run the application:
-   ```
-   python main.py
-   ```
+#### Componentes Principales
+1. **Virtual Window**:
+   - Área de diseño principal.
+   - Sistema de coordenadas.
+   - Gestión de widgets.
 
-## Dependencies
+2. **Sidebars**:
+   - *Left Sidebar*: Propiedades y configuración.
+   - *Right Sidebar*: Widgets disponibles y jerarquía.
 
-- Python 3.x
-- CustomTkinter
-- Tkinter (usually comes pre-installed with Python)
+3. **Toolbar**:
+   - Acciones principales.
+   - Exportación/Importación.
+   - Acceso a configuraciones.
 
-To install the required packages, run:
+### 6. Herramientas de Desarrollo 🛠️
+- **Debug Console**: Herramienta para depuración.
+- **Code Preview**: Vista previa del código generado.
+- **Widget Inspector**: Análisis de propiedades.
+- **Event Logger**: Registro de eventos y acciones.
 
-```
-pip install customtkinter
-```
+## Enfoque del Proyecto 🎯
+CTkDesigner se centra en:
+1. **Simplicidad**: Interfaz intuitiva para principiantes.
+2. **Flexibilidad**: Opciones avanzadas para usuarios experimentados.
+3. **Productividad**: Reducción del tiempo de desarrollo.
+4. **Mantenibilidad**: Código limpio y estructurado.
 
-## Usage
+## Propuesta de Valor 💡
+- **Reducción de Código Repetitivo**: Generación automática de código base.
+- **Aprendizaje Simplificado**: Curva de aprendizaje suave para CustomTkinter.
+- **Prototipado Rápido**: Creación veloz de interfaces.
+- **Personalización Extensa**: Control total sobre el diseño.
 
-1. Launch the application
-2. Set the initial window size and properties
-3. Click "Create Project" to start designing
-4. Use the right sidebar to add widgets to your design
-5. Select widgets to edit their properties in the left sidebar
-6. Use the toolbar to preview code or export your project
+## Tecnologías Utilizadas 🔧
+- **CustomTkinter**: Framework base de UI.
+- **Python**: Lenguaje principal.
+- **JSON**: Almacenamiento de configuraciones.
+- **TTK**: Componentes nativos mejorados.
 
-## Contributing
-
-Contributions to CTkDesigner are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+## Público Objetivo 👥
+- Desarrolladores Python.
+- Diseñadores de UI/UX.
+- Estudiantes y educadores.
+- Desarrolladores de aplicaciones de escritorio.
