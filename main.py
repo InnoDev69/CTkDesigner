@@ -188,7 +188,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
                 widget.configure(**{prop: type_of_property(new_value)})
                 widget.guide_canvas.config(bg=new_value)
             else:
-                widget.configure(**{prop: new_value})
+                widget.configure(**{prop: type_of_property(new_value)})
 
             logging.info(app.translator.translate_with_vars("USER_PROP_UPDATED", {"prop": prop, "widget": widget, "entry": new_value}))
             entry.configure(border_color="#565B5E")
@@ -776,11 +776,18 @@ class App(ctk.CTk):
         self.left_sidebar = LeftSidebar(self)
         self.left_sidebar.grid(row=0, column=0, sticky="nsew")
 
-        self.central_canvas = ctk.CTkCanvas(self, bg="black")
+        # self.central_canvas = ctk.CTkCanvas(self, bg="black")
+        # self.central_canvas.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+        
+        from objects.zoomable_canvas import ZoomableCanvas
+        self.central_canvas = ZoomableCanvas(self, bg="black")
         self.central_canvas.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
         self.virtual_window = VirtualWindow(self.central_canvas, self.left_sidebar, self, width=vw_width, height=vw_height)
-        self.virtual_window_id = self.central_canvas.create_window((50, 50), anchor="nw", window=self.virtual_window)
+        self.virtual_window_id = self.central_canvas.create_window(50, 50, anchor="nw", window=self.virtual_window)
+
+        # Registrar la ventana virtual con el canvas
+        self.central_canvas._register_widget_with_children(self.virtual_window)
 
         self.central_canvas.configure(scrollregion=self.central_canvas.bbox("all"))
 
