@@ -11,7 +11,7 @@ def validate_input(value:any):
         None
     """
 
-    return bool(value == "" or (value.isdigit() and 0 <= int(value) <= 1000))
+    return bool(value == "" or (value.isdigit() and 0 <= int(value) <= 10000))
 
 def hex_to_rgb(hex_color):
     """Convierte un color hexadecimal (#RRGGBB) a un tuple (R, G, B)."""
@@ -25,3 +25,26 @@ def parse_color(color):
     if isinstance(color, str) and color.startswith("#"):  # Si es hexadecimal
         return hex_to_rgb(color)
     return (200, 200, 200)  # Color gris por defecto
+
+def fix_color_format(color_value):
+    if isinstance(color_value, list):
+        try:
+            return ''.join(color_value)
+        except:
+            pass
+
+    if isinstance(color_value, str):
+        if color_value.startswith('#') or color_value == 'transparent' or color_value in [
+            'white', 'black', 'red', 'green', 'blue', 'yellow', 
+            'purple', 'cyan', 'magenta', 'orange', 'gray'
+        ]:
+            return color_value
+            
+    if isinstance(color_value, tuple):
+        if len(color_value) == 3:
+            r, g, b = color_value
+            return f'#{r:02x}{g:02x}{b:02x}'
+        elif len(color_value) == 2:  
+            return color_value
+
+    return '#000000'

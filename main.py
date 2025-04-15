@@ -4,6 +4,7 @@
 import io
 import sys
 import logging
+import tkinter as tk
 import tkinter.ttk as ttk
 from data.commands import *
 import customtkinter as ctk
@@ -15,9 +16,10 @@ from CTkMessagebox import CTkMessagebox
 from objects.code_box import CTkCodeBox
 from translations.translations import *
 from translations.translator import Translator
-from config.config_manajer import ConfigManager
+from config.config_manager import ConfigManager
 from functions.create_widget_animation import *
 from objects.virtual_window import VirtualWindow
+#from objects.zoomable_canvas import ZoomableCanvas
 
 class LeftSidebar(ctk.CTkScrollableFrame):
     PADDING = 5
@@ -146,57 +148,63 @@ class LeftSidebar(ctk.CTkScrollableFrame):
         self.width_entry.insert(0,int(w))
     
     def create_property_entries(self, widget: object, properties: list):
+        """Create property entries for widget configuration."""
         if not hasattr(self, "property_entries"):
             self.property_entries = {}
 
-        self.property_entries.update(
-            create_property_entries(self.config_space, widget, properties, self.update_property, self.property_entries)
+        entries = create_property_entries(
+            self.config_space, 
+            widget, 
+            properties, 
+            self.update_property, 
+            self.property_entries
         )
-
+        
+        if 'width' in entries:
+            self.width_entry = entries['width']
+        if 'height' in entries:
+            self.height_entry = entries['height']
+            
+        self.property_entries.update(entries)
+        
     def update_property(self, widget: object, prop: str, entry: object, tooltip: object):
-        """
-        Update a widget property based on entry value.
-
-        Attempts to update the specified property of the widget with the value from the entry.
-        Handles special cases for font and VirtualWindow fg_color. Displays an error tooltip if the update fails.
-
-        Args:
-            widget: The widget.
-            prop: The property name.
-            entry: The entry widget.
-            tooltip: The tooltip for error messages.
-        """
+        """Update a widget property based on entry value."""
         tooltip.hide()
         try:
-            # Obtener el valor actual de la propiedad
             current_value = widget.cget(prop)
-            new_value = entry.get().strip()
+            if not entry.__class__.__name__ == "CTkButton":
+                new_value = entry.get().strip()
+            else:
+                new_value = entry.cget("text").strip()
 
-            # Verificar si el valor ha cambiado
             if str(current_value) == new_value:
                 logging.debug(f"No se requiere actualización para '{prop}'. El valor no ha cambiado.")
                 return
 
-            # Determinar el tipo de la propiedad
-            type_of_property = str if prop == "text_color" else type(current_value)
-            logging.info(app.translator.translate_with_vars("USER_PROP_TYPE", {"type_of_property": type_of_property, "entry": new_value}))
-
-            # Actualizar la propiedad
-            if prop == "font":
-                self.update_font_property(widget, entry)
-            elif widget.__class__.__name__ == "VirtualWindow" and prop == "fg_color":
-                widget.configure(**{prop: type_of_property(new_value)})
-                widget.guide_canvas.config(bg=new_value)
+            if "color" in prop:
+                if isinstance(new_value, list):
+                    new_value = ''.join(new_value)
+                new_value = fix_color_format(new_value)
+                widget.configure(**{prop: new_value})
             else:
-                widget.configure(**{prop: type_of_property(new_value)})
+                type_of_property = str if prop == "text_color" else type(current_value)
+                if prop == "font":
+                    self.update_font_property(widget, entry)
+                elif widget.__class__.__name__ == "VirtualWindow" and prop == "fg_color":
+                    widget.configure(**{prop: type_of_property(new_value)})
+                    widget.guide_canvas.config(bg=new_value)
+                else:
+                    widget.configure(**{prop: type_of_property(new_value)})
 
-            logging.info(app.translator.translate_with_vars("USER_PROP_UPDATED", {"prop": prop, "widget": widget, "entry": new_value}))
+            logging.info(app.translator.translate_with_vars("USER_PROP_UPDATED", 
+                        {"prop": prop, "widget": widget, "entry": new_value}))
             entry.configure(border_color="#565B5E")
+            
         except Exception as e:
             logging.error(f"Error al actualizar '{prop}': {e}. Valor ingresado: {entry.get()}")
             entry.configure(border_color="red")
             tooltip.show()
-            tooltip.configure(message=e)
+            tooltip.configure(message=str(e))
 
     def update_font_property(self, widget:object, entry:object):
         font_value = entry.get()
@@ -775,30 +783,82 @@ class App(ctk.CTk):
         self.resizable(True, True)
         self.left_sidebar = LeftSidebar(self)
         self.left_sidebar.grid(row=0, column=0, sticky="nsew")
-
-        # self.central_canvas = ctk.CTkCanvas(self, bg="black")
-        # self.central_canvas.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
         
-        from objects.zoomable_canvas import ZoomableCanvas
-        self.central_canvas = ZoomableCanvas(self, bg="black")
+        # Canvas central
+        self.central_canvas = tk.Canvas(self, bg="black")
         self.central_canvas.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
-        self.virtual_window = VirtualWindow(self.central_canvas, self.left_sidebar, self, width=vw_width, height=vw_height)
-        self.virtual_window_id = self.central_canvas.create_window(50, 50, anchor="nw", window=self.virtual_window)
+        # Scrollbars personalizadas
+        self.h_scrollbar = ctk.CTkScrollbar(
+            self, 
+            orientation="horizontal",
+            command=self.central_canvas.xview
+        )
+        self.h_scrollbar.grid(row=1, column=1, sticky="ew", padx=10)
 
-        # Registrar la ventana virtual con el canvas
-        self.central_canvas._register_widget_with_children(self.virtual_window)
+        self.v_scrollbar = ctk.CTkScrollbar(
+            self,
+            orientation="vertical", 
+            command=self.central_canvas.yview
+        )
+        self.v_scrollbar.grid(row=0, column=2, sticky="ns", pady=10)
+
+        # Configurar el canvas para usar las scrollbars
+        self.central_canvas.configure(
+            xscrollcommand=self.h_scrollbar.set,
+            yscrollcommand=self.v_scrollbar.set
+        )
+
+        # Virtual Window
+        self.virtual_window = VirtualWindow(
+            self.central_canvas, 
+            self.left_sidebar, 
+            self, 
+            width=vw_width, 
+            height=vw_height
+        )
+        self.virtual_window_id = self.central_canvas.create_window(
+            50, 50, 
+            anchor="nw", 
+            window=self.virtual_window
+        )
+        if self.import_proyect:
+            if file_path := filedialog.askopenfilename(
+            filetypes=[("Json Files", "*.json")], title="Abrir archivo"
+            ):
+                self.virtual_window.import_from_json(file_path)
 
         self.central_canvas.configure(scrollregion=self.central_canvas.bbox("all"))
 
+        # Right Sidebar
         self.right_sidebar = RightSidebar(self, self.virtual_window)
-        self.right_sidebar.grid(row=0, column=2, sticky="nsew")
+        self.right_sidebar.grid(row=0, column=3, sticky="nsew")  # Cambiar a columna 3
 
+        # Toolbar
         self.toolbar = Toolbar(self, self.virtual_window, self.right_sidebar, self.import_proyect)
-        self.toolbar.grid(row=1, column=0, columnspan=3, sticky="nsew")
+        self.toolbar.grid(row=2, column=0, columnspan=4, sticky="nsew")  # Ajustar columnspan
 
-        if self.toolbar.initialize_on_import:
-            self.toolbar.import_from_file()
+        # Configurar pesos de columnas y filas
+        self.grid_columnconfigure(1, weight=1)  # Canvas central se expande
+        self.grid_rowconfigure(0, weight=1)     # Fila principal se expande
+        self.central_canvas.bind('<Configure>', self._update_scrollbars)
+        
+    def _update_scrollbars(self, event=None):
+        if bbox := self.central_canvas.bbox("all"):
+            canvas_width = self.central_canvas.winfo_width()
+            canvas_height = self.central_canvas.winfo_height()
+
+            # Mostrar/ocultar scrollbar horizontal
+            if bbox[2]-bbox[0] > canvas_width:
+                self.h_scrollbar.grid()
+            else:
+                self.h_scrollbar.grid_remove()
+
+            # Mostrar/ocultar scrollbar vertical
+            if bbox[3]-bbox[1] > canvas_height:
+                self.v_scrollbar.grid()
+            else:
+                self.v_scrollbar.grid_remove()
 
     def view_code(self):
         if self.virtual_window.toggle_visibility():

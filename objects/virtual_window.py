@@ -8,7 +8,7 @@ import json
 import ast
 import re
 
-from objects.zoomable_canvas import ZoomableCanvas
+#from objects.zoomable_canvas import ZoomableCanvas
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -167,7 +167,7 @@ class VirtualWindow(ctk.CTkFrame):
         logging.debug(f"Creando widget de tipo '{widget_type}' con argumentos: {kwargs}.")
         if widget_class := widget_classes.get(widget_type):
             widget = widget_class(self, **kwargs)
-            logging.info(self.app.translator.translate_with_vars("WIDGET_CREATED", {"widget_type":widget_type}))
+            logging.info(self.app.translator.translate_with_vars("WIDGET_CREATED_SUCCESS", {"widget_type":widget_type}))
             return widget
         logging.error(f"'{widget_type}' no es un tipo de widget válido.")
         return None
@@ -700,8 +700,12 @@ class VirtualWindow(ctk.CTkFrame):
 
     def import_from_json(self, filename):
         self.clean_virtual_window()
-        with open(f"{filename}.json", "r") as f:
-            data = json.load(f)
+        try:
+            with open(f"{filename}.json", "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            with open(filename, "r") as f:
+                data = json.load(f)
         
         for widget_data in data:
             widget_type = widget_data["type"]
