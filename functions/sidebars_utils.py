@@ -3,6 +3,7 @@ from tkinter import Tk
 import customtkinter as ctk
 from objects.tooltip import *
 from objects.color_picker import ColorPickerApp
+from data.variable import *
 
 def clear_widgets(parent):
     """
@@ -81,7 +82,7 @@ def create_property_entry(parent, widget, prop, update_callback, existing_entrie
                 y = (screen_height - window_height) // 2
                 color_window.geometry(f"{window_width}x{window_height}+{x}+{y}")
                 
-                color_picker = ColorPickerApp(color_window)
+                color_picker = ColorPickerApp(color_window, initial_color=entry.cget("text"))
                 color_picker.pack(expand=True, fill="both", padx=10, pady=10)
                 
                 def on_color_selected():
@@ -96,7 +97,8 @@ def create_property_entry(parent, widget, prop, update_callback, existing_entrie
                 accept_btn = ctk.CTkButton(
                     color_picker.buttons_frame, 
                     text="Aceptar", 
-                    command=on_color_selected
+                    command=on_color_selected,
+                    **BUTTON_STYLE
                 )
                 accept_btn.pack(pady=10)
                 

@@ -2,13 +2,14 @@ import customtkinter as ctk
 import tkinter as tk
 import math
 import colorsys
+from objects.tooltip import CTkToolTip as ToolTip
 
 class ColorWheel(ctk.CTkFrame):
-    def __init__(self, master, command=None, size=200, **kwargs):
+    def __init__(self, master, initial_color="#FF0000",command=None, size=200, **kwargs):
         super().__init__(master, **kwargs)
         self.size = size
         self.command = command
-        self.current_color = "#FF0000"
+        self.current_color = initial_color
         self.hue = 0
         self.saturation = 1
         self.value = 1
@@ -45,6 +46,54 @@ class ColorWheel(ctk.CTkFrame):
         # Eventos de mouse
         self.canvas.bind("<Button-1>", self.on_click)
         self.canvas.bind("<B1-Motion>", self.on_drag)
+
+    def _update_current_color(self, color):
+        """Actualiza el color actual"""
+        self.current_color = color
+        print(self.current_color)
+        self.update_selector()
+        if self.command:
+            self.command(self.current_color)
+
+    def set_color(self, color_hex):
+        """
+        Actualiza la rueda de colores y el selector basado en un color hexadecimal
+        
+        Args:
+            color_hex: Color en formato hexadecimal (ej: "#FF0000")
+        """
+        # Validar formato
+        if not color_hex.startswith("#") or len(color_hex) != 7:
+            print(f"Formato de color inválido: {color_hex}")
+            return
+        
+        try:
+            # Convertir de hexadecimal a RGB
+            r = int(color_hex[1:3], 16) / 255.0
+            g = int(color_hex[3:5], 16) / 255.0
+            b = int(color_hex[5:7], 16) / 255.0
+            
+            # Convertir de RGB a HSV
+            h, s, v = colorsys.rgb_to_hsv(r, g, b)
+            
+            # Actualizar los valores internos
+            self.hue = h
+            self.saturation = s
+            self.value = v
+            self.current_color = color_hex
+            
+            # Actualizar el slider de brillo
+            self.brightness_slider.set(v)
+            
+            # Actualizar la posición visual del selector
+            self.update_selector()
+            
+            # Llamar al callback si existe
+            if self.command:
+                self.command(self.current_color)
+        
+        except ValueError as e:
+            print(f"Error al procesar el color: {e}")
 
     def _on_brightness_change(self, value):
         """Maneja cambios en el control de brillo"""
@@ -140,7 +189,7 @@ class ColorWheel(ctk.CTkFrame):
         self.update_selector()
 
 class ColorPickerApp(ctk.CTkFrame):
-    def __init__(self, master=None, **kwargs):
+    def __init__(self, master=None, initial_color="#FF0000", **kwargs):
         super().__init__(master, **kwargs)
         
         # Crear el frame principal scrollable
@@ -187,11 +236,17 @@ class ColorPickerApp(ctk.CTkFrame):
         # Valor hexadecimal
         self.hex_value = ctk.CTkEntry(self.preview_frame)
         self.hex_value.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
-        self.hex_value.insert(0, "#FF0000")
-        
+        self.hex_value.insert(0, initial_color)
+        self.tooltip_color_status=ToolTip(self.hex_value,"Color no valido")
+        self.tooltip_color_status.hide()
+
+        # Actualizar color con entry
+        self.hex_value.bind("<KeyRelease>",lambda event: self.update_color_preview(self.hex_value.get()))
+        self.color_wheel.bind("<KeyRelease>", lambda event: self.color_wheel.set_colorI(self.hex_value.get()))
+
         # Inicializar con color rojo
-        self.selected_color = "#FF0000"
-        self.update_color_preview("#FF0000")
+        self.selected_color = initial_color
+        self.update_color_preview(initial_color)
         
         # Agregar controles RGB
         self.rgb_frame = ctk.CTkFrame(self.main_container)
@@ -244,10 +299,17 @@ class ColorPickerApp(ctk.CTkFrame):
     
     def update_color_preview(self, color):
         """Actualiza la previsualización del color y el valor hexadecimal"""
-        self.selected_color = color
-        self.color_preview.configure(fg_color=color)
-        self.hex_value.delete(0, tk.END)
-        self.hex_value.insert(0, color)
+        try:
+            #if self.tooltip_color_status.is_disabled:
+            self.tooltip_color_status.hide()
+            self.selected_color = color
+            self.color_preview.configure(fg_color=color)
+            self.hex_value.delete(0, tk.END)
+            self.hex_value.insert(0, color)
+            self.hex_value.configure(border_color="#5A5A5A")
+        except tk.TclError:
+            self.tooltip_color_status.show()
+            self.hex_value.configure(border_color="red")
     
     def on_accept(self):
         """Devuelve el color seleccionado y cierra la aplicación"""
