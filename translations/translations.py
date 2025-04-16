@@ -97,6 +97,16 @@ translations = {
         "CREATING_WIDGET": "Attempting to create widget of type '{widget_type}' with arguments: {widget_args}.",
         "WIDGET_CREATED_SUCCESS": "Widget '{widget_type}' created successfully.",
         "WIDGET_CREATION_ERROR": "'{widget_type}' is not a valid widget type.",
+        
+        # Translation of sidebars_utils.py 
+        "TOOLTIP_COLOR_INFO": "Click to select a color",
+        
+        # Translation of color_picker.py
+        "COLOR_PICKER_TITLE": "Color Picker",
+        "COLOR_PICKER_INITIAL_COLOR": "Initial Color",
+        "BRIGHTNESS_LABEL": "Brightness:",
+        "COLOR_PICKER_ACCEPT": "Accept",
+        "TOOLTIP_ERROR_COLOR_NO_VALID": "The color is not valid",
     },
     "es": {  # Español
         "NEW_PROYECT": "Nuevo projecto",
@@ -172,6 +182,17 @@ translations = {
         "CREATING_WIDGET": "Intentando crear el widget del tipo '{widget_type}' con argumentos: {widget_args}.",
         "WIDGET_CREATED_SUCCESS": "Widget '{widget_type}' creado con éxito.",
         "WIDGET_CREATION_ERROR": "'{widget_type}' no es un tipo de widget válido.",
+        
+        # Traducción de sidebars_utils.py
+        "TOOLTIP_COLOR_INFO": "Haga clic para seleccionar un color",
+        
+        # Traduccion de color_picker.py 
+        "COLOR_PICKER_TITLE": "Selector de color",
+        "COLOR_PICKER_INITIAL_COLOR": "Color inicial",
+        "BRIGHTNESS_LABEL": "Brillo:",
+        "COLOR_PICKER_ACCEPT": "Aceptar",
+        "TOOLTIP_ERROR_COLOR_NO_VALID": "El color no es válido",
+        
     },
     "fr": {  # Francés (ejemplo(No voy a agregar frances(nuke france)))
         "CONFIG_LABEL_TEXT": "Configuration du widget",

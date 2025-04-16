@@ -3,6 +3,7 @@ import tkinter as tk
 import math
 import colorsys
 from objects.tooltip import CTkToolTip as ToolTip
+from functions.translator_manager import *
 
 class ColorWheel(ctk.CTkFrame):
     def __init__(self, master, initial_color="#FF0000",command=None, size=200, **kwargs):
@@ -23,7 +24,7 @@ class ColorWheel(ctk.CTkFrame):
         self.brightness_frame = ctk.CTkFrame(self)
         self.brightness_frame.pack(fill="x", padx=10, pady=(0,10))
         
-        self.brightness_label = ctk.CTkLabel(self.brightness_frame, text="Brillo:")
+        self.brightness_label = ctk.CTkLabel(self.brightness_frame, text=translator.translate("BRIGHTNESS_LABEL"))
         self.brightness_label.pack(side="left", padx=5)
         
         self.brightness_slider = ctk.CTkSlider(
@@ -206,7 +207,7 @@ class ColorPickerApp(ctk.CTkFrame):
         # Etiqueta de título
         self.title_label = ctk.CTkLabel(
             self.main_container, 
-            text="Selector de Color", 
+            text=translator.translate("COLOR_PICKER_TITLE"), 
             font=("Helvetica", 24)
         )
         self.title_label.grid(row=0, column=0, pady=(20, 10))
@@ -237,7 +238,7 @@ class ColorPickerApp(ctk.CTkFrame):
         self.hex_value = ctk.CTkEntry(self.preview_frame)
         self.hex_value.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
         self.hex_value.insert(0, initial_color)
-        self.tooltip_color_status=ToolTip(self.hex_value,"Color no valido")
+        self.tooltip_color_status=ToolTip(self.hex_value,translator.translate("TOOLTIP_ERROR_COLOR_NO_VALID"))
         self.tooltip_color_status.hide()
 
         # Actualizar color con entry

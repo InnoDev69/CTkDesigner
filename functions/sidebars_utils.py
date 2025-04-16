@@ -4,6 +4,7 @@ import customtkinter as ctk
 from objects.tooltip import *
 from objects.color_picker import ColorPickerApp
 from data.variable import *
+from functions.translator_manager import *
 
 def clear_widgets(parent):
     """
@@ -71,7 +72,7 @@ def create_property_entry(parent, widget, prop, update_callback, existing_entrie
         else:
             def show_color_picker():
                 color_window = ctk.CTkToplevel(parent)
-                color_window.title("Color Picker")
+                color_window.title(translator.translate("COLOR_PICKER_TITLE"))
                 color_window.resizable(False, False)
                 
                 window_width = 400
@@ -96,7 +97,7 @@ def create_property_entry(parent, widget, prop, update_callback, existing_entrie
                 
                 accept_btn = ctk.CTkButton(
                     color_picker.buttons_frame, 
-                    text="Aceptar", 
+                    text=translator.translate("COLOR_PICKER_ACCEPT"), 
                     command=on_color_selected,
                     **BUTTON_STYLE
                 )
@@ -113,7 +114,7 @@ def create_property_entry(parent, widget, prop, update_callback, existing_entrie
                 command=show_color_picker
             )
             entry.pack()
-            tooltip = CTkToolTip(entry, "Click to change color")
+            tooltip = CTkToolTip(entry, translator.translate("TOOLTIP_COLOR_INFO"))
 
         return entry
 

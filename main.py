@@ -19,6 +19,7 @@ from translations.translator import Translator
 from config.config_manager import ConfigManager
 from functions.create_widget_animation import *
 from objects.virtual_window import VirtualWindow
+#from functions.translator_manager import *
 #from objects.zoomable_canvas import ZoomableCanvas
 
 class LeftSidebar(ctk.CTkScrollableFrame):
@@ -168,6 +169,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
         self.property_entries.update(entries)
         
     def update_property(self, widget: object, prop: str, entry: object, tooltip: object):
+        # sourcery skip: de-morgan
         """Update a widget property based on entry value."""
         tooltip.hide()
         try:
@@ -680,8 +682,7 @@ class App(ctk.CTk):
         # CONFIGURACIONES
         self.config_manager = ConfigManager()
         
-        self.translator = Translator(self.config_manager.get("General", "language"))
-        self.translator.load_translations(translations)
+        self.translator = translator
         self.title("CustomDesigner")
         self.geometry("1000x600")
         self.resizable(False, False)
