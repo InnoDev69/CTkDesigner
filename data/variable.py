@@ -1,12 +1,15 @@
 import customtkinter as ctk
 
+# DEBUG
+TOOLTIP_INFO_WIDGET = True
+
 global_properties = {
     "VirtualWindow": ["width", "height", "fg_color", "bg_color", "border_width", "border_color"],
     "CTkButton": ["text", "command", "fg_color", "width", "height", "border_width", "border_color", "hover_color", "text_color",
                   "border_spacing", "corner_radius", "text_color_disabled", "textvariable", "image",
                   "state", "compound","anchor"],
     "CTkLabel": ["text", "textvariable", "fg_color", "corner_radius", "text_color", "width", "height", "font", "anchor", "compound",
-                 "justify"],
+                 "justify", "image"],
     "CTkEntry": ["placeholder_text", "textvariable", "fg_color", "border_width", "border_color", "text_color", "width", "height", "font"],
     "CTkCheckBox": ["text", "textvariable", "onvalue", "offvalue", "fg_color", "text_color", "width", "height", "hover_color",
                     "border_width", "border_color", "checkmark_color"],
@@ -26,6 +29,10 @@ global_properties = {
     "CTkFrame": ["fg_color", "bg_color", "height", "width", "border_width", "border_color"]
 }
 
+compound = ["no", "top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right"]
+anchor = ["n", "ne", "e", "se", "s", "sw", "w", "nw", "center"]
+
+# Variables de estilo para los widgets
 
 BUTTON_STYLE = {
         "fg_color": "#2E2E2E",  # Color de fondo del boton
@@ -90,3 +97,15 @@ widget_classes = {
 
 # Commands variables
 event_registry = {}
+
+# Variables para los menus de contexto de CTkMenuBar
+context_menu_options = [
+    {"label": "Copy", "command": None},
+    {"label": "Paste", "command": None},
+    {"label": "Cut", "command": None},
+    {"label": "Delete", "command": lambda: print("Delete")},
+]
+
+# 'mark_widget_with_color' variable de control
+widget_marked_color = None
+color_default = None

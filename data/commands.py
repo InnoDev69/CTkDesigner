@@ -149,7 +149,49 @@ def display_registered_events(_):
             print(f"Widget: {widget}")
             for event, callback in events.items():
                 print(f"  Evento: {event}, Callback: {callback}")
+def execute_method(app, args):
+    """
+    Ejecuta dinámicamente un método de una clase.
+    Uso: $exec <class_name> <method_name> [args...]
+    Example: $exec VirtualWindow add_widget CTkButton
+    """
+    if len(args) < 2:
+        print("Usage: $exec <class_name> <method_name> [args...]")
+        return
 
+    class_name = args[0]
+    method_name = args[1]
+    method_args = args[2:] if len(args) > 2 else []
+
+    try:
+        # Obtiene la instancia de la clase
+        instance = None
+        if hasattr(app, class_name.lower()):
+            instance = getattr(app, class_name.lower())
+        else:
+            # Busca la instancia en comun con el atributo similar
+            for attr in dir(app):
+                obj = getattr(app, attr)
+                if obj.__class__.__name__ == class_name:
+                    instance = obj
+                    break
+
+        if instance is None:
+            print(f"Class {class_name} not found")
+            return
+
+        # Nose, obtiene algo de la clase
+        if hasattr(instance, method_name):
+            method = getattr(instance, method_name)
+            result = method(*method_args)
+            print("Method executed successfully")
+            if result is not None:
+                print(f"Result: {result}")
+        else:
+            print(f"Method {method_name} not found in class {class_name}")
+
+    except Exception as e:
+        print(f"Error executing method: {str(e)}")
 # Diccionario de comandos
 COMMAND_MAP = {
     "hello": cmd_hello,
@@ -175,4 +217,5 @@ COMMAND_MAP = {
     "debug_redo_stack": cmd_debug_redo_stack,
     "export_img": cmd_export_img,
     "inspect_events": display_registered_events,
+    "exec": execute_method,
 }

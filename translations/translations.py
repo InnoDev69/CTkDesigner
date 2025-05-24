@@ -183,6 +183,14 @@ translations = {
         "WIDGET_CREATED_SUCCESS": "Widget '{widget_type}' creado con éxito.",
         "WIDGET_CREATION_ERROR": "'{widget_type}' no es un tipo de widget válido.",
         
+        # Traduccion para todos los fileaskdialog
+        "FILE_DIALOG_OPEN": "Abrir archivo",
+        "FILE_DIALOG_SAVE": "Guardar archivo",
+        "FILE_DIALOG_ARCHIVE": "Archivo Python",
+        "FILE_DIALOG_JSON_ARCHIVE": "Archivo JSON",
+        "FILE_DIALOG_SAVE_AS_TITLE": "Guardar como",
+        "FILE_DIALOG_SELECT_FILE": "Seleccionar archivo",
+        
         # Traducción de sidebars_utils.py
         "TOOLTIP_COLOR_INFO": "Haga clic para seleccionar un color",
         

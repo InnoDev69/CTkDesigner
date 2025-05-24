@@ -2,6 +2,7 @@ import customtkinter as ctk
 from data.variable import *
 from functions.widget_resize import *
 from functions.generic import *
+from functions.translator_manager import *
 import tkinter as tk
 import logging
 import json
@@ -42,7 +43,7 @@ class VirtualWindow(ctk.CTkFrame):
         self.pack_propagate(False)
         self.make_widget_selectable(self)
         self.make_widget_selectable(self.guide_canvas)
-        logging.info(self.app.translator.translate_with_vars("VIRTUAL_WINDOW_INITIALIZED", {"width":width, "height":height}))
+        logging.info(translator.translate_with_vars("VIRTUAL_WINDOW_INITIALIZED", {"width":width, "height":height}))
         
     def export_to_image(self, filename="virtual_window.png"):
         """Genera una imagen de la VirtualWindow con todos los widgets, bordes y esquinas redondeadas."""
@@ -156,7 +157,7 @@ class VirtualWindow(ctk.CTkFrame):
         if widget := self.create_widget(widget_type, **kwargs):
             self._extracted_from_create_and_place_widget_5(widget, self.cget("width") / 2 - widget.cget("width") / 2 
                                                            , self.cget("height") / 2 - widget.cget("height")/2)
-            logging.info(self.app.translator.translate_with_vars("WIDGET_ADDED", {"widget_type":widget_type, "x":widget.winfo_x(), "y":widget.winfo_y()}))
+            logging.info(translator.translate_with_vars("WIDGET_ADDED", {"widget_type":widget_type, "x":widget.winfo_x(), "y":widget.winfo_y()}))
         else:
             logging.warning(f"Fallo al agregar widget de tipo '{widget_type}'.")
 
@@ -167,7 +168,7 @@ class VirtualWindow(ctk.CTkFrame):
         logging.debug(f"Creando widget de tipo '{widget_type}' con argumentos: {kwargs}.")
         if widget_class := widget_classes.get(widget_type):
             widget = widget_class(self, **kwargs)
-            logging.info(self.app.translator.translate_with_vars("WIDGET_CREATED_SUCCESS", {"widget_type":widget_type}))
+            logging.info(translator.translate_with_vars("WIDGET_CREATED_SUCCESS", {"widget_type":widget_type}))
             return widget
         logging.error(f"'{widget_type}' no es un tipo de widget válido.")
         return None
@@ -186,13 +187,13 @@ class VirtualWindow(ctk.CTkFrame):
                     x, y = self._original_positions[widget]
                     widget.place(x=x, y=y)
             self._is_hidden = False
-            logging.info(self.app.translator.translate_with_vars("WIDGETS_SHOWN", {"count":len(self.widgets)}))
+            logging.info(translator.translate_with_vars("WIDGETS_SHOWN", {"count":len(self.widgets)}))
         else:
             for widget in self.widgets:
                 self._original_positions[widget] = (widget.winfo_x(), widget.winfo_y())
                 widget.place_forget()
             self._is_hidden = True
-            logging.info(self.app.translator.translate_with_vars("WIDGETS_HIDDEN", {"count":len(self.widgets)}))
+            logging.info(translator.translate_with_vars("WIDGETS_HIDDEN", {"count":len(self.widgets)}))
         return self._is_hidden
     
     def previsualize_code(self):
