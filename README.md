@@ -1,3 +1,4 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/InnoDev69/CTkDesigner)
 # CTkDesigner - GUI Builder para CustomTkinter 🎨
 
 ## Descripción General
