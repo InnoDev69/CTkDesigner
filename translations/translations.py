@@ -16,8 +16,8 @@ translations = {
         "RIGHTBAR_BUTTON_UPLOAD_LAYER": "Upload layer",
         "RIGHTBAR_BUTTON_LOWER_LAYER": "Lower layer",
         "RIGHTBAR_BUTTON_DELETE_WIDGET": "Delete widget",
-        "TOOLBAR_BUTTON_EXPORT": "Export to .py",
-        "TOOLBAR_BUTTON_CONFIG": "Settings",
+        "TOOL_BUTTON_EXPORT": "Export",
+        "TOOL_BUTTON_CONFIG": "Settings",
         "RIGHTBAR_BUTTON_VARIABLE_NAME": "Variable name",
         
         "IMPORT_WIDGET_BUTTON": "Import",
@@ -107,6 +107,11 @@ translations = {
         "BRIGHTNESS_LABEL": "Brightness:",
         "COLOR_PICKER_ACCEPT": "Accept",
         "TOOLTIP_ERROR_COLOR_NO_VALID": "The color is not valid",
+        
+        # Translation of the menu bar
+        "MENU_BAR_MENU_TITLE": "Menu",
+        
+        "MENU_BAR_TOOL_TITLE": "Tools",
     },
     "es": {  # Español
         "NEW_PROYECT": "Nuevo projecto",
@@ -125,8 +130,8 @@ translations = {
         "RIGHTBAR_BUTTON_UPLOAD_LAYER": "Subir capa",
         "RIGHTBAR_BUTTON_LOWER_LAYER": "Bajar capa",
         "RIGHTBAR_BUTTON_DELETE_WIDGET": "Borrar widget",
-        "TOOLBAR_BUTTON_EXPORT": "Exportar a .py",
-        "TOOLBAR_BUTTON_CONFIG": "Configuraciones",
+        "TOOL_BUTTON_EXPORT": "Exportar",
+        "TOOL_BUTTON_CONFIG": "Configuraciones",
         "RIGHTBAR_BUTTON_VARIABLE_NAME": "Nombre de la variable",
         
         "IMPORT_WIDGET_BUTTON": "Importar",
@@ -146,6 +151,7 @@ translations = {
         "USER_WIDGET_DETAILS": "Detalles de widget a importar: {widget}",
         "USER_CONFIG_SAVED": "Configuración guardada.",
         "USER_PROYECT_DETAILS":"Creando proyecto - Altura: {height}, Anchura: {width}",
+        "USER_CONFIG_SAVE_MESSAGE": "",
         
         "VIRTUAL_WINDOW_INITIALIZED": "VirtualWindow inicializada con dimensiones {width}x{height} y canvas configurado.",
         "WIDGET_ADDED": "Widget de tipo '{widget_type}' agregado en posición inicial X:{x} Y:{y}",
@@ -201,6 +207,10 @@ translations = {
         "COLOR_PICKER_ACCEPT": "Aceptar",
         "TOOLTIP_ERROR_COLOR_NO_VALID": "El color no es válido",
         
+        # Traduccion de los menu bar
+        "MENU_BAR_MENU_TITLE": "Menu",
+        
+        "MENU_BAR_TOOL_TITLE": "Herramientas",
     },
     "fr": {  # Francés (ejemplo(No voy a agregar frances(nuke france)))
         "CONFIG_LABEL_TEXT": "Configuration du widget",

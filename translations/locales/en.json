@@ -1,0 +1,92 @@
+{
+    "project": {
+        "NEW_PROYECT": "New Project",
+        "WINDOW_CONFIG": "Window Config",
+        "CREATE_PROJECT": "Create Project",
+        "IMPORT_PROJECT": "Import Project",
+        "HEIGHT": "Height:",
+        "WIDTH": "Width:",
+        "RESIZABLE": "Resizable"
+    },
+    "widgets": {
+        "CONFIG_LABEL_TEXT": "Widget Configuration",
+        "SCENE_MANAGER_LABEL_TEXT": "Works",
+        "POSITION_LABEL_TEXT": "Position (x, y):",
+        "LABEL_WIDGETS_TEXT": "Available Widgets",
+        "LABEL_SCHEME_TEXT": "Widget Scheme",
+        "TYPE_TEXT_WIDGET_LABEL": "Type"
+    },
+    "rightbar": {
+        "RIGHTBAR_BUTTON_UPLOAD_LAYER": "Upload layer",
+        "RIGHTBAR_BUTTON_LOWER_LAYER": "Lower layer",
+        "RIGHTBAR_BUTTON_DELETE_WIDGET": "Delete widget",
+        "RIGHTBAR_BUTTON_VARIABLE_NAME": "Variable name"
+    },
+    "toolbar": {
+        "TOOL_BUTTON_EXPORT": "Export",
+        "TOOL_BUTTON_CONFIG": "Settings",
+        "USER_SHOW_WIDGET_CONFIG": "Showing configuration for widget:",
+        "USER_ENTRY_CREATED": "Entry '{prop}' for widget '{widget_class}' created.",
+        "USER_PROP_TYPE": "Type of property:{type_of_property}\n Value: {entry}",
+        "USER_PROP_UPDATED": "Property '{prop}' for widget '{widget.__class__.__name__}' updated to: '{entry}'",
+        "USER_PROP_FONT_UPDATED": "Property 'font' updated to: ({font_name}, {font_size})",
+        "USER_VAR_UPDATED": "Variable of widget updated.",
+        "USER_POS_UPDATED": "Position updated to: ({new_x}, {new_y})",
+        "USER_WIDGET_DETAILS": "Widget details to import: {widget}",
+        "USER_CONFIG_SAVED": "Configuration saved.",
+        "USER_PROYECT_DETAILS": "Creating project - Height: {height}, Width: {width}",
+        "configuration_section": {
+            "window_title": "Configuration",
+            "label_languaje": "Language",
+            "label_personalization": "Personalization",
+            "label_theme": "Theme",
+            "label_exportation": "Exportation",
+            "label_format_exportation": "Export format",
+            "label_allow_comments": "Allow comments",
+            "button_apply_changes": "Apply changes",
+            "button_reset_config": "Reset configuration"
+        }
+    },
+    "console": {
+        "CONSOLE_BUTTON_TEXT": "Console",
+        "CONSOLE_BUTTON_RUN": "Run"
+    },
+    "menubar": {
+        "MENU_BAR_MENU_TITLE": "Menu",
+        "MENU_BAR_TOOL_TITLE": "Tools",
+        "exit_option": "Exit"
+    },
+    "colorpicker": {
+        "COLOR_PICKER_TITLE": "Color Picker",
+        "COLOR_PICKER_INITIAL_COLOR": "Initial Color",
+        "BRIGHTNESS_LABEL": "Brightness:",
+        "COLOR_PICKER_ACCEPT": "Accept",
+        "TOOLTIP_ERROR_COLOR_NO_VALID": "The color is not valid",
+        "TOOLTIP_COLOR_INFO": "Click to select a color"
+    },
+    "filedialog": {
+        "FILE_DIALOG_OPEN": "Open file",
+        "FILE_DIALOG_SAVE": "Save file",
+        "FILE_DIALOG_ARCHIVE": "Python File",
+        "FILE_DIALOG_JSON_ARCHIVE": "JSON File",
+        "FILE_DIALOG_SAVE_AS_TITLE": "Save as",
+        "FILE_DIALOG_SELECT_FILE": "Select file",
+
+        "file_type": "Python File"
+    },
+    "messagebox":{
+        "toolbar":{
+            "apply_config":{
+                "user_config_saved_confirmation": "To see some changes you must restart the application.",
+                "afirmative_button": "Restart",
+                "neutral_button": "Later",
+                "negative_button": "Cancel"
+            }
+        }
+    },
+    "generic":{
+        "words":{
+            "files:": "Files"
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 # DEBUG
-TOOLTIP_INFO_WIDGET = True
+TOOLTIP_INFO_WIDGET = False
 
 global_properties = {
     "VirtualWindow": ["width", "height", "fg_color", "bg_color", "border_width", "border_color"],

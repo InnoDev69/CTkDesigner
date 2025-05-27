@@ -135,7 +135,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
         widget.focus_set()
         widget_properties = global_properties
         widget_type = widget.__class__.__name__
-        logging.info(f"{app.translator.translate('USER_SHOW_WIDGET_CONFIG')} {widget_type}")
+        app.cross_update_text_info(f"{app.translator.translate('USER_SHOW_WIDGET_CONFIG')} {widget_type}")
         logging.debug(get_class_parameters(widget.__class__)[1:])
         if widget.__class__.__name__ not in widget_classes:
             self.create_property_entries(widget, get_class_parameters(widget.__class__)[1:])
@@ -177,7 +177,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
         try:
             current_value = widget.cget(prop)
             if not entry.__class__.__name__ == "CTkButton":
-                if entry.get() == str:
+                if isinstance(entry.get(), str):
                     new_value = entry.get().strip()
                 else:
                     new_value = entry.cget("state").strip()
@@ -204,12 +204,12 @@ class LeftSidebar(ctk.CTkScrollableFrame):
                 else:
                     widget.configure(**{prop: type_of_property(new_value)})
 
-            logging.info(app.translator.translate_with_vars("USER_PROP_UPDATED", 
+            app.cross_update_text_info(app.translator.translate_with_vars("USER_PROP_UPDATED", 
                         {"prop": prop, "widget": widget, "entry": new_value}))
             entry.configure(border_color="#565B5E")
             
         except Exception as e:
-            logging.error(f"Error al actualizar '{prop}': {e}. Valor ingresado: {entry.get()}")
+            app.cross_update_text_info(f"Error al actualizar '{prop}': {e}. Valor ingresado: {entry.get()}")
             entry.configure(border_color="red")
             tooltip.show()
             tooltip.configure(message=str(e))
@@ -221,7 +221,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
             raise ValueError(f"El valor '{font_value}' no es válido para 'font'. Formato esperado: 'Arial 20'")
         font_name, font_size = font_parts[0], int(font_parts[1])
         widget.configure(font=(font_name, font_size))
-        logging.info(app.translator.translate_with_vars("USER_PROP_FONT_UPDATED", {"font_name": font_name, "font_size": font_size}))
+        app.cross_update_text_info(app.translator.translate_with_vars("USER_PROP_FONT_UPDATED", {"font_name": font_name, "font_size": font_size}))
 
     def create_position_entries(self, widget:object):
         """Create position entries for the widget.
@@ -280,7 +280,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
 
         var_name = widget_var.get()
         if self.update_variable_name(widget, widget_var):
-            logging.info(app.translator.translate("USER_VAR_UPDATED"))
+            app.cross_update_text_info(app.translator.translate("USER_VAR_UPDATED"))
         else:
             corrected_var_name = ''.join(filter(str.isalpha, var_name))
             widget_var.delete(0, 'end')
@@ -341,7 +341,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
             new_x = int(x_entry.get())
             new_y = int(y_entry.get())
             widget.place(x=new_x, y=new_y)
-            logging.info(app.translator.translate_with_vars("USER_POS_UPDATED", {"new_x": new_x, "new_y": new_y}))
+            app.cross_update_text_info(app.translator.translate_with_vars("USER_POS_UPDATED", {"new_x": new_x, "new_y": new_y}))
         except ValueError:
             logging.warning("Posición inválida. Por favor, ingresa valores numéricos.")
 
@@ -376,7 +376,7 @@ class LeftSidebar(ctk.CTkScrollableFrame):
             clear_widgets(self.config_space)
             app.cross_update_treeview()
         else:
-            logging.error("No se puede borrar la virtual window")
+            app.cross_update_text_info("No se puede borrar la virtual window")
 
 class RightSidebar(ctk.CTkScrollableFrame):
     TREEVIEW_WIDTH = 180
@@ -409,9 +409,9 @@ class RightSidebar(ctk.CTkScrollableFrame):
     def import_custom_widget(self):
         widget=load_classes_from_file(filedialog.askopenfilename(
             title=translator.translate("FILE_DIALOG_SELECT_FILE"),
-            filetypes=[("Archivos Python", "*.py"), ("Todos los archivos", "*.*")]
+            filetypes=[(translator.get("filedialog.file_type"), "*.py"), ("Todos los archivos", "*.*")]
         ))
-        logging.info(app.translator.translate_with_vars("USER_WIDGET_DETAILS", {"widget": widget}))
+        app.cross_update_text_info(app.translator.translate_with_vars("USER_WIDGET_DETAILS", {"widget": widget}))
         app.virtual_window._extracted_from_create_and_place_widget_5(widget[0](self.virtual_window), 100, 100)
 
     def check_widget(self, widget:object):
@@ -501,7 +501,6 @@ class Toolbar(ctk.CTkFrame):
         self.create_progress_bar()
 
         self.initialize_on_import = initialize_on_import
-        self.setup_logging()
 
     def apply_configs(self, language:str, theme:str):
         app.switch_language(language)
@@ -519,12 +518,14 @@ class Toolbar(ctk.CTkFrame):
             if str(app.config_manager.get("General", "language")) != str(language.get()):
                 app.config_manager.set("General", "language", language.get()) # Se aplica aqui el cambio de idioma para actualizar bien el cambio
                 msg = CTkMessagebox(
-                    title="Save", message="Para ver algunos cambios debe reiniciar la aplicación.",
-                    icon="question", option_1="Cancelar", option_2="No", option_3="Sí"
+                    title="Save", message=translator.get("messagebox.toolbar.apply_config.user_config_saved_confirmation"),
+                    icon="question", option_1=translator.get("messagebox.toolbar.apply_config.negative_button")
+                    , option_2=translator.get("messagebox.toolbar.apply_config.neutral_button")
+                    , option_3=translator.get("messagebox.toolbar.apply_config.afirmative_button")
                 )
-                if msg.get() == "Sí":
+                if msg.get() == translator.get("messagebox.toolbar.apply_config.afirmative_button"):
                     app.destroy()
-            logging.info(app.translator.translate("USER_CONFIG_SAVED"))
+            app.cross_update_text_info(app.translator.translate("USER_CONFIG_SAVED"))
 
         def select_value(widget, value:int):
             if value == 1:
@@ -536,27 +537,27 @@ class Toolbar(ctk.CTkFrame):
         scroll_frame = ctk.CTkScrollableFrame(config_window, width=380, height=280)
         scroll_frame.pack(expand=True, fill="both", padx=10, pady=10)
 
-        ctk.CTkLabel(scroll_frame, text="Language").pack(anchor="center", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text=translator.get("toolbar.configuration_section.label_languaje")).pack(anchor="center", padx=20, pady=5)
 
         # Configuración de idioma y tema
-        ctk.CTkLabel(scroll_frame, text='Idioma:').pack(anchor="w", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text=translator.get("toolbar.configuration_section.label_languaje")).pack(anchor="w", padx=20, pady=5)
         language = ctk.CTkComboBox(scroll_frame, values=['es', 'en'], state='readonly')
         language.pack(fill="x", padx=20, pady=5)
         language.set(app.config_manager.get("General", "language"))
 
         ttk.Separator(scroll_frame, orient="horizontal").pack(fill="x", padx=20, pady=5)
-        ctk.CTkLabel(scroll_frame, text="Personalization").pack(anchor="center", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text=translator.get("toolbar.configuration_section.label_personalization")).pack(anchor="center", padx=20, pady=5)
 
-        ctk.CTkLabel(scroll_frame, text='Tema:').pack(anchor="w", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text=translator.get("toolbar.configuration_section.label_theme")).pack(anchor="w", padx=20, pady=5)
         theme = ctk.CTkComboBox(scroll_frame, values=['dark-blue', 'light'], state='readonly')
         theme.pack(fill="x", padx=20, pady=5)
         theme.set(app.config_manager.get("General", "theme"))
 
         ttk.Separator(scroll_frame, orient="horizontal").pack(fill="x", padx=20, pady=5)
-        ctk.CTkLabel(scroll_frame, text="Exportation").pack(anchor="center", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text=translator.get("toolbar.configuration_section.label_exportation")).pack(anchor="center", padx=20, pady=5)
 
         # Selector de formato de exportación
-        ctk.CTkLabel(scroll_frame, text='Formato de Exportación:').pack(anchor="w", padx=20, pady=5)
+        ctk.CTkLabel(scroll_frame, text=translator.get("toolbar.configuration_section.label_format_exportation")).pack(anchor="w", padx=20, pady=5)
         export_format = ctk.CTkComboBox(scroll_frame, values=['py', 'json'], state='readonly')
         export_format.pack(fill="x", padx=20, pady=5)
         export_format.set(app.config_manager.get("Export", "format", fallback='py'))
@@ -567,12 +568,13 @@ class Toolbar(ctk.CTkFrame):
         select_value(is_resizable, app.config_manager.get("Export", "resizable"))
 
         # Checkbox para incluir comentarios
-        include_comments = ctk.CTkCheckBox(scroll_frame, text='Incluir Comentarios')
+        include_comments = ctk.CTkCheckBox(scroll_frame, text=translator.get("toolbar.configuration_section.label_allow_comments"))
         include_comments.pack(anchor="w", padx=20, pady=5)
         select_value(include_comments, app.config_manager.get("Export", "include_comments"))
 
         # Botón para aplicar cambios
-        ctk.CTkButton(scroll_frame, text='Aplicar cambios', command=apply_config).pack(pady=40)
+        ctk.CTkButton(scroll_frame, text=translator.get("toolbar.configuration_section.button_apply_changes")
+                      , command=apply_config).pack(pady=40)
 
         # Botón para restaurar valores por defecto
         def reset_defaults():
@@ -582,27 +584,26 @@ class Toolbar(ctk.CTkFrame):
             include_comments.deselect()
             apply_config()
 
-        ctk.CTkButton(scroll_frame, text='Restablecer Valores', command=reset_defaults).pack()
+        ctk.CTkButton(scroll_frame, text=translator.get("toolbar.configuration_section.button_reset_config")
+                      , command=reset_defaults).pack()
 
     def open_config_window(self):
         """Abre la ventana de configuraciones si no está ya abierta."""
         if self.config_window is None or not self.config_window.winfo_exists():
             self.config_window = ctk.CTkToplevel(self)
-            self.config_window.title("Configuraciones")
+            self.config_window.title(translator.get("toolbar.configuration_section.window_title"))
             self.config_window.geometry("400x300")
             self.config_window.after(100, self.config_window.lift)
             self.create_config_widgets(self.config_window)
             
-            label = ctk.CTkLabel(self.config_window, text="Configuraciones")
+            label = ctk.CTkLabel(self.config_window, text=translator.get("toolbar.configuration_section.window_title"))
             label.pack(pady=10)
         else:
             self.config_window.lift()
     
     def create_buttons(self):
         """Crea y empaqueta los botones de la barra de herramientas."""
-        self.create_button(app.translator.translate("TOOLBAR_BUTTON_EXPORT"), self.export_to_file, side="right")
         self.create_button("Code preview", self.change_view, side="right")
-        self.create_button(app.translator.translate("TOOLBAR_BUTTON_CONFIG"),self.open_config_window, side="right")
         self.create_button(app.translator.translate("CONSOLE_BUTTON_TEXT"), self.open_console, side="right")
         self.create_button("Theme Manager", self.open_theme_manager, side="right") # Nuevo botón
 
@@ -643,12 +644,6 @@ class Toolbar(ctk.CTkFrame):
         self.progress.set(0)
         self.progress.pack_forget()
 
-    def setup_logging(self):
-        """Configure el registro para mostrar mensajes en la etiqueta de información."""
-        log_handler = TkinterLogHandler(self.info_label)
-        log_handler.setFormatter(logging.Formatter("%(message)s"))
-        logging.getLogger().addHandler(log_handler)
-
     def progress_set_value(self, value:float):
         """Establezca el valor de la barra de progreso y administre su visibilidad."""
         self.progress.set(value)
@@ -678,33 +673,6 @@ class Toolbar(ctk.CTkFrame):
         ):
             self.virtual_window.import_from_file(file_path)
             self.right_bar.update_treeview()
-
-class TkinterLogHandler(logging.Handler):
-    def __init__(self, label):
-        super().__init__()
-        self.label = label
-        self.setLevel(logging.INFO)
-
-    def emit(self, record):
-        if record.levelno >= self.level:
-            try:
-                log_entry = self.format(record)
-                # Check if label still exists and is accessible
-                if self.label.winfo_exists():
-                    self.label.configure(text=log_entry)
-                    # Schedule reset only if label exists
-                    self.label.after(3000, self._reset_label)
-            except Exception:
-                # Silently fail if label is not accessible
-                pass
-    
-    def _reset_label(self):
-        """Reset label text safely"""
-        try:
-            if self.label.winfo_exists():
-                self.label.configure(text="Ok")
-        except Exception:
-            pass
 
 class App(ctk.CTk):
     """Main application class for CustomDesigner."""
@@ -736,9 +704,7 @@ class App(ctk.CTk):
     # =====================================
     # INITIALIZATION METHODS
     # =====================================
-    
     def _initialize_core_components(self):
-        """Initialize core application components and variables."""
         self.config_manager = ConfigManager()
         self.translator = translator
         self.command_history = []
@@ -899,7 +865,7 @@ class App(ctk.CTk):
         height = self.hvar.get()
         width = self.wvar.get()
         
-        logging.info(
+        app.cross_update_text_info(
             self.translator.translate_with_vars(
                 "USER_PROYECT_DETAILS", 
                 {"height": height, "width": width}
@@ -968,7 +934,8 @@ class App(ctk.CTk):
             padx=0,
             pady=0
         )
-        self.menu_button = self.menu_bar.add_cascade(text="Menu")
+        self.menu_button = self.menu_bar.add_cascade(text=translator.translate("MENU_BAR_MENU_TITLE"))
+        self.tool_button = self.menu_bar.add_cascade(text=translator.translate("MENU_BAR_TOOL_TITLE"))
 
     def _setup_menu_dropdown(self):
         """Setup the dropdown menu with options."""
@@ -982,17 +949,28 @@ class App(ctk.CTk):
             border_width=1,
             border_color="grey30"
         )
+        self.tool_button_drop = CustomDropdownMenu(
+            widget=self.tool_button,
+            master=self,
+            width=150,
+            fg_color="#2b2b2b",
+            hover_color="#1f1f1f",
+            corner_radius=8,
+            border_width=1,
+            border_color="grey30"
+        )
         self._populate_menu_options()
+        self._populate_tools_options()
 
     def _populate_menu_options(self):
         """Add options to the dropdown menu."""
         menu_options = [
-            ("Nuevo Proyecto", self.reset_window),
+            (translator.get("project.NEW_PROYECT"), self.reset_window),
             "separator",
-            ("Exportar", self.toolbar.export_to_file),
-            ("Configuración", self.toolbar.open_config_window),
+            (translator.translate("TOOL_BUTTON_EXPORT"), self.toolbar.export_to_file),
+            (translator.translate("TOOL_BUTTON_CONFIG"), self.toolbar.open_config_window),
             "separator",
-            ("Salir", self.quit)
+            (translator.get("menubar.exit_option"), self.quit)
         ]
         
         for option in menu_options:
@@ -1001,7 +979,20 @@ class App(ctk.CTk):
             else:
                 text, command = option
                 self.menu_button_drop.add_option(text, command=command)
-
+    
+    def _populate_tools_options(self):
+        """Create the tools dropdown menu with options."""
+        tools_options = [
+            (translator.translate("CONSOLE_BUTTON_TEXT"), self.toolbar.open_console),
+            "separator",
+            
+        ]
+        for option in tools_options:
+            if option == "separator":
+                self.tool_button_drop.add_separator()
+            else:
+                text, command = option
+                self.tool_button_drop.add_option(text, command=command)
     def _create_main_components(self, vw_height, vw_width):
         """Create the main UI components."""
         self._create_main_frame()
@@ -1152,7 +1143,7 @@ class App(ctk.CTk):
             self.translator.set_language(language)
             self.refresh_ui()
         except ValueError as e:
-            logging.error(str(e))
+            app.cross_update_text_info(str(e))
 
     def refresh_ui(self):
         """Refresh UI text after language change."""
@@ -1254,9 +1245,11 @@ class App(ctk.CTk):
 
     def cross_update_text_info(self, val):
         """Update the info text with auto-reset."""
-        self.toolbar.info_label.configure(text=val)
-        self.after(3000, lambda: self.toolbar.info_label.configure(text='Ok.'))
-
+        try:
+            self.toolbar.info_label.configure(text=val)
+            self.after(3000, lambda: self.toolbar.info_label.configure(text='Ok.'))
+        except AttributeError:
+            print("Toolbar not initialized or info_label not found.")
     # =====================================
     # CONSOLE AND COMMAND SYSTEM
     # =====================================

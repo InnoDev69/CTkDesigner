@@ -1,0 +1,93 @@
+{
+    "project": {
+        "NEW_PROYECT": "Nuevo projecto",
+        "WINDOW_CONFIG": "Configuración de ventana",
+        "CREATE_PROJECT": "Crear Proyecto",
+        "IMPORT_PROJECT": "Importar Proyecto",
+        "HEIGHT": "Altura:",
+        "WIDTH": "Anchura:",
+        "RESIZABLE": "Redimensionable"
+    },
+    "widgets": {
+        "CONFIG_LABEL_TEXT": "Configuración de widget",
+        "SCENE_MANAGER_LABEL_TEXT": "Funciona",
+        "POSITION_LABEL_TEXT": "Posición (x, y):",
+        "LABEL_WIDGETS_TEXT": "Widgets disponibles",
+        "LABEL_SCHEME_TEXT": "Esquema de widgets",
+        "TYPE_TEXT_WIDGET_LABEL": "Tipo"
+    },
+    "rightbar": {
+        "RIGHTBAR_BUTTON_UPLOAD_LAYER": "Subir capa",
+        "RIGHTBAR_BUTTON_LOWER_LAYER": "Bajar capa",
+        "RIGHTBAR_BUTTON_DELETE_WIDGET": "Borrar widget",
+        "RIGHTBAR_BUTTON_VARIABLE_NAME": "Nombre de la variable"
+    },
+    "toolbar": {
+        "TOOL_BUTTON_EXPORT": "Exportar",
+        "TOOL_BUTTON_CONFIG": "Configuraciones",
+        "USER_SHOW_WIDGET_CONFIG": "Mostrando configuración para widget:",
+        "USER_ENTRY_CREATED": "Entrada '{prop}' del widget '{widget_class}' creada.",
+        "USER_PROP_TYPE": "Tipo de propiedad:{type_of_property}\n Valor: {entry}",
+        "USER_PROP_UPDATED": "Propiedad '{prop}' del widget '{widget.__class__.__name__}' actualizada a: '{entry}'",
+        "USER_PROP_FONT_UPDATED": "Propiedad 'font' actualizada a: ({font_name}, {font_size})",
+        "USER_VAR_UPDATED": "Variable de widget actualizada.",
+        "USER_POS_UPDATED": "Posición actualizada a: ({new_x}, {new_y})",
+        "USER_WIDGET_DETAILS": "Detalles de widget a importar: {widget}",
+        "USER_CONFIG_SAVED": "Configuración guardada.",
+        "USER_PROYECT_DETAILS": "Creando proyecto - Altura: {height}, Anchura: {width}",
+        "configuration_section": {
+            "window_title": "Configuración",
+            "label_languaje": "Idioma",
+            "label_personalization": "Personalización",
+            "label_theme": "Tema",
+            "label_exportation": "Exportacion",
+            "label_format_exportation": "Formato de exportación",
+            "label_allow_comments": "Agregar comentarios",
+            "button_apply_changes": "Aplicar cambios",
+            "button_reset_config": "Reiniciar configuración"
+        }
+    },
+    "console": {
+        "CONSOLE_BUTTON_TEXT": "Consola",
+        "CONSOLE_BUTTON_RUN": "Ejecutar"
+    },
+    "menubar": {
+        "MENU_BAR_MENU_TITLE": "Menu",
+        "MENU_BAR_TOOL_TITLE": "Herramientas",
+        "exit_option": "Salir"
+    },
+    "colorpicker": {
+        "COLOR_PICKER_TITLE": "Selector de color",
+        "COLOR_PICKER_INITIAL_COLOR": "Color inicial",
+        "BRIGHTNESS_LABEL": "Brillo:",
+        "COLOR_PICKER_ACCEPT": "Aceptar",
+        "TOOLTIP_ERROR_COLOR_NO_VALID": "El color no es válido",
+        "TOOLTIP_COLOR_INFO": "Haga clic para seleccionar un color"
+    },
+    "filedialog": {
+        "FILE_DIALOG_OPEN": "Abrir archivo",
+        "FILE_DIALOG_SAVE": "Guardar archivo",
+        "FILE_DIALOG_ARCHIVE": "Archivo Python",
+        "FILE_DIALOG_JSON_ARCHIVE": "Archivo JSON",
+        "FILE_DIALOG_SAVE_AS_TITLE": "Guardar como",
+        "FILE_DIALOG_SELECT_FILE": "Seleccionar archivo",
+
+        "file_type": "Archivo Python"
+    },
+    "messagebox":{
+        "toolbar":{
+            "apply_config":{
+                "user_config_saved_confirmation": "Para ver algunos cambios, debes reiniciar la aplicación.",
+                "afirmative_button": "Reiniciar",
+                "negative_button": "Cancelar",
+                "neutral_button": "Más tarde"
+            }
+        }
+    },
+    "generic": {
+        "words": {
+            "files:": "Archivos"
+        }
+    }
+    
+}

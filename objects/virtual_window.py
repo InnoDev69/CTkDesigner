@@ -14,7 +14,7 @@ import re
 from PIL import Image, ImageDraw, ImageFont
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
         logging.FileHandler("debug.log"),
