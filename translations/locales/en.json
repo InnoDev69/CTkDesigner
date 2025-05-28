@@ -88,5 +88,12 @@
         "words":{
             "files:": "Files"
         }
+    },
+    "plugin_window": {
+        "plugins_manager": "Plugins Manager",
+        "window_title": "Plugin Window",
+        "header_text": "Available Plugins",
+        "plugin_author": "Author",
+        "no_plugins": "No plugins available"
     }
 }

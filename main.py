@@ -17,8 +17,9 @@ from objects.code_box import CTkCodeBox
 from translations.translations import *
 from config.config_manager import ConfigManager
 from functions.create_widget_animation import *
-from objects.virtual_window import VirtualWindow
+from objects.window.virtual_window import VirtualWindow
 #BETA
+from plugins.plugin_manager import PluginManager
 from objects.theme_manager import ThemeManager
 from objects.CTkMenuBar import *
 #from functions.translator_manager import *
@@ -686,6 +687,7 @@ class App(ctk.CTk):
         self._initialize_core_components()
         self._setup_application_config()
         self._initialize_ui()
+        self._initialize_plugins()
         
     #TEST
     def reset_window(self):
@@ -712,6 +714,68 @@ class App(ctk.CTk):
         # Application state
         self.import_proyect = False
         self.use_scene_manager = False
+    
+    def _initialize_plugins(self):
+        self.plugin_manager = PluginManager()
+        # Load plugins
+        self.plugin_manager.discover_plugins()
+        self.plugin_manager.initialize_plugins(self)
+        
+    def open_plugin_manager(self):
+        """Open plugin manager window"""
+        if not hasattr(self, 'plugin_window'):
+            self.plugin_window = ctk.CTkToplevel(self)
+            self.plugin_window.title(translator.get("plugin_window.window_title"))
+            self.plugin_window.geometry("400x600")
+            self._create_plugin_manager_ui()
+        else:
+            self.plugin_window.lift()
+            
+    def _create_plugin_manager_ui(self):
+        """Create plugin manager UI"""
+        frame = ctk.CTkScrollableFrame(self.plugin_window)
+        frame.pack(expand=True, fill="both", padx=10, pady=10)
+        
+        # Header
+        header = ctk.CTkLabel(frame, text=translator.get("plugin_window.header_text"), font=("Helvetica", 16, "bold"))
+        header.pack(pady=10)
+        
+        # Plugin list
+        if len(self.plugin_manager.plugins.items())!=0:
+            for name, plugin in self.plugin_manager.plugins.items():
+                plugin_frame = ctk.CTkFrame(frame)
+                plugin_frame.pack(fill="x", padx=5, pady=5)
+                
+                # Plugin info
+                info_frame = ctk.CTkFrame(plugin_frame)
+                info_frame.pack(fill="x", padx=5, pady=5)
+                
+                ctk.CTkLabel(info_frame, text=name, font=("Helvetica", 14, "bold")).pack(anchor="w")
+                ctk.CTkLabel(info_frame, text=f"Version: {plugin.version}").pack(anchor="w")
+                ctk.CTkLabel(info_frame, text=f"{translator.get('plugin_window.plugin_author')} {plugin.author}").pack(anchor="w")
+                ctk.CTkLabel(info_frame, text=plugin.description, wraplength=300).pack(anchor="w")
+                
+                # Create switch first
+                switch = ctk.CTkSwitch(plugin_frame, text="Enabled")
+                
+                # Now we can safely reference switch in the lambda
+                switch.configure(command=lambda p=name, s=switch: self._toggle_plugin(p, s))
+                
+                switch.pack(pady=5)
+                # Set initial state
+                switch.select() if self.plugin_manager.enabled_plugins.get(name, True) else switch.deselect()
+                
+                if name == 'Base Plugin':
+                    switch.configure(state="disabled")
+        else:
+            ctk.CTkLabel(frame, text=translator.get("plugin_window.no_plugins")).pack(pady=20)
+            
+    def _toggle_plugin(self, plugin_name: str, switch: ctk.CTkSwitch):
+        """Toggle plugin enabled state"""
+        if switch.get():
+            self.plugin_manager.enable_plugin(plugin_name)
+        else:
+            self.plugin_manager.disable_plugin(plugin_name)
         
     def _setup_application_config(self):
         """Configure application window and appearance."""
@@ -985,14 +1049,16 @@ class App(ctk.CTk):
         tools_options = [
             (translator.translate("CONSOLE_BUTTON_TEXT"), self.toolbar.open_console),
             "separator",
-            
+            (translator.get("plugin_window.plugins_manager"), self.open_plugin_manager),
         ]
+        
         for option in tools_options:
             if option == "separator":
                 self.tool_button_drop.add_separator()
             else:
                 text, command = option
                 self.tool_button_drop.add_option(text, command=command)
+                
     def _create_main_components(self, vw_height, vw_width):
         """Create the main UI components."""
         self._create_main_frame()
@@ -1250,6 +1316,7 @@ class App(ctk.CTk):
             self.after(3000, lambda: self.toolbar.info_label.configure(text='Ok.'))
         except AttributeError:
             print("Toolbar not initialized or info_label not found.")
+            
     # =====================================
     # CONSOLE AND COMMAND SYSTEM
     # =====================================

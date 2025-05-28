@@ -88,6 +88,12 @@
         "words": {
             "files:": "Archivos"
         }
+    },
+    "plugin_window": {
+        "plugins_manager": "Gestor de plugins",
+        "window_title": "Ventana de plugin",
+        "header_text": "Plugins disponibles",
+        "plugin_author": "Autor",
+        "no_plugins": "No hay plugins disponibles"
     }
-    
 }
