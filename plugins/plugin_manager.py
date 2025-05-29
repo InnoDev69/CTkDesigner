@@ -27,7 +27,11 @@ class Plugin:
         def attempt_initialize(remaining_retries):
             try:
                 if hasattr(self.app, 'toolbar') and self.app.toolbar:
-                    self.on_initialize(app)
+                    try:    
+                        
+                        self.on_initialize(app)
+                    except TypeError:
+                        self.on_initialize()
                     return True
                 else:
                     logging.debug(f"Plugin '{self.name}' waiting for toolbar. Attempts left: {remaining_retries}")
