@@ -14,7 +14,7 @@ class Plugin:
         self.description = "Base plugin class"
         self.author = "Yo"
         
-    def initialize(self, app, retries=3, delay=1000) -> None:
+    def initialize(self, app, retries=100, delay=5000) -> None:
         """Initialize plugin with retry mechanism.
         
         Args:
@@ -28,19 +28,18 @@ class Plugin:
             try:
                 if hasattr(self.app, 'toolbar') and self.app.toolbar:
                     try:    
-                        
                         self.on_initialize(app)
                     except TypeError:
                         self.on_initialize()
                     return True
                 else:
-                    logging.debug(f"Plugin '{self.name}' waiting for toolbar. Attempts left: {remaining_retries}")
+                    print(f"Plugin '{self.name}' waiting for toolbar. Attempts left: {remaining_retries}")
                     if remaining_retries > 0:
                         self.app.after(delay, lambda: attempt_initialize(remaining_retries - 1))
                     return False
                     
             except AttributeError as e:
-                logging.error(f"Plugin '{self.name}' initialization failed: {e}")
+                print(f"Plugin '{self.name}' initialization failed: {e}")
                 if remaining_retries > 0:
                     self.app.after(delay, lambda: attempt_initialize(remaining_retries - 1))
                 return False
@@ -69,7 +68,7 @@ class PluginManager:
                 with open(config_path, "r") as f:
                     self.enabled_plugins = json.load(f)
             except Exception as e:
-                logging.error(f"Error loading plugin config: {e}")
+                print(f"Error loading plugin config: {e}")
                 self.enabled_plugins = {}
                 
     def _save_plugin_config(self) -> None:
@@ -79,7 +78,7 @@ class PluginManager:
             with open(config_path, "w") as f:
                 json.dump(self.enabled_plugins, f, indent=2)
         except Exception as e:
-            logging.error(f"Error saving plugin config: {e}")
+            print(f"Error saving plugin config: {e}")
                 
     def discover_plugins(self) -> None:
         """Discover available plugins in plugins directory"""
@@ -109,7 +108,7 @@ class PluginManager:
                     self.enabled_plugins[plugin.name] = True
                     
         except Exception as e:
-            logging.error(f"Error loading plugin {plugin_path}: {e}")
+            print(f"Error loading plugin {plugin_path}: {e}")
             
     def initialize_plugins(self, app) -> None:
         """Initialize all enabled plugins"""
@@ -117,9 +116,9 @@ class PluginManager:
             if self.enabled_plugins.get(name, True):
                 try:
                     plugin.initialize(app)
-                    logging.info(f"Initialized plugin: {name}")
+                    print(f"Initialized plugin: {name}")
                 except Exception as e:
-                    logging.error(f"Error initializing plugin {name}: {e}")
+                    print(f"Error initializing plugin {name}: {e}")
                     
     def enable_plugin(self, name: str) -> None:
         """Enable a plugin"""
