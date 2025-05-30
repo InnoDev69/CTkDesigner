@@ -374,9 +374,20 @@ class App(ctk.CTk):
             border_width=1,
             border_color="grey30"
         )
+        self.plugin_button_drop = CustomDropdownMenu(
+            widget=self.menu_bar.add_cascade(text="Plugins"),
+            master=self,
+            width=150,
+            fg_color="#2b2b2b",
+            hover_color="#1f1f1f",
+            corner_radius=8,
+            border_width=1,
+            border_color="grey30"
+        )
         self._populate_menu_options()
         self._populate_tools_options()
-
+        self._populate_plugins_options()
+        
     def _populate_menu_options(self):
         """Add options to the dropdown menu."""
         menu_options = [
@@ -400,7 +411,7 @@ class App(ctk.CTk):
         tools_options = [
             (translator.translate("CONSOLE_BUTTON_TEXT"), self.toolbar.open_console),
             "separator",
-            (translator.get("plugin_window.plugins_manager"), self.open_plugin_manager),
+
         ]
         
         for option in tools_options:
@@ -410,6 +421,19 @@ class App(ctk.CTk):
                 text, command = option
                 self.tool_button_drop.add_option(text, command=command)
                 
+    def _populate_plugins_options(self):
+        """Create the plugins dropdown menu with options."""
+        plugins_options = [
+            (translator.get("plugin_window.plugins_manager"), self.open_plugin_manager),
+            "separator",
+        ]        
+        for option in plugins_options:
+            if option == "separator":
+                self.plugin_button_drop.add_separator()
+            else:
+                text, command = option
+                self.plugin_button_drop.add_option(text, command=command)   
+                 
     def _create_main_components(self, vw_height, vw_width):
         """Create the main UI components."""
         self._create_main_frame()

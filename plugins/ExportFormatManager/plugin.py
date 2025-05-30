@@ -28,8 +28,8 @@ class Plugin(Plugin):
         
     def on_initialize(self) -> None:
         """Initialize export format manager"""
-        self.app.tool_button_drop.add_separator()
-        self.app.tool_button_drop.add_option(
+        self.app.plugin_button_drop.add_separator()
+        self.app.plugin_button_drop.add_option(
             "Export Formats", 
             self.open_format_manager
         )

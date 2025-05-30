@@ -67,8 +67,8 @@ class Plugin(Plugin):
     def on_initialize(self) -> None:
         """Inicializa el plugin y configura el timer de auto-guardado"""
         print("Inicializando AutoSave Plugin")
-        self.app.tool_button_drop.add_separator()
-        self.app.tool_button_drop.add_option("Autosave plugin configuration", self.open_config_window)
+        self.app.plugin_button_drop.add_separator()
+        self.app.plugin_button_drop.add_option("Autosave plugin configuration", self.open_config_window)
         self._schedule_autosave()
 
     def open_config_window(self):
