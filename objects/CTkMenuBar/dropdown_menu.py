@@ -113,7 +113,7 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
     def dummy():
         pass
     
-    def add_option(self, option: str, command: Callable=dummy, **kwargs) -> None:
+    def add_option(self, option: str, command: Callable=dummy, row = None, **kwargs) -> None:
         optionButton = _CDMOptionButton(
             self,
             width = self.width,
@@ -137,17 +137,83 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
         
         if self.is_submenu:
             optionButton.bind("<Enter>", lambda e, submenu=self: submenu.change_hover(self), add="+")
+        if row:
+            self._reorder_options_per_row(option, row)
    
         return optionButton
+    
+    def add_separator(self) -> None:
+        """Add a separator line to the menu"""
+        separator = customtkinter.CTkFrame(
+            master=self, 
+            height=2,
+            width=self.width,
+            fg_color=self.separator_color, 
+            border_width=0
+        )
+        separator._is_separator = True
+        
+        separator.pack(
+            side="top",
+            fill="x",
+            expand=True,
+        )
+        self._options_list.append(separator)
 
-    def add_submenu(self, submenu_name: str, **kwargs) -> "CustomDropdownMenu":
+    def _reorder_options_per_row(self, option, row):
+        """Reorder options in the dropdown menu based on the specified row.
+        
+        Args:
+            option (str): The option text to be inserted
+            row (int): The target row where the option should be placed
+        """
+
+        target_button = None
+        for opt in self._options_list:
+            if hasattr(opt, '_is_separator'):
+                continue
+            if opt.cget("text") == option:
+                target_button = opt
+                break
+        
+        if target_button is None:
+            return
+        
+        self._options_list.remove(target_button)
+        
+        row = min(row, len(self._options_list))  # Asegurar que row no exceda el límite
+        self._options_list.insert(row, target_button)
+        
+        # Reempaquetar todos los widgets en el nuevo orden
+        for opt in self.winfo_children():
+            opt.pack_forget()
+            
+        # Reempaquetar en el orden de _options_list
+        for opt in self._options_list:
+            if hasattr(opt, '_is_separator'):
+                opt.pack(
+                    side="top",
+                    fill="x",
+                    expand=True
+                )
+            else:
+                # Configuración normal para botones
+                opt.pack(
+                    side="top",
+                    fill="both", 
+                    expand=True,
+                    padx=3+(self.corner_radius/5),
+                    pady=3+(self.corner_radius/5)
+                )
+
+    def add_submenu(self, submenu_name: str, row=None, **kwargs) -> "CustomDropdownMenu":
         submenuButtonSeed = _CDMSubmenuButton(self, text=submenu_name, anchor="w",
                                               text_color=self.text_color,
                                               width=self.width, height=self.height, **kwargs)
         submenuButtonSeed.setParentMenu(self)
         self._options_list.append(submenuButtonSeed)
         self._configureButton(submenuButtonSeed)
-
+        option=submenu_name
         submenu = CustomDropdownMenu(
             master=self.master,
             height=self.height,
@@ -179,6 +245,10 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
             expand=True,
             padx=3+(self.corner_radius/5),
             pady=3+(self.corner_radius/5))
+        
+        if row:
+            self._reorder_options_per_row(option, row)
+        
         return submenu
         
     def _left(self, parent):
@@ -214,6 +284,7 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
             
         
     def add_separator(self) -> None:
+        """Add a separator line to the menu"""
         separator = customtkinter.CTkFrame(
             master=self, 
             height=2,
@@ -221,11 +292,16 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
             fg_color=self.separator_color, 
             border_width=0
         )
+        # Agregar un atributo para identificar separadores
+        separator._is_separator = True
+        
         separator.pack(
             side="top",
             fill="x",
             expand=True,
         )
+        # Agregar separador a la lista de opciones
+        self._options_list.append(separator)
 
     def _show(self, *args, **kwargs) -> None:
         dpi = self._get_widget_scaling()
@@ -268,13 +344,17 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
                 option.submenu._hide()
 
     def toggleShow(self, *args, **kwargs) -> None:
-    
+        """Toggle visibility of dropdown menu."""
         widget_base = self.menu_seed_object.master.winfo_name()
+        
         if widget_base.startswith("!ctktitlemenu") or widget_base.startswith("!ctkmenubar"):
-            for i in self.menu_seed_object.master.menu:
-                if i!=self:
-                    i._hide()
-    
+            # Hide other menus in the menubar
+            for item in self.menu_seed_object.master.menu:
+                # Only try to hide if item is a CustomDropdownMenu
+                if isinstance(item, CustomDropdownMenu) and item != self:
+                    item._hide()
+        
+        # Toggle current menu visibility
         if not self.winfo_viewable():
             self._show()
             self.lift()

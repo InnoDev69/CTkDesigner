@@ -111,3 +111,16 @@ class WidgetManagerMixin:
         widget.destroy()
         self.widgets.remove(widget)
         logging.debug(f"Deleted widget: {widget}")
+
+    def create_and_place_widget(self, widget_type, properties, x, y, save_state=True):
+        """Create and place a widget with given properties at specified position."""
+        if save_state:
+            self.save_state()
+            
+        logging.debug(f"Creating and placing widget of type '{widget_type}'")
+        
+        if widget := self.create_widget(widget_type, **properties):
+            self._place_and_setup_widget(widget, x, y)
+            logging.info(f"Widget placed: {widget_type} at ({x}, {y})")
+            return widget
+        return None

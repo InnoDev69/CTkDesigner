@@ -131,9 +131,53 @@ class IOManagerMixin:
             file.write("\n".join(lines))
             logging.info("Successfully wrote code to file")
 
+    def _clean_widgets(self):
+        """Clean up widgets before import."""
+        try:
+            # First try direct widget cleanup
+            for widget in self.widgets[:]:  # Create a copy to avoid modification during iteration
+                if hasattr(self.left_sidebar, 'delete_widget'):
+                    self.left_sidebar.delete_widget(widget)
+                else:
+                    widget.destroy()
+                    self.widgets.remove(widget)
+            
+            # Clear any visual guides
+            self.clear_guides()
+            
+            logging.info("Successfully cleaned widgets")
+            
+        except Exception as e:
+            logging.error(f"Error cleaning widgets: {e}")
+            raise
+
+    def import_from_json(self, filename):
+        """Import window state from JSON."""
+        logging.info(f"Importing from JSON: {filename}")
+        
+        try:
+            self._clean_widgets()
+            
+            with open(filename, "r") as f:
+                data = json.load(f)
+                
+            for widget_data in data:
+                self.create_and_place_widget(
+                    widget_data["type"],
+                    widget_data["properties"],
+                    widget_data["x"],
+                    widget_data["y"]
+                )
+                
+            logging.info("JSON import completed successfully")
+            
+        except Exception as e:
+            logging.error(f"JSON import failed: {e}")
+            raise
+
     def import_from_file(self, file_path):
         """Import window configuration from a file."""
-        self.clean_virtual_window()
+        self._clean_widgets()
         
         try:
             code = self._read_file(file_path)
@@ -146,6 +190,7 @@ class IOManagerMixin:
         except Exception as e:
             logging.error(f"Import failed: {e}")
             self.app.cross_update_progressbar(0.0)
+            raise
 
     def export_to_json(self, filename):
         """Export window state to JSON."""
@@ -153,22 +198,3 @@ class IOManagerMixin:
         
         with open(f"{filename}.json", "w") as f:
             json.dump(data, f, indent=4)
-            
-    def import_from_json(self, filename):
-        """Import window state from JSON."""
-        self.clean_virtual_window()
-        
-        try:
-            with open(filename, "r") as f:
-                data = json.load(f)
-                
-            for widget_data in data:
-                self.create_and_place_widget(
-                    widget_data["type"],
-                    widget_data["properties"],
-                    widget_data["x"],
-                    widget_data["y"]
-                )
-                
-        except Exception as e:
-            logging.error(f"JSON import failed: {e}")

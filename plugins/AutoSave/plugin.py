@@ -8,7 +8,7 @@ from plugins.plugin_manager import Plugin
 class Plugin(Plugin):
     def __init__(self):
         self.name = "AutoSave Plugin"
-        self.version = "1.0.0"
+        self.version = "1.0.1"
         self.description = "Auto-guarda el proyecto cada cierto tiempo"
         self.author = "Innodev69"
         
@@ -69,6 +69,10 @@ class Plugin(Plugin):
         print("Inicializando AutoSave Plugin")
         self.app.plugin_button_drop.add_separator()
         self.app.plugin_button_drop.add_option("Autosave plugin configuration", self.open_config_window)
+        self.app.menu_button_drop.add_separator()
+        submenu=self.app.menu_button_drop.add_submenu("Autosave", 3)
+        for path in self.get_autosave_files():
+            submenu.add_option(path.name, lambda p=path: self.app.virtual_window.import_from_json(str(p)))
         self._schedule_autosave()
 
     def open_config_window(self):
@@ -91,6 +95,27 @@ class Plugin(Plugin):
             font=("Helvetica", 16, "bold")
         )
         title.pack(pady=(0, 20))
+
+        # Tiempo restante para próximo autosave
+        self.time_remaining_frame = CTk.CTkFrame(main_frame)
+        self.time_remaining_frame.pack(fill="x", pady=(0, 20))
+        
+        time_remaining_label = CTk.CTkLabel(
+            self.time_remaining_frame,
+            text="Próximo autosave en:",
+            font=("Helvetica", 12)
+        )
+        time_remaining_label.pack(side="left", padx=5)
+        
+        self.countdown_label = CTk.CTkLabel(
+            self.time_remaining_frame,
+            text="00:00",
+            font=("Helvetica", 12, "bold")
+        )
+        self.countdown_label.pack(side="right", padx=5)
+        
+        # Iniciar actualización del contador
+        self._update_countdown()
 
         interval_frame = self._extracted_from_open_config_window_22(
             main_frame, 10, "Intervalo de guardado (minutos):"
@@ -175,10 +200,30 @@ class Plugin(Plugin):
             
             # Mantener solo los últimos 5 auto-guardados
             self._cleanup_old_autosaves()
-            
+        
         except Exception as e:
             logging.error(f"Error en auto-guardado: {e}")
 
+    def get_autosave_files(self) -> list[Path]:
+        """Obtiene la lista de archivos autoguardados ordenados por fecha.
+        
+        Returns:
+            list[Path]: Lista de rutas de archivos autoguardados ordenados del más reciente al más antiguo
+        """
+        try:
+            autosave_dir = Path("autosaves")
+            if not autosave_dir.exists():
+                return []
+
+            return sorted(
+                autosave_dir.glob("autosave_*.json"),
+                key=lambda x: x.stat().st_mtime,
+                reverse=True,  # Más reciente primero
+            )
+        except Exception as e:
+            logging.error(f"Error obteniendo lista de autoguardados: {e}")
+            return []
+    
     def _cleanup_old_autosaves(self):
         """Limpia auto-guardados antiguos"""
         autosave_dir = Path("autosaves")
@@ -213,6 +258,9 @@ class Plugin(Plugin):
             self.save_interval = new_interval * 60  # Convertir minutos a segundos
             self.max_saves = new_max_saves
             
+            # Reiniciar el tiempo del último guardado para que el contador comience desde el nuevo intervalo
+            self.last_save = time.time()
+            
             # Guardar en el archivo JSON
             self.save_config_to_file()
             
@@ -226,3 +274,23 @@ class Plugin(Plugin):
                 message="Por favor ingrese valores numéricos válidos",
                 icon="cancel"
             )
+
+    def _format_time_remaining(self, seconds):
+        """Formatea el tiempo restante en formato mm:ss"""
+        minutes = int(seconds // 60)
+        seconds = int(seconds % 60)
+        return f"{minutes:02d}:{seconds:02d}"
+    
+    def _update_countdown(self):
+        """Actualiza el contador de tiempo restante"""
+        if hasattr(self, 'config_window') and self.config_window.winfo_exists():
+            current_time = time.time()
+            time_elapsed = current_time - self.last_save
+            time_remaining = max(0, self.save_interval - time_elapsed)
+            
+            self.countdown_label.configure(
+                text=self._format_time_remaining(time_remaining)
+            )
+            
+            # Actualizar cada segundo
+            self.config_window.after(1000, self._update_countdown)
