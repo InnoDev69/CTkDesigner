@@ -8,7 +8,7 @@ from plugins.plugin_manager import Plugin
 class Plugin(Plugin):
     def __init__(self):
         self.name = "AutoSave Plugin"
-        self.version = "1.0.1"
+        self.version = "1.0.2"
         self.description = "Auto-guarda el proyecto cada cierto tiempo"
         self.author = "Innodev69"
         
@@ -71,8 +71,11 @@ class Plugin(Plugin):
         self.app.plugin_button_drop.add_option("Autosave plugin configuration", self.open_config_window)
         self.app.menu_button_drop.add_separator()
         submenu=self.app.menu_button_drop.add_submenu("Autosave", 3)
-        for path in self.get_autosave_files():
-            submenu.add_option(path.name, lambda p=path: self.app.virtual_window.import_from_json(str(p)))
+        if files:= self.get_autosave_files():
+            for path in files:
+                submenu.add_option(path.name, lambda p=path: self.app.virtual_window.import_from_json(str(p)))
+        else:
+            submenu.add_option("No hay auto-guardados disponibles", None, state="disabled")
         self._schedule_autosave()
 
     def open_config_window(self):
@@ -221,7 +224,7 @@ class Plugin(Plugin):
                 reverse=True,  # Más reciente primero
             )
         except Exception as e:
-            logging.error(f"Error obteniendo lista de autoguardados: {e}")
+            print(f"Error obteniendo lista de autoguardados: {e}")
             return []
     
     def _cleanup_old_autosaves(self):
