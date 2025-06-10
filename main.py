@@ -607,49 +607,6 @@ class App(ctk.CTk):
                     continue
 
     # =====================================
-    # CODE VIEW AND EDITING
-    # =====================================
-    
-    def view_code(self):
-        """Toggle between design view and code view."""
-        if self.virtual_window.toggle_visibility():
-            self._enter_code_view()
-        else:
-            self._exit_code_view()
-
-    def _enter_code_view(self):
-        """Enter code editing mode."""
-        self.virtual_window.replace()
-        self._create_code_editor()
-        self.right_sidebar.disable_buttons()
-
-    def _create_code_editor(self):
-        """Create the code editor component."""
-        self.code = CTkCodeBox(
-            self.central_canvas, 
-            height=500, 
-            width=800, 
-            language='python'
-        )
-        self.code.place(x=50, y=50)
-        
-        code_content = "\n".join(self.virtual_window.previsualize_code())
-        self.code.insert('1.0', code_content)
-        self.code.bind("<KeyRelease>", self.update_virtual_window)
-
-    def _exit_code_view(self):
-        """Exit code editing mode."""
-        self.right_sidebar.enable_buttons()
-        if hasattr(self, 'code'):
-            self.code.destroy()
-
-    def update_virtual_window(self, event):
-        """Update virtual window with current code content."""
-        new_code = self.code.get('1.0', 'end-1c')
-        self.virtual_window.import_from_codebox(new_code)
-        logging.debug(self.virtual_window.widgets)
-
-    # =====================================
     # WIDGET MANAGEMENT
     # =====================================
     

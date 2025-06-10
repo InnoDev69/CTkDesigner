@@ -198,3 +198,43 @@ class IOManagerMixin:
         
         with open(f"{filename}.json", "w") as f:
             json.dump(data, f, indent=4)
+    
+    def toggle_visibility(self):
+        """Alterna la visibilidad de todos los widgets dentro de la VirtualWindow."""
+        if self._is_hidden:
+            for widget in self.widgets:
+                if widget in self._original_positions:
+                    x, y = self._original_positions[widget]
+                    widget.place(x=x, y=y)
+            self._is_hidden = False
+        else:
+            for widget in self.widgets:
+                self._original_positions[widget] = (widget.winfo_x(), widget.winfo_y())
+                widget.place_forget()
+            self._is_hidden = True
+        return self._is_hidden
+    
+    def previsualize_code(self):
+        logging.debug("Intentando generar lineas")
+
+        lines = self._extracted_from_export_to_file_4()
+        self.update_idletasks()
+
+        lines.extend(self._create_footer_lines())
+        self.app.cross_update_progressbar(1.0)
+        self.update_idletasks()
+        return lines
+    
+    def _extracted_from_export_to_file_4(self):
+        self.app.cross_update_progressbar(0.0)
+        self.update_idletasks()
+        window_params_string = self._get_window_params_string()
+        self.app.cross_update_progressbar(0.5)
+        self.update_idletasks()
+        result = self._create_initial_lines(window_params_string)
+        self._add_widget_lines(result)
+        self.app.cross_update_progressbar(0.7)
+        return result
+    
+    def replace(self):
+        self.place(x=50, y=50)

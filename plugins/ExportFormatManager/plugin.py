@@ -8,7 +8,7 @@ class Plugin(Plugin):
         self.name = "Export Format Manager" 
         self.version = "1.0.0"
         self.description = "Manage different code export formats"
-        self.author = "Your Name"
+        self.author = "InnoDev69"
         
         # Default format templates
         self.formats = {

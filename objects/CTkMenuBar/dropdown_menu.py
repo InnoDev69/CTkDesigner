@@ -498,3 +498,79 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
             return self.pady
 
         return super().cget(param)
+    
+    def remove_option(self, option_text: str) -> bool:
+        """Remove an option from the dropdown menu by its text
+    
+        Args:
+            option_text (str): Text of the option to remove
+            
+        Returns:
+            bool: True if option was found and removed, False otherwise
+        """
+        for option in self._options_list:
+            if hasattr(option, '_is_separator'):
+                continue
+                
+            if isinstance(option, (_CDMOptionButton, _CDMSubmenuButton)) and option.cget("text") == option_text:
+                self._options_list.remove(option)
+                option.destroy()
+                return True
+        return False
+
+    def change_option_text(self, old_text: str, new_text: str) -> bool:
+        """Change the text of an option in the dropdown menu
+    
+        Args:
+            old_text (str): Current text of the option
+            new_text (str): New text to set
+            
+        Returns:
+            bool: True if option was found and modified, False otherwise
+        """
+        for option in self._options_list:
+            if hasattr(option, '_is_separator'):
+                continue
+                
+            if isinstance(option, (_CDMOptionButton, _CDMSubmenuButton)) and option.cget("text") == old_text:
+                option.configure(text=new_text)
+                return True
+        return False
+
+    def remove_option(self, option_text: str) -> bool:
+        """Remove an option from the dropdown menu by its text
+        
+        Args:
+            option_text (str): Text of the option to remove
+            
+        Returns:
+            bool: True if option was found and removed, False otherwise
+        """
+        for option in self._options_list:
+            if hasattr(option, '_is_separator'):
+                continue
+                
+            if isinstance(option, (_CDMOptionButton, _CDMSubmenuButton)) and option.cget("text") == option_text:
+                self._options_list.remove(option)
+                option.destroy()
+                return True
+        return False
+
+    def change_option_text(self, old_text: str, new_text: str) -> bool:
+        """Change the text of an option in the dropdown menu
+        
+        Args:
+            old_text (str): Current text of the option
+            new_text (str): New text to set
+            
+        Returns:
+            bool: True if option was found and modified, False otherwise
+        """
+        for option in self._options_list:
+            if hasattr(option, '_is_separator'):
+                continue
+                
+            if isinstance(option, (_CDMOptionButton, _CDMSubmenuButton)) and option.cget("text") == old_text:
+                option.configure(text=new_text)
+                return True
+        return False

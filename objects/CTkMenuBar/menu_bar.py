@@ -58,8 +58,43 @@ class CTkMenuBar(customtkinter.CTkFrame):
         self.num += 1
 
         return self.menu_button
-    
+        
     def configure(self, **kwargs):
         if "bg_color" in kwargs:
            super().configure(fg_color=kwargs.pop("bg_color"))
         super().configure(**kwargs)
+        
+    def remove_button(self, text: str) -> bool:
+        """Remove a button from the menu bar by its text
+    
+        Args:
+            text (str): Text of the button to remove
+            
+        Returns:
+            bool: True if button was found and removed, False otherwise
+        """
+        for button in self.winfo_children():
+            if isinstance(button, customtkinter.CTkButton) and button.cget("text") == text:
+                button.destroy()
+                self.num -= 1
+                # Reposition remaining buttons
+                for i, remaining_button in enumerate(self.winfo_children()):
+                    remaining_button.grid(row=0, column=i, padx=(self.padx,0), pady=self.pady)
+                return True
+        return False
+
+    def change_button_text(self, old_text: str, new_text: str) -> bool:
+        """Change the text of a button in the menu bar
+    
+        Args:
+            old_text (str): Current text of the button
+            new_text (str): New text to set
+            
+        Returns:
+            bool: True if button was found and modified, False otherwise
+        """
+        for button in self.winfo_children():
+            if isinstance(button, customtkinter.CTkButton) and button.cget("text") == old_text:
+                button.configure(text=new_text)
+                return True
+        return False
