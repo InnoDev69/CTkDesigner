@@ -1,0 +1,71 @@
+{
+  "customtkinter": {
+    "name": "CustomTkinter (Default)",
+    "imports": "import customtkinter as ctk\n",
+    "class_def": "class App(ctk.CTk):",
+    "init_method": "    def __init__(self):\n        super().__init__()\n        self.geometry('{window_width}x{window_height}')\n        self.title('Exported Virtual Window')\n        \n        self.resizable({resizable},{resizable})\n        self.virtual_window = ctk.CTkFrame(self, {window_params})\n        self.virtual_window.pack(expand=True, fill='both')\n        self.generic_widget_creator()",
+    "creator_method": "    def generic_widget_creator(self):",
+    "widget_template": "        self.{widget_name} = ctk.{widget_type}(self.virtual_window, {widget_params})",
+    "widget_placement": "        self.{widget_name}.place(x={x}, y={y})",
+    "widget_no_name": "        ctk.{widget_type}(self.virtual_window, {widget_params}).place(x={x}, y={y})",
+    "footer": "\nif __name__ == '__main__':\n    app = App()\n    app.mainloop()",
+    "file_extension": ".py"
+  },
+  "tkinter": {
+    "name": "Tkinter (Standard)",
+    "imports": "import tkinter as tk\nfrom tkinter import ttk\n",
+    "class_def": "class App(tk.Tk):",
+    "init_method": "    def __init__(self):\n        super().__init__()\n        self.geometry('{window_width}x{window_height}')\n        self.title('Exported Virtual Window')\n        \n        self.resizable({resizable_bool},{resizable_bool})\n        self.virtual_window = tk.Frame(self, {window_params})\n        self.virtual_window.pack(expand=True, fill='both')\n        self.generic_widget_creator()",
+    "creator_method": "    def generic_widget_creator(self):",
+    "widget_template": "        self.{widget_name} = tk.{widget_type}(self.virtual_window, {widget_params})",
+    "widget_placement": "        self.{widget_name}.place(x={x}, y={y})",
+    "widget_no_name": "        tk.{widget_type}(self.virtual_window, {widget_params}).place(x={x}, y={y})",
+    "footer": "\nif __name__ == '__main__':\n    app = App()\n    app.mainloop()",
+    "file_extension": ".py",
+    "widget_mapping": {
+      "CTkButton": "Button",
+      "CTkLabel": "Label", 
+      "CTkEntry": "Entry",
+      "CTkTextbox": "Text",
+      "CTkFrame": "Frame"
+    }
+  },
+  "html": {
+    "name": "HTML/CSS/JS",
+    "imports": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Exported Virtual Window</title>\n    <style>\n        body {{\n            margin: 0;\n            padding: 0;\n            font-family: Arial, sans-serif;\n        }}\n        .virtual-window {{\n            width: {window_width}px;\n            height: {window_height}px;\n            position: relative;\n            background-color: {bg_color};\n            margin: 20px auto;\n            border: 1px solid #ccc;\n        }}\n        .widget {{\n            position: absolute;\n        }}\n    </style>\n</head>\n<body>",
+    "class_def": "    <div class=\"virtual-window\">",
+    "init_method": "",
+    "creator_method": "",
+    "widget_template": "        <{html_tag} class=\"widget\" style=\"left: {x}px; top: {y}px; {style}\">{content}</{html_tag}>",
+    "widget_placement": "",
+    "widget_no_name": "        <{html_tag} class=\"widget\" style=\"left: {x}px; top: {y}px; {style}\">{content}</{html_tag}>",
+    "footer": "    </div>\n</body>\n</html>",
+    "file_extension": ".html",
+    "widget_mapping": {
+      "CTkButton": {"tag": "button", "content": "{text}"},
+      "CTkLabel": {"tag": "div", "content": "{text}"},
+      "CTkEntry": {"tag": "input", "content": "", "extra": "type=\"text\" value=\"{text}\""},
+      "CTkTextbox": {"tag": "textarea", "content": "{text}"},
+      "CTkFrame": {"tag": "div", "content": ""}
+    }
+  },
+  "pyside6": {
+    "name": "PySide6 (Qt)",
+    "imports": "from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout\nfrom PySide6.QtWidgets import QPushButton, QLabel, QLineEdit, QTextEdit\nfrom PySide6.QtCore import Qt\nimport sys\n",
+    "class_def": "class App(QMainWindow):",
+    "init_method": "    def __init__(self):\n        super().__init__()\n        self.setWindowTitle('Exported Virtual Window')\n        self.setGeometry(100, 100, {window_width}, {window_height})\n        \n        self.central_widget = QWidget()\n        self.setCentralWidget(self.central_widget)\n        self.setup_widgets()",
+    "creator_method": "    def setup_widgets(self):",
+    "widget_template": "        self.{widget_name} = {qt_widget_type}(self.central_widget)",
+    "widget_placement": "        self.{widget_name}.move({x}, {y})\n        self.{widget_name}.resize({width}, {height})",
+    "widget_no_name": "        widget_{index} = {qt_widget_type}(self.central_widget)\n        widget_{index}.move({x}, {y})\n        widget_{index}.resize({width}, {height})",
+    "footer": "\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    window = App()\n    window.show()\n    sys.exit(app.exec())",
+    "file_extension": ".py",
+    "widget_mapping": {
+      "CTkButton": "QPushButton",
+      "CTkLabel": "QLabel", 
+      "CTkEntry": "QLineEdit",
+      "CTkTextbox": "QTextEdit",
+      "CTkFrame": "QWidget"
+    }
+  }
+}

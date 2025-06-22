@@ -1,6 +1,7 @@
 # Version: 1.2
 # Tiene comentarios en español y a veces en ingles, depende el dia
 
+import contextlib
 import io
 import sys
 import logging
@@ -39,6 +40,9 @@ class App(ctk.CTk):
         self._setup_application_config()
         self._initialize_ui()
         self._initialize_plugins()
+        
+        self.message_queue = []  
+        self.is_showing_message = False  
         
     #TEST
     def reset_window(self):
@@ -279,13 +283,6 @@ class App(ctk.CTk):
         self.import_proyect = import_proyect
         height = self.hvar.get()
         width = self.wvar.get()
-        
-        app.cross_update_text_info(
-            self.translator.translate_with_vars(
-                "USER_PROYECT_DETAILS", 
-                {"height": height, "width": width}
-            )
-        )
         
         self._transition_to_main_ui(height, width)
 
@@ -641,13 +638,46 @@ class App(ctk.CTk):
         """Update the progress bar value."""
         self.toolbar.progress_set_value(val)
 
-    def cross_update_text_info(self, val):
-        """Update the info text with auto-reset."""
-        try:
-            self.toolbar.info_label.configure(text=val)
-            self.after(3000, lambda: self.toolbar.info_label.configure(text='Ok.'))
-        except AttributeError:
-            print("Toolbar not initialized or info_label not found.")
+    def cross_update_text_info(self, val):  
+        """Update the info text with message queue support."""  
+        try:  
+            self.message_queue.append(val)  
+            
+            if not self.is_showing_message:  
+                self._process_message_queue()  
+                
+        except AttributeError:  
+            print("Toolbar not initialized or info_label not found.")  
+            
+    # =====================================
+    # MESSAGE QUEUE SYSTEM
+    # =====================================            
+    
+    def _process_message_queue(self):  
+        """Process the next message in the queue."""  
+        if not self.message_queue or not hasattr(self, 'toolbar'):  
+            self.is_showing_message = False  
+            return  
+        
+        message = self.message_queue.pop(0)  
+        self.is_showing_message = True  
+        
+        if len(self.message_queue) > 0:
+            self.toolbar.info_label.configure(text=f"{message} ({len(self.message_queue)} more messages)")
+        
+        else:
+            self.toolbar.info_label.configure(text=message)
+        
+        self.after(3000, self._show_next_message)  
+    
+    def _show_next_message(self):
+        """Show next message or reset to 'Ok.'"""  
+        if self.message_queue:  
+            self._process_message_queue()
+        else:  
+            with contextlib.suppress(AttributeError):
+                self.toolbar.info_label.configure(text='Ok.')
+            self.is_showing_message = False
             
     # =====================================
     # CONSOLE AND COMMAND SYSTEM

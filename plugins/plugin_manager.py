@@ -32,6 +32,9 @@ class Plugin:
                     except TypeError:
                         self.on_initialize()
                     print(f"Plugin '{self.name}' initialized successfully.")
+                    self.app.cross_update_text_info(
+                        f"Plugin '{self.name}' initialized successfully."
+                    )
                     return True
                 else:
                     print(f"Plugin '{self.name}' waiting for toolbar. Attempts left: {remaining_retries}")

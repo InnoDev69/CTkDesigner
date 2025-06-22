@@ -133,9 +133,8 @@ class Toolbar(ctk.CTkFrame):
     
     def create_buttons(self):
         """Crea y empaqueta los botones de la barra de herramientas."""
-        self.create_button("Code preview", self.change_view, side="right")
-        self.create_button(app.translator.translate("CONSOLE_BUTTON_TEXT"), self.open_console, side="right")
-        self.create_button("Theme Manager", self.open_theme_manager, side="right") # Nuevo botón
+        #self.create_button(app.translator.translate("CONSOLE_BUTTON_TEXT"), self.open_console, side="right")
+        #self.create_button("Theme Manager", self.open_theme_manager, side="right") 
 
     def open_theme_manager(self):
         """Abre el gestor de temas."""
