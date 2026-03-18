@@ -1,0 +1,99 @@
+# filepath: /home/thiago/Documentos/GitHub/CTkDesigner/.github/workflows/build.yml
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger solo en tags v1.0.0, v2.0.1, etc.
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onefile pyinstaller.spec
+          cd dist
+          tar -czf CTkDesigner-linux-x64.tar.gz CTkDesigner/
+          ls -lah
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CTkDesigner-linux-x64
+          path: dist/CTkDesigner-linux-x64.tar.gz
+
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onefile pyinstaller.spec
+          cd dist
+          powershell Compress-Archive -Path CTkDesigner -DestinationPath CTkDesigner-windows-x64.zip
+          dir
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CTkDesigner-windows-x64
+          path: dist/CTkDesigner-windows-x64.zip
+
+  release:
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      
+      - name: List artifacts
+        run: |
+          find artifacts -type f
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/CTkDesigner-linux-x64/CTkDesigner-linux-x64.tar.gz
+            artifacts/CTkDesigner-windows-x64/CTkDesigner-windows-x64.zip
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

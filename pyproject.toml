@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CTkDesigner"
+version = "1.0.0"
+description = "GUI Builder para CustomTkinter"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Thiago", email = "your@email.com"}]
+keywords = ["customtkinter", "gui", "builder", "designer"]
+
+dependencies = [
+    "customtkinter>=5.0",
+    "pillow>=9.0",
+    "CTkMessagebox>=2.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+    "black>=23.0",
+    "pyinstaller>=6.0",
+]
+
+[project.urls]
+Repository = "https://github.com/tu-usuario/CTkDesigner"
+Issues = "https://github.com/tu-usuario/CTkDesigner/issues"
+
+[tool.setuptools]
+packages = ["functions", "components", "core", "objects", "data", "config", "translations", "plugins"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]

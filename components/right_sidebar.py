@@ -10,15 +10,17 @@ from data.variable import *
 from functions.generic import *
 from functions.import_widget import *
 import logging
-class RightSidebar(ctk.CTkScrollableFrame):
+class RightSidebar(ctk.CTkFrame):
     TREEVIEW_WIDTH = 180
     PADDING = 5
 
     def __init__(self, parent, virtual_window, app):
-        super().__init__(parent, width=200)
+        super().__init__(parent, width=220)
         self.app = app
         self.configure_treeview_style()
         self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_rowconfigure(3, weight=1)
         self.virtual_window = virtual_window
         self.widget_tree = {}
         self.buttons = {}
@@ -35,14 +37,19 @@ class RightSidebar(ctk.CTkScrollableFrame):
 
     def create_widgets_section(self):
         ctk.CTkLabel(self, text=self.app.translator.translate("LABEL_WIDGETS_TEXT")).grid(row=0, column=0, padx=self.PADDING, pady=self.PADDING, sticky="w")
+
+        self.widgets_scroll = ctk.CTkScrollableFrame(self)
+        self.widgets_scroll.grid(row=1, column=0, padx=self.PADDING, pady=(0, self.PADDING), sticky="nsew")
+        self.widgets_scroll.grid_columnconfigure(0, weight=1)
+
         for i, widget in enumerate(widgets):
             self.create_widget_button(widget, i + 1, True)
         #self.create_widget_button(self.app.translator.translate("IMPORT_WIDGET_BUTTON"), i + 1)
 
     def import_custom_widget(self):
         widget=load_classes_from_file(filedialog.askopenfilename(
-            title=translator.translate("FILE_DIALOG_SELECT_FILE"),
-            filetypes=[(translator.get("filedialog.file_type"), "*.py"), ("Todos los archivos", "*.*")]
+            title=self.app.translator.translate("FILE_DIALOG_SELECT_FILE"),
+            filetypes=[(self.app.translator.get("filedialog.file_type"), "*.py"), ("Todos los archivos", "*.*")]
         ))
         self.app.cross_update_text_info(self.app.translator.translate_with_vars("USER_WIDGET_DETAILS", {"widget": widget}))
         self.app.virtual_window._extracted_from_create_and_place_widget_5(widget[0](self.virtual_window), 100, 100)
@@ -55,7 +62,7 @@ class RightSidebar(ctk.CTkScrollableFrame):
         """Crea un botón para cada widget y lo agrega a la sección de widgets."""
         dic_help = widgets_info.get(self.app.translator.current_language)
         btn = ctk.CTkButton(
-            self,
+            self.widgets_scroll,
             text=widget,
             command=self.check_widget(widget),
             **BUTTON_STYLE
@@ -76,10 +83,16 @@ class RightSidebar(ctk.CTkScrollableFrame):
             btn.configure(state="normal")
 
     def create_treeview_section(self):
-        ctk.CTkLabel(self, text=self.app.translator.translate("LABEL_SCHEME_TEXT")).grid(row=len(widgets) + 1, column=0, padx=self.PADDING, pady=self.PADDING, sticky="w")
-        self.tree = ttk.Treeview(self, selectmode="browse", show="tree")
-        self.tree.grid(row=len(widgets) + 2, column=0, padx=self.PADDING, pady=self.PADDING, sticky="nsew")
-        self.tree.column("#0", width=self.TREEVIEW_WIDTH, stretch=True)
+        ctk.CTkLabel(self, text=self.app.translator.translate("LABEL_SCHEME_TEXT")).grid(row=2, column=0, padx=self.PADDING, pady=self.PADDING, sticky="w")
+
+        self.tree_container = ctk.CTkFrame(self)
+        self.tree_container.grid(row=3, column=0, padx=self.PADDING, pady=(0, self.PADDING), sticky="nsew")
+        self.tree_container.grid_columnconfigure(0, weight=1)
+        self.tree_container.grid_rowconfigure(0, weight=1)
+
+        self.tree = ttk.Treeview(self.tree_container, selectmode="browse", show="tree")
+        self.tree.grid(row=0, column=0, sticky="nsew")
+        self.tree.column("#0", width=self.TREEVIEW_WIDTH, minwidth=140, stretch=False)
         self.tree.heading("#0", text="Widgets")
 
     def add_widget(self, widget:object):
