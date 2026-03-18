@@ -24,20 +24,18 @@ jobs:
           pip install pyinstaller
 
       - name: Build with PyInstaller
-        run: |
-          pyinstaller pyinstaller.spec
+        run: pyinstaller pyinstaller.spec
 
-      - name: Package artifact
+      - name: Package artifact (Linux)
         run: |
           cd dist
-          # onefile → single binary named CTkDesigner (no extension on Linux)
           tar -czf CTkDesigner-linux-x64.tar.gz CTkDesigner
-          ls -lah
+          ls -lah CTkDesigner*
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CTkDesigner-linux-x64
+          name: linux-binary
           path: dist/CTkDesigner-linux-x64.tar.gz
 
   build-windows:
@@ -58,43 +56,35 @@ jobs:
           pip install pyinstaller
 
       - name: Build with PyInstaller
-        run: |
-          pyinstaller pyinstaller.spec
+        run: pyinstaller pyinstaller.spec
 
-      - name: Package artifact
+      - name: Package artifact (Windows)
         run: |
           cd dist
-          # onefile → single binary named CTkDesigner.exe on Windows
           Compress-Archive -Path CTkDesigner.exe -DestinationPath CTkDesigner-windows-x64.zip
-          dir
+          dir CTkDesigner*
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CTkDesigner-windows-x64
+          name: windows-binary
           path: dist/CTkDesigner-windows-x64.zip
 
   release:
     needs: [build-linux, build-windows]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download all artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
-
-      - name: List artifacts
-        run: find artifacts -type f
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artifacts/CTkDesigner-linux-x64/CTkDesigner-linux-x64.tar.gz
-            artifacts/CTkDesigner-windows-x64/CTkDesigner-windows-x64.zip
+            artifacts/linux-binary/CTkDesigner-linux-x64.tar.gz
+            artifacts/windows-binary/CTkDesigner-windows-x64.zip
           draft: false
           prerelease: false
           generate_release_notes: true
