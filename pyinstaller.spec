@@ -18,6 +18,7 @@ a = Analysis(
         'customtkinter',
         'CTkMessagebox',
         'PIL',
+        'tklinenums', 
     ],
     hookspath=[],
     hooksconfig={},
