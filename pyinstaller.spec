@@ -1,24 +1,40 @@
 # -*- mode: python ; coding: utf-8 -*-
 import sys
 from pathlib import Path
+from PyInstaller.utils.hooks import collect_all
 
 block_cipher = None
+
+# collect_all trae binaries, datas e hiddenimports del paquete completo
+tklinenums_datas, tklinenums_binaries, tklinenums_hiddenimports = collect_all('tklinenums')
+ctk_datas, ctk_binaries, ctk_hiddenimports = collect_all('customtkinter')
+ctkmsg_datas, ctkmsg_binaries, ctkmsg_hiddenimports = collect_all('CTkMessagebox')
 
 a = Analysis(
     ['main.py'],
     pathex=[],
-    binaries=[],
+    binaries=[
+        *tklinenums_binaries,
+        *ctk_binaries,
+        *ctkmsg_binaries,
+    ],
     datas=[
         ('translations', 'translations'),
         ('data', 'data'),
         ('plugins', 'plugins'),
         ('config', 'config'),
+        *tklinenums_datas,
+        *ctk_datas,
+        *ctkmsg_datas,
     ],
     hiddenimports=[
         'customtkinter',
         'CTkMessagebox',
         'PIL',
-        'tklinenums', 
+        'tklinenums',
+        *tklinenums_hiddenimports,
+        *ctk_hiddenimports,
+        *ctkmsg_hiddenimports,
     ],
     hookspath=[],
     hooksconfig={},
