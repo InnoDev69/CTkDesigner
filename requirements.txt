@@ -2,3 +2,4 @@ customtkinter>=5.0
 pillow>=9.0
 CTkMessagebox>=2.0
 pyyaml>=6.0
+tklinenums
