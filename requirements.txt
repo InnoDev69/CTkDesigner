@@ -3,3 +3,4 @@ pillow>=9.0
 CTkMessagebox>=2.0
 pyyaml>=6.0
 tklinenums>=1.7.1
+pygments>=2.19.2
