@@ -23,6 +23,12 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
+      - name: Diagnose tklinenums
+        run: |
+            pip show tklinenums
+            python -c "import tklinenums; print('module file:', tklinenums.__file__)"
+            python -c "from PyInstaller.utils.hooks import collect_all; d,b,h = collect_all('tklinenums'); print('datas:', d); print('binaries:', b); print('hidden:', h)"
+
       - name: Build with PyInstaller
         run: pyinstaller pyinstaller.spec
 
