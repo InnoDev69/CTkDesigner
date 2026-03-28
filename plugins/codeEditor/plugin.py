@@ -1,7 +1,8 @@
 import customtkinter as ctk
+from core.events import AppEvents
 from plugins.plugin_manager import Plugin
 from objects.code_box import CTkCodeBox
-from objects.CTkMenuBar.dropdown_menu import CustomDropdownMenu
+from objects.menuBar.dropdown_menu import CustomDropdownMenu
 import tkinter as tk
 from CTkMessagebox import CTkMessagebox
 import tempfile
@@ -11,6 +12,7 @@ import os
 
 class Plugin(Plugin):
     def __init__(self):
+        super().__init__()
         self.name = "Code Editor Plugin"
         self.version = "1.0.0"
         self.description = "Editor de código integrado para la VirtualWindow"
@@ -18,9 +20,12 @@ class Plugin(Plugin):
 
     def on_initialize(self) -> None:
         """Inicializa el plugin y agrega opciones al menú"""
-        print("Inicializando Code Editor Plugin")
-        self.app.plugin_button_drop.add_separator()
-        self.app.plugin_button_drop.add_option("Abrir Editor de Código", self.view_code)
+        if hasattr(self.app, 'plugin_button_drop'):
+            print("Inicializando Code Editor Plugin")
+            self.app.plugin_button_drop.add_separator()
+            self.app.plugin_button_drop.add_option("Abrir Editor de Código", self.view_code)
+        else:
+            self.app.event_manager.on(AppEvents.PROJECT_OPENED, self.on_initialize)
 
     def view_code(self):
         """Toggle between design view and code view."""

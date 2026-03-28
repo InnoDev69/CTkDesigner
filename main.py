@@ -9,11 +9,12 @@ import tkinter.ttk as ttk
 from tkinter import filedialog
 
 import customtkinter as ctk
-from CTkMessagebox import CTkMessagebox
 
 # Internal modules — avoid wildcard imports
+from core.proyect_manager import ProjectManager
 from config.config_manager import ConfigManager
 from core.app import init_app
+from core.events_manager import EventManager
 from data.commands import COMMAND_MAP, global_properties, BUTTON_STYLE, TOOLTIP_INFO_WIDGET
 from functions import (
     validate_input,
@@ -23,14 +24,12 @@ from functions import (
     translator,
     enable_resizable_highlight,
 )
-from objects.code_box import CTkCodeBox
-from objects.CTkMenuBar import CTkMenuBar, CustomDropdownMenu
+from objects.menuBar import CTkMenuBar, CustomDropdownMenu
 from objects.window.virtual_window import VirtualWindow
 from plugins.plugin_manager import PluginManager
 from components.left_sidebar import LeftSidebar
 from components.right_sidebar import RightSidebar
 from components.toolbar import Toolbar
-
 
 class App(ctk.CTk):
     """Main application class for CustomDesigner."""
@@ -49,8 +48,10 @@ class App(ctk.CTk):
         super().__init__()
 
         # Initialize message queue state before any UI that might use it
+        self.project_manager = ProjectManager(self)
         self.message_queue: list[str] = []
         self.is_showing_message = False
+        self.event_manager = EventManager(app=self)  # Pass self to EventManager for cross-component communication
 
         self._initialize_core_components()
         self._setup_window()
@@ -106,7 +107,7 @@ class App(ctk.CTk):
         """Initialize the complete UI structure."""
         self._setup_fonts_and_styles()
         self._setup_initial_layout()
-        self._create_initial_interface()
+        self.project_manager.create_setup_ui()
 
     def _initialize_plugins(self):
         self.plugin_manager = PluginManager()
@@ -157,133 +158,21 @@ class App(ctk.CTk):
         self._create_setup_frame()
         self._create_project_setup_ui()
 
-    def _create_setup_frame(self):
-        """Create the container frame for the project-setup screen.
-
-        Named 'setup_frame' to avoid colliding with self.virtual_window
-        (which later holds the actual VirtualWindow widget).
-        """
-        self.setup_frame = ctk.CTkFrame(self, corner_radius=15, fg_color="transparent")
-        self.setup_frame.grid(row=0, column=0, sticky="nsew", padx=40, pady=40)
-        self.setup_frame.grid_columnconfigure((0, 1), weight=1)
-        self.setup_frame.grid_rowconfigure(list(range(7)), weight=1)
-
-    def _create_project_setup_ui(self):
-        self._create_title_section()
-        self._create_configuration_section()
-        self._create_input_fields()
-        self._create_action_buttons()
-
-    def _create_title_section(self):
-        ctk.CTkLabel(
-            self.setup_frame,
-            text=self.translator.translate("NEW_PROYECT"),
-            font=self.TITLE_FONT,
-            text_color=("gray10", "gray90"),
-        ).grid(row=0, column=0, columnspan=2, sticky="w", padx=30, pady=(30, 10))
-
-    def _create_configuration_section(self):
-        ctk.CTkLabel(
-            self.setup_frame,
-            text=self.translator.translate("WINDOW_CONFIG"),
-            font=self.SUBTITLE_FONT,
-            text_color=("gray20", "gray80"),
-        ).grid(row=1, column=0, columnspan=2, sticky="w", padx=30, pady=(10, 20))
-
-    def _create_input_fields(self):
-        validate_command = self.register(validate_input)
-
-        self.hvar = ctk.StringVar(value=str(self.DEFAULT_HEIGHT))
-        self._create_labeled_entry("HEIGHT", self.hvar, 2, validate_command)
-
-        self.wvar = ctk.StringVar(value=str(self.DEFAULT_WIDTH))
-        self._create_labeled_entry("WIDTH", self.wvar, 3, validate_command)
-
-    def _create_labeled_entry(self, label_key: str, text_var: ctk.StringVar, row: int, validate_command):
-        label_text = self.translator.translate(label_key)
-
-        ctk.CTkLabel(
-            self.setup_frame,
-            text=label_text,
-            font=self.LABEL_FONT,
-            text_color=("gray10", "gray90"),
-        ).grid(row=row, column=0, sticky="e", padx=(20, 10), pady=10)
-
-        ctk.CTkEntry(
-            self.setup_frame,
-            textvariable=text_var,
-            validate="key",
-            validatecommand=(validate_command, "%P"),
-            placeholder_text=text_var.get(),
-            **self.ENTRY_STYLE,
-        ).grid(row=row, column=1, sticky="w", padx=(10, 30), pady=10)
-
-    def _create_action_buttons(self):
-        """Create the Create and Import buttons.
-
-        Both buttons share row=8; they are differentiated by column so both
-        are actually visible (column 0 and column 1, not 0 and 4).
-        """
-        ctk.CTkButton(
-            self.setup_frame,
-            text=self.translator.translate("CREATE_PROJECT"),
-            command=self.create_project,
-            font=self.LABEL_FONT,
-            **BUTTON_STYLE,
-        ).grid(row=8, column=0, sticky="se", padx=30, pady=30)
-
-        ctk.CTkButton(
-            self.setup_frame,
-            text=self.translator.translate("IMPORT_PROJECT"),
-            command=lambda: self.create_project(import_project=True),
-            font=self.LABEL_FONT,
-            **BUTTON_STYLE,
-        ).grid(row=8, column=1, sticky="sw", padx=30, pady=30)
-
     # =========================================================================
     # PROJECT CREATION AND TRANSITION
     # =========================================================================
 
     def create_project(self, import_project: bool = False):
         """Handle project creation with specified dimensions."""
-        self.import_project = import_project
-        self._transition_to_main_ui(self.hvar.get(), self.wvar.get())
-
-    def _transition_to_main_ui(self, height: str, width: str):
-        height = str(height) if isinstance(height, int) else height
-        width = str(width) if isinstance(width, int) else width
-
-        if not (height.isdigit() and width.isdigit()):
-            logging.warning("Altura o anchura no válidas: height=%s, width=%s", height, width)
-            return
-
-        self._cleanup_setup_interface()
-        self._create_main_ui(int(height), int(width))
-        self._setup_debug_features()
-
-    def _cleanup_setup_interface(self):
-        for widget in self.setup_frame.winfo_children():
-            widget.destroy()
-        self.setup_frame.destroy()
+        self.project_manager.create_project(import_project=import_project)
 
     def reset_window(self):
         """Reset the window to its default project-setup state."""
-        for widget in self.winfo_children():
-            widget.destroy()
-        self.resizable(False, False)
-        self.geometry("1000x600")
-        self._initialize_ui()
+        self.project_manager.reset_window()
 
     # =========================================================================
     # MAIN UI
     # =========================================================================
-
-    def _create_main_ui(self, vw_height: int, vw_width: int):
-        self._setup_main_layout()
-        self._create_main_components(vw_height, vw_width)
-        self._create_menu_system()
-        self._handle_project_import()
-        self._finalize_main_ui()
 
     def _setup_main_layout(self):
         self.grid_columnconfigure(0, weight=1)
@@ -332,8 +221,175 @@ class App(ctk.CTk):
     def _create_canvas_with_scrollbars(self):
         self.central_canvas = tk.Canvas(self.central_frame, bg="black")
         self.central_canvas.grid(row=0, column=0, sticky="nsew")
+        
+        self._bind_canvas_pan_events()
+        
         self._create_scrollbars()
         self._configure_canvas_scrolling()
+    
+    def _bind_canvas_pan_events(self):
+        """Bind middle mouse button for panning and zoom on white area."""
+        self.central_canvas.bind("<ButtonPress-2>", self._start_canvas_pan)
+        self.central_canvas.bind("<B2-Motion>", self._do_canvas_pan)
+        self.central_canvas.bind("<ButtonRelease-2>", self._end_canvas_pan)
+        self.central_canvas.bind("<Double-Button-2>", self._reset_canvas_view)
+        
+        self.central_canvas.bind("<MouseWheel>", self._on_canvas_zoom)  # Windows
+        self.central_canvas.bind("<Button-4>", self._on_canvas_zoom)    # Linux (zoom up)
+        self.central_canvas.bind("<Button-5>", self._on_canvas_zoom)    # Linux (zoom down)
+    
+    def _start_canvas_pan(self, event):
+        """Start canvas pan operation."""
+        self.pan_start = (event.x, event.y)
+        self.central_canvas.config(cursor="fleur")
+    
+    def _do_canvas_pan(self, event):
+        """Pan the view by moving the virtual window on the canvas."""
+        if hasattr(self, 'pan_start') and hasattr(self, 'virtual_window_id'):
+            dx = event.x - self.pan_start[0]
+            dy = event.y - self.pan_start[1]
+            
+            # Move the virtual window on the canvas
+            self.central_canvas.move(self.virtual_window_id, dx, dy)
+            
+            self.pan_start = (event.x, event.y)
+    
+    def _end_canvas_pan(self, event):
+        """End canvas pan operation."""
+        self.central_canvas.config(cursor="arrow")
+        self.pan_start = None
+    
+    def _reset_canvas_view(self, event=None):
+        """Reset the virtual window to its original position and zoom."""
+        if hasattr(self, 'virtual_window_id'):
+            # Reset position to (50, 50)
+            coords = self.central_canvas.coords(self.virtual_window_id)
+            if coords:
+                self.central_canvas.move(self.virtual_window_id, 50 - coords[0], 50 - coords[1])
+            
+            # Reset zoom and size
+            if hasattr(self, 'zoom_level') and self.zoom_level != 1.0:
+                self.virtual_window.configure(width=800, height=500)
+                self.central_canvas.coords(self.virtual_window_id, 50, 50)
+                
+                # Reset widget zoom attributes
+                for widget in self.virtual_window.widgets:
+                    if hasattr(widget, '_original_zoom_x'):
+                        widget.place(x=widget._original_zoom_x, y=widget._original_zoom_y)
+                        if hasattr(widget, '_original_zoom_width'):
+                            widget.configure(width=widget._original_zoom_width)
+                        if hasattr(widget, '_original_zoom_height'):
+                            widget.configure(height=widget._original_zoom_height)
+                        delattr(widget, '_original_zoom_x')
+                        delattr(widget, '_original_zoom_y')
+                        if hasattr(widget, '_original_zoom_width'):
+                            delattr(widget, '_original_zoom_width')
+                        if hasattr(widget, '_original_zoom_height'):
+                            delattr(widget, '_original_zoom_height')
+                
+                self.zoom_level = 1.0
+                logging.debug("Canvas view reset to default")
+    
+    def _on_canvas_zoom(self, event):
+        """Handle mouse wheel zoom on the canvas."""
+        if not hasattr(self, 'virtual_window_id'):
+            return
+        
+        # Determine zoom direction (only on white area - use event coordinates)
+        # Only allow zoom if the event happened on the virtual window
+        coords = self.central_canvas.coords(self.virtual_window_id)
+        if coords and (event.x < coords[0] or event.x > coords[0] + 800 or 
+                       event.y < coords[1] or event.y > coords[1] + 500):
+            return  # Event outside virtual window
+        
+        # Calculate zoom factor
+        if event.num == 5 or event.delta < 0:
+            scale_factor = 0.9  # Zoom out
+        else:
+            scale_factor = 1.1  # Zoom in
+        
+        self._apply_canvas_zoom(scale_factor, event.x, event.y)
+    
+    def _apply_canvas_zoom(self, scale_factor, event_x, event_y):
+        """Apply zoom transformation to the virtual window on canvas."""
+        if not hasattr(self, 'zoom_level'):
+            self.zoom_level = 1.0
+        
+        # Calculate new zoom level
+        new_zoom = max(0.1, min(3.0, self.zoom_level * scale_factor))
+        
+        if new_zoom == self.zoom_level:
+            return  # No change
+        
+        if not hasattr(self, 'virtual_window_id'):
+            return
+        
+        coords = self.central_canvas.coords(self.virtual_window_id)
+        if not coords:
+            return
+        
+        # Get current position and size
+        vw_x, vw_y = coords[0], coords[1]
+        vw_width = 800  # Original width (from init)
+        vw_height = 500  # Original height (from init)
+        
+        # Calculate scaled dimensions
+        new_width = int(vw_width * new_zoom)
+        new_height = int(vw_height * new_zoom)
+        
+        # Calculate center point to zoom around
+        center_x = vw_x + vw_width / 2
+        center_y = vw_y + vw_height / 2
+        
+        # Calculate new position to keep center in place
+        new_vw_x = center_x - new_width / 2
+        new_vw_y = center_y - new_height / 2
+        
+        # Update virtual window size
+        try:
+            self.virtual_window.configure(width=new_width, height=new_height)
+            # Update canvas item position and size indirectly through the widget
+            self.central_canvas.coords(self.virtual_window_id, new_vw_x, new_vw_y)
+            
+            # Scale the widgets inside the virtual window
+            self._scale_virtual_window_widgets(new_zoom)
+            
+        except Exception as e:
+            logging.error(f"Zoom error: {e}")
+            return
+        
+        self.zoom_level = new_zoom
+        logging.debug(f"Canvas zoom: {self.zoom_level:.2f}x (width: {new_width}, height: {new_height})")
+    
+    def _scale_virtual_window_widgets(self, zoom_factor):
+        """Scale all widgets inside the virtual window."""
+        if not hasattr(self, 'virtual_window') or not self.virtual_window.widgets:
+            return
+        
+        for widget in self.virtual_window.widgets:
+            try:
+                # Store original position if not already stored
+                if not hasattr(widget, '_original_zoom_x'):
+                    widget._original_zoom_x = widget.winfo_x()
+                    widget._original_zoom_y = widget.winfo_y()
+                    widget._original_zoom_width = widget.winfo_width()
+                    widget._original_zoom_height = widget.winfo_height()
+                
+                # Calculate scaled position and size
+                new_x = int(widget._original_zoom_x * zoom_factor)
+                new_y = int(widget._original_zoom_y * zoom_factor)
+                new_width = int(widget._original_zoom_width * zoom_factor) if widget._original_zoom_width > 0 else widget.cget("width")
+                new_height = int(widget._original_zoom_height * zoom_factor) if widget._original_zoom_height > 0 else widget.cget("height")
+                
+                # Update position
+                widget.place(x=new_x, y=new_y)
+                
+                # Update size if configured
+                if new_width > 0 and new_height > 0:
+                    widget.configure(width=new_width, height=new_height)
+                    
+            except Exception as e:
+                logging.debug(f"Could not scale widget: {e}")
 
     def _create_scrollbars(self):
         self.h_scrollbar = ctk.CTkScrollbar(

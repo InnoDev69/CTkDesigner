@@ -4,9 +4,12 @@ import logging
 import customtkinter as CTk
 from pathlib import Path
 from plugins.plugin_manager import Plugin
+from core.events import AppEvents
+from core.logging import logger
 
 class Plugin(Plugin):
     def __init__(self):
+        super().__init__()
         self.name = "AutoSave Plugin"
         self.version = "1.0.2"
         self.description = "Auto-guarda el proyecto cada cierto tiempo"
@@ -42,7 +45,7 @@ class Plugin(Plugin):
                 # Crear el archivo de configuración con valores por defecto
                 self.save_config_to_file()
         except Exception as e:
-            logging.error(f"Error cargando configuración: {e}")
+            logger.error(f"Error cargando configuración: {e}")
             # Usar valores por defecto en caso de error
             self.save_interval = self.default_config['save_interval']
             self.max_saves = self.default_config['max_saves']
@@ -66,25 +69,27 @@ class Plugin(Plugin):
 
     def on_initialize(self) -> None:
         """Inicializa el plugin y configura el timer de auto-guardado"""
-        print("Inicializando AutoSave Plugin")
-        self.app.plugin_button_drop.add_separator()
-        self.app.plugin_button_drop.add_option("Autosave plugin configuration", self.open_config_window)
-        self.app.menu_button_drop.add_separator()
-        submenu=self.app.menu_button_drop.add_submenu("Autosave", 3)
-        if files:= self.get_autosave_files():
-            for path in files:
-                submenu.add_option(path.name, lambda p=path: self.app.virtual_window.import_from_json(str(p)))
+        if hasattr(self.app, 'plugin_button_drop') or hasattr(self.app, 'menu_button_drop'):
+            self.app.plugin_button_drop.add_separator()
+            self.app.plugin_button_drop.add_option("Autosave plugin configuration", self.open_config_window)
+            self.app.menu_button_drop.add_separator()
+            submenu=self.app.menu_button_drop.add_submenu("Autosave", 3)
+            if files:= self.get_autosave_files():
+                for path in files:
+                    submenu.add_option(path.name, lambda p=path: self.app.virtual_window.import_from_json(str(p)))
+            else:
+                submenu.add_option("No hay auto-guardados disponibles", None, state="disabled")
+            self._schedule_autosave()
         else:
-            submenu.add_option("No hay auto-guardados disponibles", None, state="disabled")
-        self._schedule_autosave()
-
+            self.app.event_manager.on(AppEvents.PROJECT_OPENED, self.on_initialize)
+            
     def open_config_window(self):
         """Abre la ventana de configuración del plugin"""
         if self.config_window is not None and self.config_window.winfo_exists():
             return
         self.config_window = CTk.CTkToplevel(self.app)
         self.config_window.title("Configuración de AutoSave Plugin")
-        self.config_window.geometry("400x300")
+        self.config_window.geometry("450x300")
         self.config_window.resizable(False, False)
 
         # Frame principal
@@ -146,9 +151,9 @@ class Plugin(Plugin):
         save_location = CTk.CTkLabel(
             main_frame,
             text=f"Ubicación: {Path('autosaves').absolute()}",
-            wraplength=350
+            wraplength=350,
         )
-        save_location.pack(pady=(0, 20))
+        save_location.pack()
 
         # Botones
         button_frame = CTk.CTkFrame(main_frame)

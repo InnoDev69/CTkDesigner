@@ -22,7 +22,7 @@ class WindowBase(ctk.CTkFrame):
         self.redo_stack = []
         
         self.guide_canvas = tk.Canvas(self, width=width, height=height, 
-                                    highlightthickness=0)
+                                    highlightthickness=0, bg="white")
         self.guide_canvas.place(relx=0, rely=0, relwidth=1, relheight=1)
         
         self.pack_propagate(False)
